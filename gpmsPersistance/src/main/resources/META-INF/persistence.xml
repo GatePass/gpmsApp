@@ -11,7 +11,7 @@
 			<property name="javax.persistence.jdbc.driver" value="com.mysql.jdbc.Driver" />
 			<property name="javax.persistence.jdbc.url" value="jdbc:mysql://localhost:3306/gpmsdb" />
 			<property name="javax.persistence.jdbc.user" value="gpmsAdmin" />
-			<property name="javax.persistence.jdbc.password" value="gpmsAdmin" />
+			<property name="javax.persistence.jdbc.password" value="gpms1234~!" />
 
 			<property name="hibernate.hbm2ddl.auto" value="create-drop" />
 			<property name="hibernate.show_sql" value="true" />

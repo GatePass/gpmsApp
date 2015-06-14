@@ -1,46 +1,43 @@
 package org.gpms.web;
 
-import junit.framework.Test;
-import junit.framework.TestCase;
-import junit.framework.TestSuite;
-
-import org.activiti.engine.ProcessEngineConfiguration;
+import org.activiti.engine.RuntimeService;
+import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.test.context.ContextConfiguration;
+import org.springframework.test.context.junit4.AbstractJUnit4SpringContextTests;
+import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 /**
  * Unit test for simple App.
  */
-
-public class AppTest extends TestCase {
+@ContextConfiguration("classpath*:test-context.xml")
+@RunWith(SpringJUnit4ClassRunner.class)
+public class AppTest extends AbstractJUnit4SpringContextTests {
 	/**
 	 * Create the test case
 	 * 
 	 * @param testName
 	 *            name of the test case
 	 */
-
-	public AppTest(String testName) {
-		super(testName);
-	}
+	@Autowired
+	private RuntimeService runtimeService;
 
 	/**
 	 * @return the suite of tests being tested
 	 */
-	public static Test suite() {
-		return new TestSuite(AppTest.class);
-	}
+	// public static Test suite() {
+	// return new TestSuite(AppTest.class);
+	// }
 
 	/**
 	 * Rigourous Test :-)
 	 */
+	@Test
 	public void testApp() {
 
-		ProcessEngineConfiguration pec = ProcessEngineConfiguration
-				.createProcessEngineConfigurationFromResourceDefault();
-		System.out.println("((((((((" + pec.getDataSourceJndiName());
-		System.out.println(pec.getJdbcDriver());
-		System.out.println(pec.getJdbcUrl());
-		System.out.println(pec.getJdbcUsername());
-		System.out.println(pec.getJdbcPassword());
-		assertTrue(true);
+		System.out.println("runtimeService " + runtimeService);
+
+		// assertTrue(true);
 	}
 }

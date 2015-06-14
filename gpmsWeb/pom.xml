@@ -27,7 +27,6 @@
 			<groupId>org.gpms.web</groupId>
 			<artifactId>gpmsBusinessSrv</artifactId>
 			<version>0.0.1-SNAPSHOT</version>
-			<scope>compile</scope>
 		</dependency>
 		<!-- Spring core & mvc -->
 		
@@ -44,13 +43,6 @@
 			<scope>compile</scope>
 		</dependency-->
 
-		<dependency>
-			<groupId>org.springframework</groupId>
-			<artifactId>spring-test</artifactId>
-			<version>${spring.version}</version>
-			<type>jar</type>
-			<scope>test</scope>
-		</dependency>
 
 		<!-- CGLib for @Configuration -->
 		<dependency>
