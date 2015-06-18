@@ -10,7 +10,7 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 /**
  * Unit test for simple App.
  */
-@ContextConfiguration("classpath*:application-context.xml")
+@ContextConfiguration("classpath*:gpms-business-app-context.xml")
 @RunWith(SpringJUnit4ClassRunner.class)
 public class AppTest extends AbstractJUnit4SpringContextTests {
 

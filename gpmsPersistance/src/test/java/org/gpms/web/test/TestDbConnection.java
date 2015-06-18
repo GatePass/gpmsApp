@@ -10,7 +10,7 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.AbstractJUnit4SpringContextTests;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
-@ContextConfiguration("classpath*:test-context.xml")
+@ContextConfiguration("classpath*:gpms-persistance-test-context.xml")
 @RunWith(SpringJUnit4ClassRunner.class)
 public class TestDbConnection extends AbstractJUnit4SpringContextTests {
 

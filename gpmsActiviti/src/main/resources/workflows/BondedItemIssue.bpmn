@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<definitions xmlns="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:activiti="http://activiti.org/bpmn" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:omgdc="http://www.omg.org/spec/DD/20100524/DC" xmlns:omgdi="http://www.omg.org/spec/DD/20100524/DI" typeLanguage="http://www.w3.org/2001/XMLSchema" expressionLanguage="http://www.w3.org/1999/XPath" targetNamespace="http://www.gpms.org/activiti">
+  <process id="BondedItemIssue" name="Bonded Item Issue" isExecutable="true">
+    <startEvent id="startevent1" name="Start"></startEvent>
+    <serviceTask id="bondedItemCreatedMailtask" name="Bonded Item Created Mail to ISIT Mgr" activiti:class="org.gpms.web.mail.MailServiceTask"></serviceTask>
+    <sequenceFlow id="flow1" sourceRef="startevent1" targetRef="bondedItemCreatedMailtask"></sequenceFlow>
+    <exclusiveGateway id="exclusivegateway1" name="Exclusive Gateway"></exclusiveGateway>
+    <serviceTask id="ApproveMailToSecurity" name="Approve Mail To Security" activiti:class="org.gpms.web.TestActiviti"></serviceTask>
+    <serviceTask id="ApproveMailToEmployee" name="Approve Mail to Employee" activiti:class="org.gpms.web.TestActiviti"></serviceTask>
+    <sequenceFlow id="flow4" sourceRef="ApproveMailToSecurity" targetRef="ApproveMailToEmployee"></sequenceFlow>
+    <sequenceFlow id="flow5" sourceRef="ISITMgrApprovalTask" targetRef="exclusivegateway1"></sequenceFlow>
+    <sequenceFlow id="flow6" sourceRef="bondedItemCreatedMailtask" targetRef="ISITMgrApprovalTask"></sequenceFlow>
+    <serviceTask id="servicetask1" name="Service Task" activiti:class="org.gpms.web.TestActiviti"></serviceTask>
+    <sequenceFlow id="flow7" sourceRef="servicetask1" targetRef="ApproveMailToSecurity"></sequenceFlow>
+    <sequenceFlow id="flow8" sourceRef="exclusivegateway1" targetRef="servicetask1"></sequenceFlow>
+    <serviceTask id="RejectMailToISITUser" name="Reject Mail to ISIT User" activiti:class="org.gpms.web.TestActiviti"></serviceTask>
+    <sequenceFlow id="flow9" sourceRef="exclusivegateway1" targetRef="RejectMailToISITUser"></sequenceFlow>
+    <sequenceFlow id="flow10" sourceRef="manualtask2" targetRef="bondedItemCreatedMailtask"></sequenceFlow>
+    <serviceTask id="servicetask2" name="Service Task" activiti:class="org.gpms.web.TestActiviti"></serviceTask>
+    <manualTask id="manualtask2" name="Manual Task"></manualTask>
+    <sequenceFlow id="flow11" sourceRef="RejectMailToISITUser" targetRef="servicetask2"></sequenceFlow>
+    <sequenceFlow id="flow12" sourceRef="servicetask2" targetRef="manualtask2"></sequenceFlow>
+    <endEvent id="endevent1" name="End"></endEvent>
+    <sequenceFlow id="flow13" sourceRef="ApproveMailToEmployee" targetRef="endevent1"></sequenceFlow>
+    <userTask id="ISITMgrApprovalTask" name="ISIT Mgr Approval Task" activiti:candidateUsers="kermit" activiti:candidateGroups="management"></userTask>
+  </process>
+  <bpmndi:BPMNDiagram id="BPMNDiagram_BondedItemIssue">
+    <bpmndi:BPMNPlane bpmnElement="BondedItemIssue" id="BPMNPlane_BondedItemIssue">
+      <bpmndi:BPMNShape bpmnElement="startevent1" id="BPMNShape_startevent1">
+        <omgdc:Bounds height="35.0" width="35.0" x="70.0" y="140.0"></omgdc:Bounds>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="bondedItemCreatedMailtask" id="BPMNShape_bondedItemCreatedMailtask">
+        <omgdc:Bounds height="71.0" width="116.0" x="120.0" y="130.0"></omgdc:Bounds>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="exclusivegateway1" id="BPMNShape_exclusivegateway1">
+        <omgdc:Bounds height="40.0" width="40.0" x="450.0" y="145.0"></omgdc:Bounds>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="ApproveMailToSecurity" id="BPMNShape_ApproveMailToSecurity">
+        <omgdc:Bounds height="71.0" width="117.0" x="670.0" y="60.0"></omgdc:Bounds>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="ApproveMailToEmployee" id="BPMNShape_ApproveMailToEmployee">
+        <omgdc:Bounds height="71.0" width="131.0" x="840.0" y="60.0"></omgdc:Bounds>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="servicetask1" id="BPMNShape_servicetask1">
+        <omgdc:Bounds height="71.0" width="116.0" x="500.0" y="60.0"></omgdc:Bounds>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="RejectMailToISITUser" id="BPMNShape_RejectMailToISITUser">
+        <omgdc:Bounds height="71.0" width="128.0" x="500.0" y="210.0"></omgdc:Bounds>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="servicetask2" id="BPMNShape_servicetask2">
+        <omgdc:Bounds height="71.0" width="119.0" x="680.0" y="210.0"></omgdc:Bounds>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="manualtask2" id="BPMNShape_manualtask2">
+        <omgdc:Bounds height="71.0" width="111.0" x="840.0" y="210.0"></omgdc:Bounds>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="endevent1" id="BPMNShape_endevent1">
+        <omgdc:Bounds height="35.0" width="35.0" x="1020.0" y="70.0"></omgdc:Bounds>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="ISITMgrApprovalTask" id="BPMNShape_ISITMgrApprovalTask">
+        <omgdc:Bounds height="71.0" width="116.0" x="284.0" y="130.0"></omgdc:Bounds>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge bpmnElement="flow1" id="BPMNEdge_flow1">
+        <omgdi:waypoint x="105.0" y="157.0"></omgdi:waypoint>
+        <omgdi:waypoint x="120.0" y="165.0"></omgdi:waypoint>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="flow4" id="BPMNEdge_flow4">
+        <omgdi:waypoint x="787.0" y="95.0"></omgdi:waypoint>
+        <omgdi:waypoint x="840.0" y="95.0"></omgdi:waypoint>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="flow5" id="BPMNEdge_flow5">
+        <omgdi:waypoint x="400.0" y="165.0"></omgdi:waypoint>
+        <omgdi:waypoint x="450.0" y="165.0"></omgdi:waypoint>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="flow6" id="BPMNEdge_flow6">
+        <omgdi:waypoint x="236.0" y="165.0"></omgdi:waypoint>
+        <omgdi:waypoint x="284.0" y="165.0"></omgdi:waypoint>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="flow7" id="BPMNEdge_flow7">
+        <omgdi:waypoint x="616.0" y="95.0"></omgdi:waypoint>
+        <omgdi:waypoint x="670.0" y="95.0"></omgdi:waypoint>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="flow8" id="BPMNEdge_flow8">
+        <omgdi:waypoint x="470.0" y="145.0"></omgdi:waypoint>
+        <omgdi:waypoint x="468.0" y="87.0"></omgdi:waypoint>
+        <omgdi:waypoint x="500.0" y="95.0"></omgdi:waypoint>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="flow9" id="BPMNEdge_flow9">
+        <omgdi:waypoint x="470.0" y="185.0"></omgdi:waypoint>
+        <omgdi:waypoint x="468.0" y="237.0"></omgdi:waypoint>
+        <omgdi:waypoint x="500.0" y="245.0"></omgdi:waypoint>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="flow10" id="BPMNEdge_flow10">
+        <omgdi:waypoint x="895.0" y="281.0"></omgdi:waypoint>
+        <omgdi:waypoint x="892.0" y="312.0"></omgdi:waypoint>
+        <omgdi:waypoint x="632.0" y="312.0"></omgdi:waypoint>
+        <omgdi:waypoint x="405.0" y="312.0"></omgdi:waypoint>
+        <omgdi:waypoint x="182.0" y="312.0"></omgdi:waypoint>
+        <omgdi:waypoint x="178.0" y="201.0"></omgdi:waypoint>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="flow11" id="BPMNEdge_flow11">
+        <omgdi:waypoint x="628.0" y="245.0"></omgdi:waypoint>
+        <omgdi:waypoint x="680.0" y="245.0"></omgdi:waypoint>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="flow12" id="BPMNEdge_flow12">
+        <omgdi:waypoint x="799.0" y="245.0"></omgdi:waypoint>
+        <omgdi:waypoint x="840.0" y="245.0"></omgdi:waypoint>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="flow13" id="BPMNEdge_flow13">
+        <omgdi:waypoint x="971.0" y="95.0"></omgdi:waypoint>
+        <omgdi:waypoint x="1020.0" y="87.0"></omgdi:waypoint>
+      </bpmndi:BPMNEdge>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+</definitions>

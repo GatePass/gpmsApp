@@ -6,19 +6,22 @@
 	version="1.0">
 	
 	<persistence-unit name="persistenceUnit" transaction-type="RESOURCE_LOCAL">
+		<class>org.gpms.web.entities.GpmsUsers</class>
 		<exclude-unlisted-classes>false</exclude-unlisted-classes>
+		
 		<properties>
 			<property name="javax.persistence.jdbc.driver" value="com.mysql.jdbc.Driver" />
 			<property name="javax.persistence.jdbc.url" value="jdbc:mysql://localhost:3306/gpmsdb" />
 			<property name="javax.persistence.jdbc.user" value="gpmsAdmin" />
 			<property name="javax.persistence.jdbc.password" value="gpms1234~!" />
-
+			<property name="hibernate.archive.autodetection" value="class, hbm"/>
 			<property name="hibernate.hbm2ddl.auto" value="create-drop" />
 			<property name="hibernate.show_sql" value="true" />
 			<property name="hibernate.transaction.flush_before_completion" value="true" />
-			<property name="hibernate.cache.provider_class" value="org.hibernate.cache.HashtableCacheProvider" />			
+			<property name="hibernate.cache.provider_class" value="org.hibernate.cache.HashtableCacheProvider" />
+					
 		</properties>
-
+		
 	</persistence-unit>
 
 </persistence>

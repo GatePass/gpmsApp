@@ -7,11 +7,16 @@
 		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.0.xsd
 		http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx.xsd"
 	>
-	
-	
+
+	<!-- Scans within the base package of the application for @Components to 
+		configure as beans -->
+	<!-- import resource="classpath*:**/*gpms-persistance-app-db.xml" /-->
+
 	<tx:annotation-driven />
 	<context:annotation-config/>
 	
-	<context:component-scan base-package="org.gpms.web.gpmsBusinessSrv" />	
+	<context:component-scan base-package="org.gpms.web" />
+	<context:component-scan base-package="org.gpms.web.domain" />
+	<context:component-scan base-package="org.gpms.web.entities" />	
 
 </beans>

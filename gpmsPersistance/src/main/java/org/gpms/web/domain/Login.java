@@ -22,4 +22,19 @@ public class Login {
 		System.out.println("entityManager : " + entityManager);
 
 	}
+
+	/**
+	 * @return the entityManager
+	 */
+	public EntityManager getEntityManager() {
+		return entityManager;
+	}
+
+	/**
+	 * @param entityManager
+	 *            the entityManager to set
+	 */
+	public void setEntityManager(EntityManager entityManager) {
+		this.entityManager = entityManager;
+	}
 }

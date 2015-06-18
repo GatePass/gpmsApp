@@ -22,4 +22,8 @@ public class LoginBusinessSrv {
 		login.getUsers();
 	}
 
+	public void setLogin(Login login) {
+		this.login = login;
+	}
+
 }

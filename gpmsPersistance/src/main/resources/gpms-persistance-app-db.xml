@@ -10,10 +10,10 @@
 		http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx.xsd">
 
 	<!-- Scans within the base package of the application for @Components to configure as beans -->
-	<bean id="placeholderConfig"
+	<!-- bean id="placeholderConfig"
 		class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
-		<property name="location" value="classpath:db.properties" />
-	</bean>
+		<property name="location" value="classpath*:gpms-persistance-app-db.properties" />
+	</bean-->
 
 	<bean id="entityManagerFactory"
 		class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean">
@@ -25,7 +25,16 @@
 			</bean>
 		</property>		
 		<property name="dataSource" ref="dataSource"></property>
+		<property name="persistenceXmlLocation" value="classpath*:**/*persistence.xml"/>
 		<property name="persistenceUnitName" value="persistenceUnit"></property>
+		 <property name="jpaPropertyMap">
+        <map merge="true">
+            <entry key="hibernate.archive.autodetection" value="class" />
+            <entry key="hibernate.format_sql" value="false" />
+            <entry key="hibernate.hbm2ddl.auto" value="false" />
+            <entry key="hibernate.default_schema" value="myschema" />
+        </map>
+    	</property>
 	</bean>
 
 	<bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource"
@@ -42,7 +51,6 @@
 	
 
 
-	<tx:annotation-driven />
-
+	
 	
 </beans>

@@ -1,6 +1,11 @@
 package org.gpms.web;
 
+import java.util.HashMap;
+import java.util.Map;
+
+import org.activiti.engine.RepositoryService;
 import org.activiti.engine.RuntimeService;
+import org.activiti.engine.runtime.ProcessInstance;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,7 +16,7 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 /**
  * Unit test for simple App.
  */
-@ContextConfiguration("classpath*:test-context.xml")
+@ContextConfiguration("classpath*:activiti-test-context.xml")
 @RunWith(SpringJUnit4ClassRunner.class)
 public class AppTest extends AbstractJUnit4SpringContextTests {
 	/**
@@ -22,6 +27,9 @@ public class AppTest extends AbstractJUnit4SpringContextTests {
 	 */
 	@Autowired
 	private RuntimeService runtimeService;
+
+	@Autowired
+	private RepositoryService repositoryService;
 
 	/**
 	 * @return the suite of tests being tested
@@ -36,7 +44,14 @@ public class AppTest extends AbstractJUnit4SpringContextTests {
 	@Test
 	public void testApp() {
 
-		System.out.println("runtimeService " + runtimeService);
+		repositoryService.createDeployment()
+				.addClasspathResource("workflows/BondedItemIssue.bpmn")
+				.deploy();
+		Map<String, Object> variableMap = new HashMap<String, Object>();
+
+		ProcessInstance processInstance = runtimeService
+				.startProcessInstanceByKey("BondedItemIssue", variableMap);
+		System.out.println("processInstance " + processInstance);
 
 		// assertTrue(true);
 	}
