@@ -8,7 +8,7 @@
 		http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx.xsd"
 	>
 	
-	<!-- import resource="classpath*:gpms-business-app-context.xml"/ -->
+	<import resource="classpath*:gpms-business-app-context.xml"/>
 	
 	<tx:annotation-driven />
 	<mvc:annotation-driven/>

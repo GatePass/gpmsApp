@@ -10,7 +10,7 @@
 
 	<!-- Scans within the base package of the application for @Components to 
 		configure as beans -->
-	<!-- import resource="classpath*:**/*gpms-persistance-app-db.xml" /-->
+	<import resource="classpath*:**/*gpms-persistance-app-db.xml" />
 
 	<tx:annotation-driven />
 	<context:annotation-config/>
