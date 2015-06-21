@@ -26,7 +26,7 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 /**
  * Unit test for simple App.
  */
-@ContextConfiguration("classpath*:activiti-app-context.xml")
+@ContextConfiguration("classpath*:activiti-test-context.xml")
 @RunWith(SpringJUnit4ClassRunner.class)
 public class AppTest extends AbstractJUnit4SpringContextTests {
 	/**
@@ -56,7 +56,7 @@ public class AppTest extends AbstractJUnit4SpringContextTests {
 		// System.out.println(task.getId());
 		// taskService.complete(task.getId());
 
-		repositoryService.deleteDeploymentCascade("65002");
+		// repositoryService.deleteDeploymentCascade("65002");
 
 	}
 

@@ -142,6 +142,7 @@
 					<include>**/*.properties</include>
 					<include>**/*.xml</include>
 					<include>**/*.bpmn</include>
+					<include>**/*.css</include>
 				</includes>
 			</resource>
 		</resources>
