@@ -58,7 +58,7 @@
         <omgdc:Bounds height="71.0" width="111.0" x="840.0" y="210.0"></omgdc:Bounds>
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape bpmnElement="endevent1" id="BPMNShape_endevent1">
-        <omgdc:Bounds height="35.0" width="35.0" x="1020.0" y="70.0"></omgdc:Bounds>
+        <omgdc:Bounds height="35.0" width="35.0" x="1020.0" y="78.0"></omgdc:Bounds>
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape bpmnElement="ISITMgrApprovalTask" id="BPMNShape_ISITMgrApprovalTask">
         <omgdc:Bounds height="71.0" width="116.0" x="284.0" y="130.0"></omgdc:Bounds>
@@ -88,7 +88,7 @@
         <omgdi:waypoint x="468.0" y="87.0"></omgdi:waypoint>
         <omgdi:waypoint x="500.0" y="95.0"></omgdi:waypoint>
         <bpmndi:BPMNLabel>
-          <omgdc:Bounds height="14.0" width="100.0" x="411.0" y="105.0"></omgdc:Bounds>
+          <omgdc:Bounds height="14.0" width="48.0" x="411.0" y="105.0"></omgdc:Bounds>
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge bpmnElement="Rejected" id="BPMNEdge_Rejected">
@@ -96,7 +96,7 @@
         <omgdi:waypoint x="468.0" y="237.0"></omgdi:waypoint>
         <omgdi:waypoint x="500.0" y="245.0"></omgdi:waypoint>
         <bpmndi:BPMNLabel>
-          <omgdc:Bounds height="14.0" width="100.0" x="411.0" y="210.0"></omgdc:Bounds>
+          <omgdc:Bounds height="14.0" width="42.0" x="411.0" y="210.0"></omgdc:Bounds>
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge bpmnElement="flow10" id="BPMNEdge_flow10">
@@ -117,7 +117,7 @@
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge bpmnElement="flow13" id="BPMNEdge_flow13">
         <omgdi:waypoint x="971.0" y="95.0"></omgdi:waypoint>
-        <omgdi:waypoint x="1020.0" y="87.0"></omgdi:waypoint>
+        <omgdi:waypoint x="1020.0" y="95.0"></omgdi:waypoint>
       </bpmndi:BPMNEdge>
     </bpmndi:BPMNPlane>
   </bpmndi:BPMNDiagram>

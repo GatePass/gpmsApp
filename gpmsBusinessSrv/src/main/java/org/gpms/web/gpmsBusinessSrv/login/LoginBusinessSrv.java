@@ -1,7 +1,7 @@
 /**
  * 
  */
-package org.gpms.web.gpmsBusinessSrv;
+package org.gpms.web.gpmsBusinessSrv.login;
 
 import org.gpms.web.domain.Login;
 import org.springframework.beans.factory.annotation.Autowired;

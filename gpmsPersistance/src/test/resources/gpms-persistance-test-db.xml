@@ -40,9 +40,5 @@
 		<property name="entityManagerFactory" ref="entityManagerFactory"></property>
 	</bean>
 	
-
-
-	<tx:annotation-driven />
-
 	
 </beans>

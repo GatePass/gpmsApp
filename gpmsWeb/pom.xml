@@ -23,11 +23,11 @@
 
 	<dependencies>
 
-		<!-- dependency>
+		<dependency>
 			<groupId>org.gpms.web</groupId>
 			<artifactId>gpmsBusinessSrv</artifactId>
 			<version>0.0.1-SNAPSHOT</version>
-		</dependency-->
+		</dependency>
 		<!-- Spring core & mvc -->
 		
 		<dependency>

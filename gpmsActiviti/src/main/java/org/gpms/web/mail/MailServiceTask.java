@@ -5,6 +5,7 @@ package org.gpms.web.mail;
 
 import org.activiti.engine.delegate.DelegateExecution;
 import org.activiti.engine.delegate.JavaDelegate;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 /**
@@ -14,14 +15,14 @@ import org.springframework.stereotype.Component;
 @Component
 public class MailServiceTask implements JavaDelegate {
 
-	// @Autowired
-	MailServiceConfiguration mailServiceConfiguration = new MailServiceConfiguration();
+	@Autowired
+	MailService mailService = new MailService();
 
 	@Override
 	public void execute(DelegateExecution execution) throws Exception {
-		// TODO Auto-generated method stub
-		System.out.println("In side TestActiviti" + mailServiceConfiguration);
-		mailServiceConfiguration.createMailConfig();
+
+		System.out.println("In side TestActiviti" + mailService);
+
 	}
 
 }

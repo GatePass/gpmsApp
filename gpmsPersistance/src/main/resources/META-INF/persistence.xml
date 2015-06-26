@@ -6,7 +6,6 @@
 	version="1.0">
 	
 	<persistence-unit name="persistenceUnit" transaction-type="RESOURCE_LOCAL">
-		<class>org.gpms.web.entities.GpmsUsers</class>
 		<exclude-unlisted-classes>false</exclude-unlisted-classes>
 		
 		<properties>

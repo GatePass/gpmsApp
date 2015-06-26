@@ -1,6 +1,6 @@
 package org.gpms.web.test;
 
-import org.gpms.web.domain.Login;
+import org.gpms.web.domain.UsersRepository;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -18,7 +18,7 @@ public class TestDbConnection extends AbstractJUnit4SpringContextTests {
 	ApplicationContext applicationContext;
 
 	@Autowired
-	Login login;
+	UsersRepository usersRepository;
 
 	/**
 	 * @throws java.lang.Exception
@@ -37,9 +37,9 @@ public class TestDbConnection extends AbstractJUnit4SpringContextTests {
 
 	@Test
 	public void test() {
-		System.out.println(">>>>>>>>>> " + login);
+		System.out.println(">>>>>>>>>> " + usersRepository);
 		System.out.println(">>>>>>>>>> ");
-		login.getUsers();
+		// usersRepository.createUser();
 
 		// fail("Not yet implemented");
 	}
