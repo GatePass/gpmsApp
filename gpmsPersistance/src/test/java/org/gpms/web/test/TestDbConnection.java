@@ -40,6 +40,7 @@ public class TestDbConnection extends AbstractJUnit4SpringContextTests {
 		System.out.println(">>>>>>>>>> " + usersRepository);
 		System.out.println(">>>>>>>>>> ");
 		// usersRepository.createUser();
+		usersRepository.getAllSecurityQuestionEntity();
 
 		// fail("Not yet implemented");
 	}

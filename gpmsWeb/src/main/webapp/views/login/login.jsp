@@ -47,9 +47,10 @@
 										</td>
 									</tr>
 								</table>
-								<input type="submit" value="Submit"   />
-								<input type="submit" value="Reset Password"  />
+								<input type="submit" name="submit" value="Submit" />
+								<input type="submit" name="reset" value="Reset Password"  />
 							</sf:form>
+							
 						</fieldset>
 					</div>
 				</td>

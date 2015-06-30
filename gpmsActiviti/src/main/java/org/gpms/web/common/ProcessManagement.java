@@ -17,7 +17,7 @@ import org.springframework.stereotype.Component;
  * 
  */
 @Component
-public class ProcessManagement extends AbstractManagement {
+public class ProcessManagement {
 
 	@Autowired
 	public RuntimeService runtimeService;

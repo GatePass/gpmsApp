@@ -20,7 +20,7 @@ import org.springframework.stereotype.Component;
  * 
  */
 @Component
-public class DeploymentManagement extends AbstractManagement {
+public class DeploymentManagement {
 
 	@Autowired
 	public RuntimeService runtimeService;

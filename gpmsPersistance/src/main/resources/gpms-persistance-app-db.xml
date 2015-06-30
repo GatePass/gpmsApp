@@ -37,7 +37,7 @@
             <entry key="hibernate.archive.autodetection" value="class" />
             <entry key="hibernate.format_sql" value="false" />
             <entry key="hibernate.hbm2ddl.auto" value="false" />
-            <entry key="hibernate.default_schema" value="myschema" />
+            <entry key="hibernate.default_schema" value="gpmsdb" />
         </map>
     	</property>
 	</bean>

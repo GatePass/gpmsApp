@@ -11,7 +11,7 @@ import javax.persistence.Id;
  * 
  */
 // @Entity(name = "GPMS_USER_GROUP")
-public class UserGroups {
+public class UserGroupsEntity {
 
 	@Id
 	@Column(name = "GPMS_USER_GROUP_ID")

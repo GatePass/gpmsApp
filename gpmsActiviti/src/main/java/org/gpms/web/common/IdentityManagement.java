@@ -19,7 +19,7 @@ import org.springframework.stereotype.Component;
  * 
  */
 @Component
-public class IdentityManagement extends AbstractManagement {
+public class IdentityManagement {
 
 	@Autowired(required = true)
 	public RuntimeService runtimeService;

@@ -17,8 +17,9 @@ html,body {
 }
 
 #content {
-	padding-bottom: 30px;
-	overflow: auto;
+	background-image: url(../../images/locksmith.gif);
+	background-size:cover;
+	padding-bottom: 50px;
 	font-family: Arial, Helvetica, sans-serif;
 }
 

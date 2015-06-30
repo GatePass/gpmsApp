@@ -16,7 +16,7 @@ import org.springframework.stereotype.Component;
  * 
  */
 @Component
-public class TaskManagement extends AbstractManagement {
+public class TaskManagement {
 
 	@Autowired(required = true)
 	public RuntimeService runtimeService;

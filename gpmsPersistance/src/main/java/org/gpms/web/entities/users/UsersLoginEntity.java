@@ -16,7 +16,7 @@ import javax.persistence.Id;
  */
 
 @Entity(name = "GPMS_USER_LOGIN")
-public class UsersLogin {
+public class UsersLoginEntity {
 
 	@Id
 	@GeneratedValue

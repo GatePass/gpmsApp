@@ -3,7 +3,6 @@
  */
 package org.gpms.web.gpmsWeb.controller.login;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -38,23 +37,6 @@ public class PasswordResetController {
 		passwordResetBean.setLoginId("Narendra");
 
 		model.addAttribute("passwordResetBean", passwordResetBean);
-
-		return new ModelAndView("login/passwordReset");
-	}
-
-	public ModelAndView login(
-			@ModelAttribute @Valid PasswordResetBean passwordResetBean,
-			BindingResult result) throws IOException {
-
-		System.out.println("result " + result.getFieldError());
-		// if (result.hasErrors()) {
-		// return "login/login";
-		// }
-
-		System.out.println(passwordResetBean.getLoginId());
-
-		// passwordResetBean.setQuestionId("This is a Question");
-		ModelAndView modelAndView = new ModelAndView("login/passwordReset");
 
 		return new ModelAndView("login/passwordReset");
 	}
