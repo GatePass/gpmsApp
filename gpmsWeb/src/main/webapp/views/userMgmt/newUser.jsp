@@ -36,19 +36,47 @@
 											</b></td>
 										</tr>
 										<tr>
-											<td align="left"><b><sf:label path="userId">User Id :</sf:label></b></td>
-											<td align="left"><sf:label path="userId"></sf:label></td>
-
+											<td align="left" valign="top"><b><sf:label path="userId">User Id :</sf:label></b></td>
+											<td align="left"><sf:label path="userId">${userBean.userId}</sf:label></td>
 										</tr>
 										<tr>
-											<td align="left"><b><sf:label path="userName">User Name :</sf:label></b></td>
-											<td><sf:input path="userName" /><br /> <sf:errors
-													path="userName" cssClass="error" /></td>
+											<td align="left" valign="top"><b><sf:label path="userFirstName">User First Name :</sf:label></b></td>
+											<td><sf:input path="userFirstName" disabled="${isDisabled}"/><br /> <sf:errors
+													path="userFirstName" cssClass="error" /></td>
 										</tr>
 										<tr>
-											<td align="left"><b><sf:label path="questionId">Select the secret question :</sf:label></b></td>
-											<td><sf:select path="questionId" multiple="false">
-													<sf:option value="" label="....."></sf:option>
+											<td align="left" valign="top"><b><sf:label path="userLastName">User Last Name:</sf:label></b></td>
+											<td><sf:input path="userLastName" disabled="${isDisabled}"/><br /> <sf:errors
+													path="userLastName" cssClass="error" /></td>
+										</tr>
+										
+										<tr>
+											<td align="left" valign="top"><b><sf:label path="corpEmailId">Corporate Email Id :</sf:label></b></td>
+											<td><sf:input path="corpEmailId"   disabled="${isDisabled}" /><br /> <sf:errors
+													path="corpEmailId" cssClass="error" /></td>
+										</tr>
+										<tr>
+											<td align="left" valign="top"><b><sf:label path="personalEmailId">Personal Email Id :</sf:label></b></td>
+											<td><sf:input path="personalEmailId" disabled="${isDisabled}"/><br /> <sf:errors
+													path="personalEmailId" cssClass="error" /></td>
+										</tr>
+										<tr>
+											<td align="left" valign="top"><b><sf:label path="userGroupId">Select the User Group :</sf:label></b></td>
+											<td><sf:select path="userGroupId" multiple="false" disabled="${isDisabled}">
+													<sf:option value="" label=""></sf:option>
+													<c:forEach items="${userGroupModel}"
+														var="userGroupModel">
+														<sf:option
+															value="${userGroupModel.userGroupId}">${userGroupModel.userGroupName}</sf:option>
+													</c:forEach>
+												</sf:select>
+												<br /> 
+											<sf:errors path="userGroupId" cssClass="error" /></td>
+										</tr>
+										<tr>
+											<td align="left" valign="top"><b><sf:label path="questionId">Select the secret question :</sf:label></b></td>
+											<td><sf:select path="questionId" multiple="false" disabled="${isDisabled}">
+													<sf:option value="" label=""></sf:option>
 													<c:forEach items="${securityQuestionsModel}"
 														var="securityQuestionsModel">
 														<sf:option
@@ -59,12 +87,14 @@
 											<sf:errors path="questionId" cssClass="error" /></td>
 										</tr>
 										<tr>
-											<td align="left"><b><sf:label path="secretQuesAnsId">Secret question answer :</sf:label></b></td>
-											<td><sf:input path="secretQuesAnsId" /><br /> 
+											<td align="left" valign="top"><b><sf:label path="secretQuesAnsId">Secret question answer :</sf:label></b></td>
+											<td><sf:input path="secretQuesAnsId" disabled="${isDisabled}"/><br /> 
 											<sf:errors path="secretQuesAnsId" cssClass="error" /></td>
 										</tr>
 									</table>
-									<input type="submit" name="submit" value="Create User" />
+								
+									<input type="submit" name="createUser" value="Create User" ${isDisabled eq "true" ? 'disabled'  : '' }/>
+								
 								</sf:form>
 							</fieldset>
 						</div>

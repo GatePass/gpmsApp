@@ -9,6 +9,8 @@ import java.util.List;
 
 import org.gpms.web.domain.UsersRepository;
 import org.gpms.web.entities.users.SecurityQuestionEntity;
+import org.gpms.web.entities.users.UserGroupsEntity;
+import org.gpms.web.entities.users.UsersLoginEntity;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -44,5 +46,51 @@ public class UserMgmtBusinessSrv {
 		}
 
 		return securityQuestionsModelList;
+	}
+
+	public List<UserGroupModel> getUserGroup() {
+
+		List<UserGroupsEntity> userGroupsEntityList = usersRepository
+				.getAllUserGroupsEntity();
+
+		List<UserGroupModel> userGroupModelList = new ArrayList();
+
+		Iterator<UserGroupsEntity> userGroupsEntityListIter = userGroupsEntityList
+				.iterator();
+		while (userGroupsEntityListIter.hasNext()) {
+			UserGroupsEntity userGroupsEntityEntity = userGroupsEntityListIter
+					.next();
+			UserGroupModel userGroupsModel = new UserGroupModel();
+			userGroupsModel.setUserGroupId(userGroupsEntityEntity
+					.getUserGroupId());
+			userGroupsModel.setUserGroupName(userGroupsEntityEntity
+					.getUserGroupName());
+			userGroupsModel.setUserGroupDesc(userGroupsEntityEntity
+					.getUserGroupDesc());
+
+			userGroupModelList.add(userGroupsModel);
+		}
+
+		return userGroupModelList;
+	}
+
+	public UserModel createUser(UserModel userModel) {
+
+		UsersLoginEntity usersLoginEntity = new UsersLoginEntity();
+		usersLoginEntity.setUserFirstName(userModel.getUserFirstName());
+		usersLoginEntity.setUserLastName(userModel.getUserLastName());
+		usersLoginEntity.setUserCorpEmail(userModel.getUserCorpEmail());
+		usersLoginEntity.setUserPersonnalEmail(userModel
+				.getUserPersonnalEmail());
+		usersLoginEntity.setUserGroupId(userModel.getUserGroupId());
+		usersLoginEntity.setPassword("Narendra");
+
+		String userId = usersRepository.createUser(usersLoginEntity);
+
+		if (userId != null) {
+			userModel.setUserId(userId);
+		}
+
+		return userModel;
 	}
 }

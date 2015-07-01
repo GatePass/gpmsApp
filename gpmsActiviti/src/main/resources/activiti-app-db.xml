@@ -14,7 +14,7 @@
 		<property name="location" value="classpath:activiti-app-db.properties" />
 	</bean>
 
-	<bean id="dataSource"
+	<bean id="activitiDataSource"
 		class="org.springframework.jdbc.datasource.TransactionAwareDataSourceProxy">
 		<property name="targetDataSource">
 			<bean class="org.springframework.jdbc.datasource.SimpleDriverDataSource">
@@ -26,10 +26,10 @@
 		</property>
 	</bean>
 
-	<bean id="transactionManager"
+	<bean id="activitiTransactionManager"
 		class="
 					org.springframework.jdbc.datasource.DataSourceTransactionManager">
-		<property name="dataSource" ref="dataSource"></property>
+		<property name="dataSource" ref="activitiDataSource"></property>
 	</bean>
 
 	<tx:annotation-driven />

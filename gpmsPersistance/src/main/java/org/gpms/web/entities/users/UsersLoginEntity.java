@@ -23,11 +23,20 @@ public class UsersLoginEntity {
 	@Column(name = "USER_ID")
 	private String userId;
 
+	@Column(name = "USER_FIRST_NAME")
+	private String userFirstName;
+
+	@Column(name = "USER_LAST_NAME")
+	private String userLastName;
+
 	@Column(name = "USER_CORP_EMAIL")
 	private String userCorpEmail;
 
 	@Column(name = "USER_PERSONAL_EMAIL")
 	private String userPersonnalEmail;
+
+	@Column(name = "USER_GROUP_ID")
+	private String userGroupId;
 
 	@Column(name = "USER_PASSWORD")
 	private String password;
@@ -48,6 +57,51 @@ public class UsersLoginEntity {
 	 */
 	public void setUserId(String userId) {
 		this.userId = userId;
+	}
+
+	/**
+	 * @return the userFirstName
+	 */
+	public String getUserFirstName() {
+		return userFirstName;
+	}
+
+	/**
+	 * @param userFirstName
+	 *            the userFirstName to set
+	 */
+	public void setUserFirstName(String userFirstName) {
+		this.userFirstName = userFirstName;
+	}
+
+	/**
+	 * @return the userLastName
+	 */
+	public String getUserLastName() {
+		return userLastName;
+	}
+
+	/**
+	 * @param userLastName
+	 *            the userLastName to set
+	 */
+	public void setUserLastName(String userLastName) {
+		this.userLastName = userLastName;
+	}
+
+	/**
+	 * @return the userGroupId
+	 */
+	public String getUserGroupId() {
+		return userGroupId;
+	}
+
+	/**
+	 * @param userGroupId
+	 *            the userGroupId to set
+	 */
+	public void setUserGroupId(String userGroupId) {
+		this.userGroupId = userGroupId;
 	}
 
 	/**

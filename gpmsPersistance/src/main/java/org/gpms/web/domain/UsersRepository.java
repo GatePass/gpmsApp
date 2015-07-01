@@ -3,7 +3,6 @@
  */
 package org.gpms.web.domain;
 
-import java.util.Date;
 import java.util.List;
 
 import javax.persistence.EntityManager;
@@ -11,6 +10,7 @@ import javax.persistence.PersistenceContext;
 import javax.transaction.Transactional;
 
 import org.gpms.web.entities.users.SecurityQuestionEntity;
+import org.gpms.web.entities.users.UserGroupsEntity;
 import org.gpms.web.entities.users.UsersLoginEntity;
 import org.springframework.stereotype.Repository;
 
@@ -22,18 +22,16 @@ import org.springframework.stereotype.Repository;
 @Transactional
 public class UsersRepository {
 
-	@PersistenceContext
+	@PersistenceContext(unitName = "gpmsPersistenceUnit")
 	EntityManager entityManager;
 
-	public void createUser(UsersLoginEntity usersLoginEntity) {
+	public String createUser(UsersLoginEntity usersLoginEntity) {
 
-		UsersLoginEntity usersLogin = new UsersLoginEntity();
-		usersLogin.setUserCorpEmail("aSDASD");
-		usersLogin.setUserPersonnalEmail("asdfsd");
-		usersLogin.setPassword("asdfasdf");
-		usersLogin.setUserLastLogin(new Date());
+		entityManager.persist(usersLoginEntity);
 
-		entityManager.persist(usersLogin);
+		String userIdCreated = usersLoginEntity.getUserId();
+
+		return userIdCreated;
 
 	}
 
@@ -86,10 +84,17 @@ public class UsersRepository {
 						"SELECT securityQuestion FROM GPMS_SECURITY_QUESTIONS securityQuestion")
 				.getResultList();
 
-		System.out.println("securityQuestionEntityLst "
-				+ securityQuestionEntityLst.size());
-
 		return securityQuestionEntityLst;
+
+	}
+
+	public List<UserGroupsEntity> getAllUserGroupsEntity() {
+
+		List<UserGroupsEntity> userGroupsEntityLst = (List<UserGroupsEntity>) entityManager
+				.createQuery("SELECT userGroup FROM GPMS_USER_GROUPS userGroup")
+				.getResultList();
+
+		return userGroupsEntityLst;
 
 	}
 

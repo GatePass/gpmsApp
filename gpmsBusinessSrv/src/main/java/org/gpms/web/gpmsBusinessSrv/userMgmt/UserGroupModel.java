@@ -1,27 +1,18 @@
 /**
  * 
  */
-package org.gpms.web.entities.users;
-
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
+package org.gpms.web.gpmsBusinessSrv.userMgmt;
 
 /**
  * @author narenda.kumar
  * 
  */
-@Entity(name = "GPMS_USER_GROUPS")
-public class UserGroupsEntity {
+public class UserGroupModel {
 
-	@Id
-	@Column(name = "GPMS_USER_GROUP_ID")
 	private String userGroupId;
 
-	@Column(name = "GPMS_USER_GROUP_NAME")
 	private String userGroupName;
 
-	@Column(name = "GPMS_USER_GROUP_DESC")
 	private String userGroupDesc;
 
 	/**
