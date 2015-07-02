@@ -34,8 +34,6 @@ public class UserController {
 	@RequestMapping(value = "/newUser", method = RequestMethod.GET)
 	public ModelAndView newUser(@ModelAttribute UserBean userBean, Model model) {
 
-		System.out.println("Narendra 1");
-
 		List<SecurityQuestionsModel> securityQuestionsModel = userMgmtBusinessSrv
 				.getAllSecurityQuestions();
 		List<UserGroupModel> userGroupModel = userMgmtBusinessSrv
@@ -52,8 +50,6 @@ public class UserController {
 	@RequestMapping(value = "/newUser", method = RequestMethod.POST, params = "createUser")
 	public String createUser(@ModelAttribute @Valid UserBean userBean,
 			BindingResult result, Model model) throws IOException {
-
-		System.out.println("Narendra 2");
 
 		List<SecurityQuestionsModel> securityQuestionsModel = userMgmtBusinessSrv
 				.getAllSecurityQuestions();

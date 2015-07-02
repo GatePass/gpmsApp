@@ -1,29 +1,25 @@
 /**
  * 
  */
-package org.gpms.web.entities.assets;
+package org.gpms.web.gpmsWeb.controller.assets;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
+import javax.validation.constraints.Size;
+
+import org.hibernate.validator.constraints.NotEmpty;
 
 /**
  * @author narenda.kumar
  * 
  */
-@Entity(name = "GPMS_ASSET_TYPES")
-public class AssetTypesEntity {
+public class AssetTypeBean {
 
-	@Id
-	@GeneratedValue
-	@Column(name = "ASSET_TYPE_ID")
 	private String assetTypeId;
 
-	@Column(name = "ASSET_TYPE_NAME")
+	@NotEmpty(message = "Asset Type Name cannot be be Empty")
 	private String assetTypeName;
 
-	@Column(name = "ASSET_TYPE_DESC")
+	@NotEmpty(message = "Asset Type Description cannot be be Empty")
+	@Size(min = 20, message = "Minimum 20 Character description is required")
 	private String assetTypeDesc;
 
 	/**

@@ -1,22 +1,18 @@
 /**
  * 
  */
-package org.gpms.web.gpmsWeb.controller.assets;
-
-import org.hibernate.validator.constraints.NotEmpty;
+package org.gpms.web.gpmsBusinessSrv.assets;
 
 /**
  * @author narenda.kumar
  * 
  */
-public class AssetBean {
+public class AssetModel {
 
 	private String assetId;
 
-	@NotEmpty(message = "Asset Type cannot be be Empty")
 	private String assetTypeId;
 
-	@NotEmpty(message = "Asset Purchase Date cannot be be Empty")
 	private String assetPurchaseDate;
 
 	private String assetRemovalDate;

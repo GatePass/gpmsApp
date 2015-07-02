@@ -3,6 +3,8 @@
  */
 package org.gpms.web.entities.assets;
 
+import java.util.Date;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -24,10 +26,10 @@ public class AssetsEntity {
 	private String assetType;
 
 	@Column(name = "ASSET_PURCHASE_DATE")
-	private String assetPurchaseDate;
+	private Date assetPurchaseDate;
 
 	@Column(name = "ASSET_REMOVAL_DATE")
-	private String assetRemovalDate;
+	private Date assetRemovalDate;
 
 	/**
 	 * @return the assetId
@@ -62,7 +64,7 @@ public class AssetsEntity {
 	/**
 	 * @return the assetPurchaseDate
 	 */
-	public String getAssetPurchaseDate() {
+	public Date getAssetPurchaseDate() {
 		return assetPurchaseDate;
 	}
 
@@ -70,14 +72,14 @@ public class AssetsEntity {
 	 * @param assetPurchaseDate
 	 *            the assetPurchaseDate to set
 	 */
-	public void setAssetPurchaseDate(String assetPurchaseDate) {
+	public void setAssetPurchaseDate(Date assetPurchaseDate) {
 		this.assetPurchaseDate = assetPurchaseDate;
 	}
 
 	/**
 	 * @return the assetRemovalDate
 	 */
-	public String getAssetRemovalDate() {
+	public Date getAssetRemovalDate() {
 		return assetRemovalDate;
 	}
 
@@ -85,7 +87,7 @@ public class AssetsEntity {
 	 * @param assetRemovalDate
 	 *            the assetRemovalDate to set
 	 */
-	public void setAssetRemovalDate(String assetRemovalDate) {
+	public void setAssetRemovalDate(Date assetRemovalDate) {
 		this.assetRemovalDate = assetRemovalDate;
 	}
 

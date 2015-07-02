@@ -1,29 +1,18 @@
 /**
  * 
  */
-package org.gpms.web.entities.assets;
-
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
+package org.gpms.web.gpmsBusinessSrv.assets;
 
 /**
  * @author narenda.kumar
  * 
  */
-@Entity(name = "GPMS_ASSET_TYPES")
-public class AssetTypesEntity {
+public class AssetTypeModel {
 
-	@Id
-	@GeneratedValue
-	@Column(name = "ASSET_TYPE_ID")
 	private String assetTypeId;
 
-	@Column(name = "ASSET_TYPE_NAME")
 	private String assetTypeName;
 
-	@Column(name = "ASSET_TYPE_DESC")
 	private String assetTypeDesc;
 
 	/**

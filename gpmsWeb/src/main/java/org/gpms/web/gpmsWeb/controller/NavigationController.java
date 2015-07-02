@@ -26,9 +26,39 @@ public class NavigationController {
 		return "redirect:newUser";
 	}
 
+	@RequestMapping(value = "/navigation", params = "modifyUser")
+	public String modifyUser() throws IOException {
+		return "redirect:modifyUser";
+	}
+
 	@RequestMapping(value = "/navigation", params = "deleteUser")
 	public String deleteUser() throws IOException {
-		return "redirect:newUser";
+		return "redirect:deleteUser";
+	}
+
+	@RequestMapping(value = "/navigation", params = "createAsset")
+	public String createAsset() throws IOException {
+		return "redirect:newAsset";
+	}
+
+	@RequestMapping(value = "/navigation", params = "modifyAsset")
+	public String modifyAsset() throws IOException {
+		return "redirect:modifyAsset";
+	}
+
+	@RequestMapping(value = "/navigation", params = "deleteAsset")
+	public String deleteAsset() throws IOException {
+		return "redirect:deleteAsset";
+	}
+
+	@RequestMapping(value = "/navigation", params = "createAssetType")
+	public String createAssetType() throws IOException {
+		return "redirect:newAssetType";
+	}
+
+	@RequestMapping(value = "/navigation", params = "modifyAssetType")
+	public String modifyAssetType() throws IOException {
+		return "redirect:modifyAssetType";
 	}
 
 	@RequestMapping(value = "/navigation", params = "bondedItemAssign")

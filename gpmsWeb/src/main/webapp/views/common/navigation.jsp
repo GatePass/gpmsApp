@@ -50,6 +50,12 @@
 										</b></td>
 									</tr>
 									<tr>
+										<td align="left" colspan="2" ><label>Create/Modify a Asset Type</label>
+										</td>
+										<td><input type="submit" name="createAssetType" value="Create Asset Type" /></td>
+										<td><input type="submit" name="modifyAssetType" value="Modify Asset Type" /></td>
+									</tr>
+									<tr>
 										<td align="left" colspan="2" ><label>Create/Modify a bonded asset</label>
 										</td>
 										<td><input type="submit" name="createAsset" value="Create Asset" /></td>
