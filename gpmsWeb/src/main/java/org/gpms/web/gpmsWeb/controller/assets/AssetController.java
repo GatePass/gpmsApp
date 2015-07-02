@@ -10,6 +10,7 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
 /**
@@ -17,9 +18,9 @@ import org.springframework.web.servlet.ModelAndView;
  * 
  */
 @Controller
-public class NewAssetController {
+public class AssetController {
 
-	@RequestMapping(value = "/newAsset")
+	@RequestMapping(value = "/newAsset", method = RequestMethod.GET)
 	public ModelAndView newAsset(@ModelAttribute @Valid AssetBean assetBean,
 			BindingResult result, Model model) {
 

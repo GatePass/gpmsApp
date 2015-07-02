@@ -62,7 +62,7 @@
 										</tr>
 										<tr>
 											<td align="left" valign="top"><b><sf:label path="userGroupId">Select the User Group :</sf:label></b></td>
-											<td><sf:select path="userGroupId" multiple="false" disabled="${isDisabled}">
+											<td><sf:select path="userGroupId" multiple="false" disabled="${isDisabled}" >
 													<sf:option value="" label=""></sf:option>
 													<c:forEach items="${userGroupModel}"
 														var="userGroupModel">

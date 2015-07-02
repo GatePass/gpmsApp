@@ -28,15 +28,16 @@
 						<fieldset id="fieldSet"
 							style="border-width: 2px; background-color: lightblue;  width: 800px;">
 							<sf:form action="navigation">
-								<table cellspacing="20px">
+								<table cellspacing="10px">
 									<tr>
 										<td class="boxHeading" align="left" colspan="2" ><b> <label>User Access Management</label>
 										</b></td>
 									</tr>
 									<tr>
-										<td align="left" colspan="2" ><label>Create an Employee/ISIT Member</label>
+										<td align="left" colspan="2" ><label>Create/Modify an Employee/ISIT Member</label>
 										</td>
 										<td><input type="submit" name="createUser" value="Create User" /></td>
+										<td><input type="submit" name="modifyUser" value="Modify User" /></td>
 									</tr>
 									<tr>
 										<td align="left" colspan="2" ><label>Delete an Employee/ISIT Member</label>
@@ -49,14 +50,25 @@
 										</b></td>
 									</tr>
 									<tr>
+										<td align="left" colspan="2" ><label>Create/Modify a bonded asset</label>
+										</td>
+										<td><input type="submit" name="createAsset" value="Create Asset" /></td>
+										<td><input type="submit" name="modifyAsset" value="Modify Asset" /></td>
+									</tr>
+									<tr>
+										<td align="left" colspan="2" ><label>Delete a bonded asset</label>
+										</td>
+										<td><input type="submit" name="deleteAsset" value="Delete Asset" /></td>
+									</tr>
+									<tr>
 										<td align="left" colspan="2" ><label>Assign a bonded item to Employee</label>
 										</td>
-										<td><input type="submit" name="bondedItemAssign" value="Assign Bonded Item" /></td>
+										<td><input type="submit" name="bondedItemAssign" value="Assign Asset" /></td>
 									</tr>
 									<tr>
 										<td align="left" colspan="2" ><label>Return of the bonded item</label>
 										</td>
-										<td><input type="submit" name="bondedItemReturn" value="Return Bonded item" /></td>
+										<td><input type="submit" name="bondedItemReturn" value="Return Asset" /></td>
 									</tr>
 									<br>
 									<tr>
