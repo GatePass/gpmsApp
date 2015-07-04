@@ -20,6 +20,8 @@ public class LoginBean implements Serializable {
 	private static final long serialVersionUID = -356597310566721839L;
 	// spring validation
 
+	private String langId;
+
 	@NotEmpty(message = "User Id cannot be Empty")
 	@Email(message = "Not a valid User Id")
 	@Size(min = 6, message = "Wrong UserName Entered")
@@ -28,6 +30,21 @@ public class LoginBean implements Serializable {
 	@NotEmpty(message = "Password cannot be Empty")
 	@Size(min = 6, max = 20, message = "Wrong Password Entered")
 	private String password;
+
+	/**
+	 * @return the langId
+	 */
+	public String getLangId() {
+		return langId;
+	}
+
+	/**
+	 * @param langId
+	 *            the langId to set
+	 */
+	public void setLangId(String langId) {
+		this.langId = langId;
+	}
 
 	public String getUserId() {
 		return userId;
