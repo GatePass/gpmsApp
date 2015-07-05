@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
+import org.gpms.web.activitiUserMgmt.ActivitiUserMgmt;
 import org.gpms.web.domain.UsersRepository;
 import org.gpms.web.entities.users.SecurityQuestionEntity;
 import org.gpms.web.entities.users.UserGroupsEntity;
@@ -23,6 +24,9 @@ public class UserMgmtBusinessSrv {
 
 	@Autowired
 	private UsersRepository usersRepository;
+
+	@Autowired
+	ActivitiUserMgmt activitiUserMgmt;
 
 	public List<SecurityQuestionsModel> getAllSecurityQuestions() {
 		List<SecurityQuestionEntity> securityQuestionList = usersRepository
@@ -90,6 +94,12 @@ public class UserMgmtBusinessSrv {
 		if (userId != null) {
 			userModel.setUserId(userId);
 		}
+
+		activitiUserMgmt.createUser(userModel.getUserCorpEmail(),
+				userModel.getUserFirstName(), userModel.getUserLastName(),
+				userModel.getUserPersonnalEmail(), userModel.getPassword());
+		activitiUserMgmt.assignUserToGroup(userModel.getUserCorpEmail(),
+				userModel.getUserGroupId());
 
 		return userModel;
 	}

@@ -53,6 +53,7 @@ public class AssetController {
 				.getAllAssetType();
 
 		AssetModel assetModel = new AssetModel();
+		assetModel.setAssetBarCode(assetBean.getAssetBarCode());
 		assetModel.setAssetTypeId(assetBean.getAssetTypeId());
 		assetModel.setAssetPurchaseDate(assetBean.getAssetPurchaseDate());
 		assetModel.setAssetRemovalDate(assetBean.getAssetRemovalDate());

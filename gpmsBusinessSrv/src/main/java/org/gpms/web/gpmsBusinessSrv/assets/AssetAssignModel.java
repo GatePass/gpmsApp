@@ -1,22 +1,11 @@
-/**
- * 
- */
-package org.gpms.web.gpmsWeb.controller.assets;
+package org.gpms.web.gpmsBusinessSrv.assets;
 
-import org.hibernate.validator.constraints.NotEmpty;
-
-/**
- * @author narenda.kumar
- * 
- */
-public class BondedAssetBean {
+public class AssetAssignModel {
 
 	private String userAssetId;
 
-	@NotEmpty(message = "Email Id of the employee to whom asset is to be assigned cannot be be Empty")
 	private String userCorpEmail;
 
-	@NotEmpty(message = "Asset Id to be assigned cannot be be Empty")
 	private String assetId;
 
 	private String userAssetIssueDate;

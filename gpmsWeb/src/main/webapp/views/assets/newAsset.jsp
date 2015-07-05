@@ -39,6 +39,11 @@
 											<td align="left"><sf:label path="assetId">${assetBean.assetId}</sf:label></td>
 										</tr>
 										<tr>
+											<td align="left" valign="top"><b><sf:label path="assetBarCode">Asset Bar Code :</sf:label></b></td>
+											<td><sf:input path="assetBarCode" disabled="${isDisabled}"/><br /> 
+											<sf:errors path="assetBarCode" cssClass="error" /></td>
+										</tr>
+										<tr>
 											<td align="left" valign="top"><b><sf:label path="assetTypeId">Select the Asset type :</sf:label></b></td>
 											<td>
 											<sf:select path="assetTypeId" multiple="false" disabled="${isDisabled}" >

@@ -69,9 +69,19 @@ public class IdentityManagement {
 		UserQuery userQuery = identityService.createUserQuery().userId(userId);
 		User user = userQuery.singleResult();
 		return user;
+
 	}
 
 	public void deleteUser(String userId) {
 		identityService.deleteUser(userId);
 	}
+
+	public void assignUserToGroup(String userId, String groupId) {
+		identityService.createMembership(userId, groupId);
+	}
+
+	public void removeUserFromGroup(String userId, String groupId) {
+		identityService.deleteMembership(userId, groupId);
+	}
+
 }

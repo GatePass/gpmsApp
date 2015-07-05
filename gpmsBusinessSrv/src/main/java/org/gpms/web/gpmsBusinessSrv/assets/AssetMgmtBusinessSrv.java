@@ -3,8 +3,6 @@
  */
 package org.gpms.web.gpmsBusinessSrv.assets;
 
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
@@ -12,6 +10,8 @@ import java.util.List;
 import org.gpms.web.domain.AssetsRepository;
 import org.gpms.web.entities.assets.AssetTypesEntity;
 import org.gpms.web.entities.assets.AssetsEntity;
+import org.gpms.web.gpmsBusinessSrv.util.ApplicationConstants;
+import org.gpms.web.gpmsBusinessSrv.util.DateUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -30,24 +30,16 @@ public class AssetMgmtBusinessSrv {
 
 		AssetsEntity assetsEntity = new AssetsEntity();
 
-		SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/YYYY");
+		assetsEntity.setAssetBarCode(assetModel.getAssetBarCode());
+
 		assetsEntity.setAssetType(assetModel.getAssetTypeId());
-		try {
-			java.util.Date dateStr = formatter.parse(assetModel
-					.getAssetPurchaseDate());
-			java.sql.Date dateDB = new java.sql.Date(dateStr.getTime());
-			assetsEntity.setAssetPurchaseDate(new java.sql.Date(dateDB
-					.getTime()));
 
-			dateStr = formatter.parse(assetModel.getAssetRemovalDate());
-			dateDB = new java.sql.Date(dateStr.getTime());
-			assetsEntity
-					.setAssetRemovalDate(new java.sql.Date(dateDB.getTime()));
-
-		} catch (ParseException pe) {
-			pe.printStackTrace();
-		}
-
+		assetsEntity.setAssetPurchaseDate(DateUtil.getSQLDate(assetModel
+				.getAssetPurchaseDate()));
+		assetsEntity.setAssetRemovalDate(DateUtil.getSQLDate(assetModel
+				.getAssetRemovalDate()));
+		assetsEntity
+				.setAssetStatus(ApplicationConstants.ASSET_AVAILABLE_STATUS);
 		String assetId = assetsRepository.createAsset(assetsEntity);
 
 		if (assetId != null) {

@@ -26,7 +26,7 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 /**
  * Unit test for simple App.
  */
-@ContextConfiguration("classpath*:activiti-test-context.xml")
+@ContextConfiguration("classpath*:activiti-app-context.xml")
 @RunWith(SpringJUnit4ClassRunner.class)
 public class AppTest extends AbstractJUnit4SpringContextTests {
 	/**
@@ -136,7 +136,7 @@ public class AppTest extends AbstractJUnit4SpringContextTests {
 
 		System.out.println("groupList count " + groupList.size());
 
-		repositoryService.deleteDeploymentCascade(deployment.getId());
+		// repositoryService.deleteDeploymentCascade(deployment.getId());
 
 	}
 }

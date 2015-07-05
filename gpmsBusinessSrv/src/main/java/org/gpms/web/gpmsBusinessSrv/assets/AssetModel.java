@@ -11,6 +11,8 @@ public class AssetModel {
 
 	private String assetId;
 
+	private String assetBarCode;
+
 	private String assetTypeId;
 
 	private String assetPurchaseDate;
@@ -30,6 +32,21 @@ public class AssetModel {
 	 */
 	public void setAssetId(String assetId) {
 		this.assetId = assetId;
+	}
+
+	/**
+	 * @return the assetBarCode
+	 */
+	public String getAssetBarCode() {
+		return assetBarCode;
+	}
+
+	/**
+	 * @param assetBarCode
+	 *            the assetBarCode to set
+	 */
+	public void setAssetBarCode(String assetBarCode) {
+		this.assetBarCode = assetBarCode;
 	}
 
 	/**

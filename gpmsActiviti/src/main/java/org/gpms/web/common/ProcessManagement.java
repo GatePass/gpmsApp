@@ -41,8 +41,11 @@ public class ProcessManagement {
 	}
 
 	public void assignProcessToGroup(String processInstanceId, String groupId) {
-
 		runtimeService.addParticipantGroup(processInstanceId, groupId);
-
 	}
+
+	public void assignProcessToUser(String processInstanceId, String userId) {
+		runtimeService.addParticipantUser(processInstanceId, userId);
+	}
+
 }

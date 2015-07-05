@@ -39,7 +39,7 @@ public class BondedItemIssue {
 	/**
 	 * 
 	 */
-	public String startBondItemIssueProcess() {
+	public String startBondItemIssueProcess(String userAssetId) {
 
 		Deployment deployment = deploymentManagement
 				.getDeploymentByName(DEPLOYMENT_NAME);
@@ -58,8 +58,16 @@ public class BondedItemIssue {
 
 		processInstanceId = processInstance.getId();
 
+		System.out.println("processInstanceId : " + processInstanceId);
+
 		return processInstanceId;
 
+	}
+
+	public void assignProcessToUserAndGroup(String processId, String userId,
+			String groupId) {
+		processManagement.assignProcessToUser(processId, userId);
+		processManagement.assignProcessToGroup(processId, groupId);
 	}
 
 	public void completeTask(String processInstanceId) {

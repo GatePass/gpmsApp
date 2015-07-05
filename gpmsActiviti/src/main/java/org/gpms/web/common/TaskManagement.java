@@ -31,19 +31,14 @@ public class TaskManagement {
 	public TaskService taskService;
 
 	public Task getTaskByProcessInstance(String processInstanceId) {
-
 		Task task = taskService.createTaskQuery()
 				.processInstanceId(processInstanceId).singleResult();
-
 		return task;
-
 	}
 
 	public void completeTaskByProcessInstanceId(String processInstanceId) {
 		Task task = getTaskByProcessInstance(processInstanceId);
-
 		taskService.complete(task.getId());
-
 	}
 
 }

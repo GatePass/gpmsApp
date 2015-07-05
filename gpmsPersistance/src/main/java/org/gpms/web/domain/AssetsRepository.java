@@ -30,6 +30,12 @@ public class AssetsRepository {
 		return assetIdCreated;
 	}
 
+	public String updateAssetInfo(AssetsEntity assetsEntity) {
+		entityManager.merge(assetsEntity);
+		String assetIdCreated = assetsEntity.getAssetId();
+		return assetIdCreated;
+	}
+
 	public AssetsEntity getAssetById(String assetId) {
 
 		AssetsEntity assetsEntity = entityManager.find(AssetsEntity.class,

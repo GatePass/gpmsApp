@@ -13,6 +13,8 @@ public class AssetBean {
 
 	private String assetId;
 
+	private String assetBarCode;
+
 	@NotEmpty(message = "Asset Type cannot be be Empty")
 	private String assetTypeId;
 
@@ -34,6 +36,21 @@ public class AssetBean {
 	 */
 	public void setAssetId(String assetId) {
 		this.assetId = assetId;
+	}
+
+	/**
+	 * @return the assetBarCode
+	 */
+	public String getAssetBarCode() {
+		return assetBarCode;
+	}
+
+	/**
+	 * @param assetBarCode
+	 *            the assetBarCode to set
+	 */
+	public void setAssetBarCode(String assetBarCode) {
+		this.assetBarCode = assetBarCode;
 	}
 
 	/**

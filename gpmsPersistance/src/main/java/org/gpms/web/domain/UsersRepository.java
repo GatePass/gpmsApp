@@ -26,13 +26,9 @@ public class UsersRepository {
 	EntityManager entityManager;
 
 	public String createUser(UsersLoginEntity usersLoginEntity) {
-
 		entityManager.persist(usersLoginEntity);
-
 		String userIdCreated = usersLoginEntity.getUserId();
-
 		return userIdCreated;
-
 	}
 
 	public void deleteUser(UsersLoginEntity usersLoginEntity) {
