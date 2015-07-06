@@ -3,8 +3,13 @@
  */
 package org.gpms.web.gpmsBusinessSrv.assets;
 
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.Iterator;
+import java.util.List;
 
+import org.activiti.engine.task.Comment;
+import org.activiti.engine.task.Task;
 import org.gpms.web.bondedItemIssue.BondedItemIssue;
 import org.gpms.web.domain.AssetsRepository;
 import org.gpms.web.domain.UserAssetsRepository;
@@ -38,6 +43,9 @@ public class IssueAssetsBusinessSrv {
 
 	public void IssueBondedItems(AssetAssignModel assetAssignModel) {
 
+		/*
+		 * Update the gpms database with the record
+		 */
 		UserAssetEntity userAssetEntity = new UserAssetEntity();
 
 		UsersLoginEntity userLoginEntity = usersRepository
@@ -63,20 +71,71 @@ public class IssueAssetsBusinessSrv {
 				.addAssetToUser(userAssetEntity);
 		userAssetEntity.setUserAssetId(userAssetId);
 
-		String processInstanceId = bondedItemIssue
-				.startBondItemIssueProcess(userAssetId);
-		userAssetEntity.setUserAssetIssueProcessId(processInstanceId);
-
 		userAssetId = userAssetsRepository
 				.updateAssetInfoOfUser(userAssetEntity);
 
 		assetsEntity.setAssetStatus(ApplicationConstants.ASSET_ASSIGNED_STATUS);
 		assetsRepository.updateAssetInfo(assetsEntity);
 
-		bondedItemIssue.assignProcessToUserAndGroup(processInstanceId,
-				userLoginEntity.getUserCorpEmail(),
-				userLoginEntity.getUserGroupId());
+		/*
+		 * Start the process of assigning the assign and getting approval.
+		 */
 
+		String processInstanceId = bondedItemIssue
+				.startBondItemIssueProcess(userAssetId);
+		userAssetEntity.setUserAssetIssueProcessId(processInstanceId);
+
+		bondedItemIssue.performApprovalAssignment(processInstanceId,
+				ApplicationConstants.GROUP_ISIT_MANAGER,
+				"gpmsISITManager@gmail.com");
+
+		String comment = "An asset is for Approval request with id :"
+				+ assetsEntity.getAssetId() + "of Type "
+				+ assetsEntity.getAssetType() + ". It is to be assigned to "
+				+ assetAssignModel.getUserCorpEmail();
+
+		bondedItemIssue.updateInfoOnTask(processInstanceId, comment,
+				"UserAssetEntity", userAssetEntity);
 	}
 
+	public List<AssetAssignModel> getAllTasksForAction() {
+		List<Task> taskList = bondedItemIssue
+				.getAllTasksForAction("gpmsISITManager@gmail.com");
+
+		List<AssetAssignModel> assetAssignModelLst = new ArrayList<AssetAssignModel>();
+
+		Iterator<Task> taskListIter = taskList.iterator();
+
+		while (taskListIter.hasNext()) {
+			Task singleTask = taskListIter.next();
+			AssetAssignModel assetAssignModel = new AssetAssignModel();
+
+			UserAssetEntity userAssetEntity = (UserAssetEntity) bondedItemIssue
+					.getVariableByTaskId(singleTask.getId(), "UserAssetEntity");
+
+			List<Comment> comment = bondedItemIssue
+					.getCommentsByTaskId(singleTask.getId());
+
+			assetAssignModel.setUserAssetId(userAssetEntity.getUserAssetId());
+			assetAssignModel.setUserCorpEmail(userAssetEntity
+					.getUserCorpEmail());
+			assetAssignModel.setAssetId(userAssetEntity.getAssetId());
+			assetAssignModel.setUserAssetIssueDate(userAssetEntity
+					.getUserAssetIssueDate().toString());
+			assetAssignModel.setCreateDate(userAssetEntity.getCreateDate()
+					.toString());
+
+			Iterator<Comment> commentIter = comment.iterator();
+
+			while (commentIter.hasNext()) {
+				Comment singleComment = commentIter.next();
+				assetAssignModel.setAssetAssignComments(singleComment
+						.getFullMessage());
+			}
+
+			assetAssignModelLst.add(assetAssignModel);
+		}
+
+		return assetAssignModelLst;
+	}
 }

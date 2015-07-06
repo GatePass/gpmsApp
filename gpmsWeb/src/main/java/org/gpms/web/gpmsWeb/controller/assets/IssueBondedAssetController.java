@@ -3,6 +3,10 @@
  */
 package org.gpms.web.gpmsWeb.controller.assets;
 
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
+
 import javax.validation.Valid;
 
 import org.gpms.web.gpmsBusinessSrv.assets.AssetAssignModel;
@@ -54,6 +58,54 @@ public class IssueBondedAssetController {
 		model.addAttribute("bondedAssetBean", bondedAssetBean);
 
 		return new ModelAndView("assets/issueBondedAsset");
+	}
+
+	@RequestMapping(value = "/approveRejectAsset", method = RequestMethod.GET)
+	public ModelAndView approveRejectAsset(
+			@ModelAttribute BondedAssetBean bondedAssetBean, Model model) {
+
+		List<AssetAssignModel> assetAssignModelLst = issueAssetsBusinessSrv
+				.getAllTasksForAction();
+
+		List<BondedAssetBean> BondedAssetBeanLst = new ArrayList<BondedAssetBean>();
+
+		Iterator<AssetAssignModel> assetAssignModelLstIter = assetAssignModelLst
+				.iterator();
+
+		while (assetAssignModelLstIter.hasNext()) {
+			AssetAssignModel singleAssetAssignModel = assetAssignModelLstIter
+					.next();
+			BondedAssetBean bondedAsset = new BondedAssetBean();
+
+			bondedAsset.setUserAssetId(singleAssetAssignModel.getUserAssetId());
+			bondedAsset.setUserCorpEmail(singleAssetAssignModel
+					.getUserCorpEmail());
+			bondedAsset.setAssetId(singleAssetAssignModel.getAssetId());
+			bondedAsset.setUserAssetIssueDate(singleAssetAssignModel
+					.getUserAssetIssueDate().toString());
+			bondedAsset.setCreateDate(singleAssetAssignModel.getCreateDate()
+					.toString());
+			bondedAsset.setAssetAssignedComment(singleAssetAssignModel
+					.getAssetAssignComments());
+
+			BondedAssetBeanLst.add(bondedAsset);
+		}
+
+		System.out
+				.println("BondedAssetBeanLst :  " + BondedAssetBeanLst.size());
+
+		model.addAttribute("BondedAssetBeanLst", BondedAssetBeanLst);
+
+		return new ModelAndView("assets/approveRejectAsset");
+	}
+
+	@RequestMapping(value = "/resubmitForApproval", method = RequestMethod.GET)
+	public ModelAndView resubmitForApproval(
+			@ModelAttribute BondedAssetBean bondedAssetBean, Model model) {
+
+		model.addAttribute("bondedAssetBean", bondedAssetBean);
+
+		return new ModelAndView("assets/resubmitForApproval");
 	}
 
 }

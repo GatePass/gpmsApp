@@ -3,7 +3,6 @@
  */
 package org.gpms.web.gpmsWeb.controller.assets;
 
-import org.hibernate.validator.constraints.NotEmpty;
 
 /**
  * @author narenda.kumar
@@ -13,10 +12,11 @@ public class BondedAssetBean {
 
 	private String userAssetId;
 
-	@NotEmpty(message = "Email Id of the employee to whom asset is to be assigned cannot be be Empty")
+	// @NotEmpty(message =
+	// "Email Id of the employee to whom asset is to be assigned cannot be be Empty")
 	private String userCorpEmail;
 
-	@NotEmpty(message = "Asset Id to be assigned cannot be be Empty")
+	// @NotEmpty(message = "Asset Id to be assigned cannot be be Empty")
 	private String assetId;
 
 	private String userAssetIssueDate;
@@ -30,6 +30,8 @@ public class BondedAssetBean {
 	private String createDate;
 
 	private String modifiedDate;
+
+	private String assetAssignedComment;
 
 	/**
 	 * @return the userAssetId
@@ -164,6 +166,21 @@ public class BondedAssetBean {
 	 */
 	public void setModifiedDate(String modifiedDate) {
 		this.modifiedDate = modifiedDate;
+	}
+
+	/**
+	 * @return the assetAssignedComment
+	 */
+	public String getAssetAssignedComment() {
+		return assetAssignedComment;
+	}
+
+	/**
+	 * @param assetAssignedComment
+	 *            the assetAssignedComment to set
+	 */
+	public void setAssetAssignedComment(String assetAssignedComment) {
+		this.assetAssignedComment = assetAssignedComment;
 	}
 
 }

@@ -8,6 +8,7 @@ import org.activiti.engine.RepositoryService;
 import org.activiti.engine.RuntimeService;
 import org.activiti.engine.TaskService;
 import org.activiti.engine.repository.ProcessDefinition;
+import org.activiti.engine.runtime.Execution;
 import org.activiti.engine.runtime.ProcessInstance;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -40,12 +41,12 @@ public class ProcessManagement {
 		return processInstance;
 	}
 
-	public void assignProcessToGroup(String processInstanceId, String groupId) {
-		runtimeService.addParticipantGroup(processInstanceId, groupId);
-	}
+	public Execution getExecutionFromProcessId(String processId) {
 
-	public void assignProcessToUser(String processInstanceId, String userId) {
-		runtimeService.addParticipantUser(processInstanceId, userId);
+		Execution execution = runtimeService.createExecutionQuery()
+				.processInstanceId(processId).singleResult();
+
+		return execution;
 	}
 
 }

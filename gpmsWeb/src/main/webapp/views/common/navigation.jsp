@@ -68,14 +68,16 @@
 										<td><input type="submit" name="deleteAsset" value="Delete Asset" /></td>
 									</tr>
 									<tr>
-										<td align="left" colspan="2" ><label>Assign a bonded item to Employee</label>
+										<td align="left" colspan="2" ><label>Assign/Return a bonded item to/From Employee</label>
 										</td>
 										<td><input type="submit" name="bondedItemAssign" value="Assign Asset" /></td>
+										<td><input type="submit" name="bondedItemReturn" value="Return Asset" /></td>
 									</tr>
 									<tr>
-										<td align="left" colspan="2" ><label>Return of the bonded item</label>
+										<td align="left" colspan="2" ><label>Issued Bonded Item Activity</label>
 										</td>
-										<td><input type="submit" name="bondedItemReturn" value="Return Asset" /></td>
+										<td><input type="submit" name="approveRejectAsset" value="Approve/Reject" /></td>
+										<td><input type="submit" name="resubmitForApproval" value="Resubmit for Approval" /></td>
 									</tr>
 									<br>
 									<tr>

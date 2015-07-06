@@ -20,6 +20,8 @@ public class AssetAssignModel {
 
 	private String modifiedDate;
 
+	private String assetAssignComments;
+
 	/**
 	 * @return the userAssetId
 	 */
@@ -153,6 +155,21 @@ public class AssetAssignModel {
 	 */
 	public void setModifiedDate(String modifiedDate) {
 		this.modifiedDate = modifiedDate;
+	}
+
+	/**
+	 * @return the assetAssignComments
+	 */
+	public String getAssetAssignComments() {
+		return assetAssignComments;
+	}
+
+	/**
+	 * @param assetAssignComments
+	 *            the assetAssignComments to set
+	 */
+	public void setAssetAssignComments(String assetAssignComments) {
+		this.assetAssignComments = assetAssignComments;
 	}
 
 }

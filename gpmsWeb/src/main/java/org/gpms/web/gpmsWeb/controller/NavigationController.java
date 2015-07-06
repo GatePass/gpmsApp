@@ -71,4 +71,14 @@ public class NavigationController {
 		return "redirect:returnBondedAsset";
 	}
 
+	@RequestMapping(value = "/navigation", params = "approveRejectAsset")
+	public String approveRejectAsset() throws IOException {
+		return "redirect:approveRejectAsset";
+	}
+
+	@RequestMapping(value = "/navigation", params = "resubmitForApproval")
+	public String resubmitForApproval() throws IOException {
+		return "redirect:resubmitForApproval";
+	}
+
 }

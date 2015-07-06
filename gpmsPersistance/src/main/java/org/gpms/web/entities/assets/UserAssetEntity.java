@@ -3,6 +3,7 @@
  */
 package org.gpms.web.entities.assets;
 
+import java.io.Serializable;
 import java.util.Date;
 
 import javax.persistence.Column;
@@ -15,7 +16,7 @@ import javax.persistence.Id;
  * 
  */
 @Entity(name = "GPMS_USER_ASSET")
-public class UserAssetEntity {
+public class UserAssetEntity implements Serializable {
 
 	@Id
 	@GeneratedValue

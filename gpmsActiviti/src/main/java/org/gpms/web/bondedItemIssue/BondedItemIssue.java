@@ -3,9 +3,14 @@
  */
 package org.gpms.web.bondedItemIssue;
 
+import java.util.List;
+
 import org.activiti.engine.repository.Deployment;
 import org.activiti.engine.repository.ProcessDefinition;
+import org.activiti.engine.runtime.Execution;
 import org.activiti.engine.runtime.ProcessInstance;
+import org.activiti.engine.task.Comment;
+import org.activiti.engine.task.Task;
 import org.gpms.web.common.DeploymentManagement;
 import org.gpms.web.common.ProcessManagement;
 import org.gpms.web.common.TaskManagement;
@@ -64,10 +69,39 @@ public class BondedItemIssue {
 
 	}
 
-	public void assignProcessToUserAndGroup(String processId, String userId,
-			String groupId) {
-		processManagement.assignProcessToUser(processId, userId);
-		processManagement.assignProcessToGroup(processId, groupId);
+	public void updateInfoOnTask(String processInstanceId, String comment,
+			String variableName, Object objectValue) {
+		taskManagement.updateInfoOnTask(processInstanceId, comment,
+				variableName, objectValue);
+	}
+
+	public Object getVariableByTaskId(String taskId, String variableName) {
+		Object varObject = taskManagement.getVariableByTaskId(taskId,
+				variableName);
+		return varObject;
+	}
+
+	public List<Comment> getCommentsByTaskId(String taskId) {
+		List<Comment> commentsList = taskManagement.getCommentsByTaskId(taskId);
+		return commentsList;
+	}
+
+	public void performApprovalAssignment(String processId, String groupId,
+			String userId) {
+
+		Execution execution = processManagement
+				.getExecutionFromProcessId(processId);
+
+		Task task = taskManagement.getTaskByExecutionId(execution.getId());
+
+		taskManagement.assignTaskToUser(task.getId(), userId);
+		taskManagement.assignTaskToGroup(task.getId(), groupId);
+
+	}
+
+	public List<Task> getAllTasksForAction(String userId) {
+		List<Task> taskList = taskManagement.getAllTasksByAssignee(userId);
+		return taskList;
 	}
 
 	public void completeTask(String processInstanceId) {
