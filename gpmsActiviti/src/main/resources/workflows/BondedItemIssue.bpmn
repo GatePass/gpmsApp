@@ -2,31 +2,31 @@
 <definitions xmlns="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:activiti="http://activiti.org/bpmn" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:omgdc="http://www.omg.org/spec/DD/20100524/DC" xmlns:omgdi="http://www.omg.org/spec/DD/20100524/DI" typeLanguage="http://www.w3.org/2001/XMLSchema" expressionLanguage="http://www.w3.org/1999/XPath" targetNamespace="http://www.gpms.org/activiti">
   <process id="BondedItemIssue" name="Bonded Item Issue" isExecutable="true">
     <startEvent id="startevent1" name="Start"></startEvent>
-    <serviceTask id="bondedItemCreatedMailtask" name="Bonded Item Created Mail to ISIT Mgr" activiti:class="org.gpms.web.mail.MailServiceTask"></serviceTask>
+    <serviceTask id="bondedItemCreatedMailtask" name="Bonded Item Created Mail to ISIT Mgr" activiti:class="org.gpms.web.TestActiviti"></serviceTask>
     <sequenceFlow id="flow1" sourceRef="startevent1" targetRef="bondedItemCreatedMailtask"></sequenceFlow>
     <sequenceFlow id="flow6" sourceRef="bondedItemCreatedMailtask" targetRef="ISITMgrApprovalTask"></sequenceFlow>
     <userTask id="ISITMgrApprovalTask" name="ISIT Mgr Approval Task"></userTask>
     <sequenceFlow id="flow5" sourceRef="ISITMgrApprovalTask" targetRef="setDecisionVariable"></sequenceFlow>
     <exclusiveGateway id="exclusivegateway1" name="Exclusive Gateway"></exclusiveGateway>
-    <sequenceFlow id="Approved" name="Approved" sourceRef="exclusivegateway1" targetRef="IssueBondedItemTask">
+    <sequenceFlow id="Approved" name="Approved" sourceRef="exclusivegateway1" targetRef="ApproveMailTOISITMember">
       <conditionExpression xsi:type="tFormalExpression"><![CDATA[${bondedItemApproved == true}]]></conditionExpression>
     </sequenceFlow>
     <sequenceFlow id="Rejected" name="Rejected" sourceRef="exclusivegateway1" targetRef="RejectMailToISITUser">
       <conditionExpression xsi:type="tFormalExpression"><![CDATA[${bondedItemApproved == false}]]></conditionExpression>
     </sequenceFlow>
-    <serviceTask id="IssueBondedItemTask" name="Issue Bonded Item Task" activiti:class="org.gpms.web.TestActiviti"></serviceTask>
-    <sequenceFlow id="flow7" sourceRef="IssueBondedItemTask" targetRef="ApproveMailToSecurity"></sequenceFlow>
-    <serviceTask id="ApproveMailToSecurity" name="Approve Mail To Security" activiti:class="org.gpms.web.TestActiviti"></serviceTask>
+    <serviceTask id="ApproveMailTOISITMember" name="Approve Mail to ISIT Member and Issue Bonded Item Task" activiti:class="org.gpms.web.mail.MailServiceTask"></serviceTask>
+    <sequenceFlow id="flow7" sourceRef="ApproveMailTOISITMember" targetRef="ApproveMailToSecurity"></sequenceFlow>
+    <serviceTask id="ApproveMailToSecurity" name="Approve Mail To Security" activiti:class="org.gpms.web.mail.MailServiceTask"></serviceTask>
     <sequenceFlow id="flow4" sourceRef="ApproveMailToSecurity" targetRef="ApproveMailToEmployee"></sequenceFlow>
-    <serviceTask id="ApproveMailToEmployee" name="Approve Mail to Employee" activiti:class="org.gpms.web.TestActiviti"></serviceTask>
+    <serviceTask id="ApproveMailToEmployee" name="Approve Mail to Employee" activiti:class="org.gpms.web.mail.MailServiceTask"></serviceTask>
     <sequenceFlow id="flow13" sourceRef="ApproveMailToEmployee" targetRef="endevent1"></sequenceFlow>
     <endEvent id="endevent1" name="End"></endEvent>
-    <serviceTask id="RejectMailToISITUser" name="Reject Mail to ISIT User" activiti:class="org.gpms.web.TestActiviti"></serviceTask>
+    <serviceTask id="RejectMailToISITUser" name="Reject Mail to ISIT User" activiti:class="org.gpms.web.mail.MailServiceTask"></serviceTask>
     <sequenceFlow id="flow11" sourceRef="RejectMailToISITUser" targetRef="AssignToISITUser"></sequenceFlow>
     <serviceTask id="AssignToISITUser" name="Assign to ISIT User" activiti:class="org.gpms.web.TestActiviti"></serviceTask>
     <sequenceFlow id="flow14" sourceRef="AssignToISITUser" targetRef="bondedItemCorrection"></sequenceFlow>
     <userTask id="bondedItemCorrection" name="Bonded item Correction"></userTask>
-    <serviceTask id="correctionMailtoManager" name="Correction Mail to Manager" activiti:class="org.gpms.web.TestActiviti"></serviceTask>
+    <serviceTask id="correctionMailtoManager" name="Correction Mail to Manager" activiti:class="org.gpms.web.mail.MailServiceTask"></serviceTask>
     <sequenceFlow id="flow15" sourceRef="bondedItemCorrection" targetRef="correctionMailtoManager"></sequenceFlow>
     <serviceTask id="assignToISITManager" name="Assign to ISIT Manager" activiti:class="org.gpms.web.TestActiviti"></serviceTask>
     <sequenceFlow id="flow16" sourceRef="correctionMailtoManager" targetRef="assignToISITManager"></sequenceFlow>
@@ -48,7 +48,7 @@
       <bpmndi:BPMNShape bpmnElement="exclusivegateway1" id="BPMNShape_exclusivegateway1">
         <omgdc:Bounds height="40.0" width="40.0" x="544.0" y="145.0"></omgdc:Bounds>
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape bpmnElement="IssueBondedItemTask" id="BPMNShape_IssueBondedItemTask">
+      <bpmndi:BPMNShape bpmnElement="ApproveMailTOISITMember" id="BPMNShape_ApproveMailTOISITMember">
         <omgdc:Bounds height="71.0" width="116.0" x="594.0" y="60.0"></omgdc:Bounds>
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape bpmnElement="ApproveMailToSecurity" id="BPMNShape_ApproveMailToSecurity">

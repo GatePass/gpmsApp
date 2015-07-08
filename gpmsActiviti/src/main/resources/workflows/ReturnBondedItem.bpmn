@@ -1,0 +1,148 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<definitions xmlns="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:activiti="http://activiti.org/bpmn" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:omgdc="http://www.omg.org/spec/DD/20100524/DC" xmlns:omgdi="http://www.omg.org/spec/DD/20100524/DI" typeLanguage="http://www.w3.org/2001/XMLSchema" expressionLanguage="http://www.w3.org/1999/XPath" targetNamespace="http://www.activiti.org/test">
+  <process id="myProcess" name="My process" isExecutable="true">
+    <startEvent id="startevent1" name="Start"></startEvent>
+    <serviceTask id="bondedItemReturnTask" name="Bonded Item Return and Mail to ISIT Mgr" activiti:class="org.gpms.web.mail.MailServiceTask"></serviceTask>
+    <userTask id="isitManagerApprovalTask" name="ISIT Manager Approval Task"></userTask>
+    <serviceTask id="setDecisionVariableTask" name="Set The decision Variable" activiti:class="org.gpms.web.returnBondedItem.ReturnBondedItemExclusiveGateway"></serviceTask>
+    <exclusiveGateway id="exclusivegateway1" name="Exclusive Gateway"></exclusiveGateway>
+    <serviceTask id="ApproveMailToISITMember" name="Approve Mail to ISIT Member and update task" activiti:class="org.gpms.web.mail.MailServiceTask"></serviceTask>
+    <serviceTask id="ApproveMailToEmployee" name="Approve Mail To Employee" activiti:class="org.gpms.web.mail.MailServiceTask"></serviceTask>
+    <serviceTask id="ApproveMailToSecurity" name="Approve Mail To Security" activiti:class="org.gpms.web.mail.MailServiceTask"></serviceTask>
+    <endEvent id="endevent1" name="End"></endEvent>
+    <sequenceFlow id="flow1" sourceRef="startevent1" targetRef="bondedItemReturnTask"></sequenceFlow>
+    <sequenceFlow id="flow2" sourceRef="bondedItemReturnTask" targetRef="isitManagerApprovalTask"></sequenceFlow>
+    <sequenceFlow id="flow3" sourceRef="isitManagerApprovalTask" targetRef="setDecisionVariableTask"></sequenceFlow>
+    <sequenceFlow id="flow4" sourceRef="setDecisionVariableTask" targetRef="exclusivegateway1"></sequenceFlow>
+    <sequenceFlow id="Approved" name="Approved" sourceRef="exclusivegateway1" targetRef="ApproveMailToISITMember">
+      <conditionExpression xsi:type="tFormalExpression"><![CDATA[${bondedItemReturnApproved == true}]]></conditionExpression>
+    </sequenceFlow>
+    <sequenceFlow id="flow6" sourceRef="ApproveMailToISITMember" targetRef="ApproveMailToEmployee"></sequenceFlow>
+    <sequenceFlow id="flow7" sourceRef="ApproveMailToEmployee" targetRef="ApproveMailToSecurity"></sequenceFlow>
+    <sequenceFlow id="flow8" sourceRef="ApproveMailToSecurity" targetRef="endevent1"></sequenceFlow>
+    <serviceTask id="RejectMailToISITUser" name="Reject Mail to ISIT Member and update task" activiti:class="org.gpms.web.mail.MailServiceTask"></serviceTask>
+    <serviceTask id="AssigntoISITMember" name="Assign to ISIT Member" activiti:class="org.gpms.web.TestActiviti"></serviceTask>
+    <userTask id="ReturnInformationCorrectionTask " name="Return Information Correction Task by ISIT Member"></userTask>
+    <serviceTask id="correctionMailToManager" name="Correction Mail to Manager" activiti:class="org.gpms.web.mail.MailServiceTask"></serviceTask>
+    <serviceTask id="AssignToISITManager" name="Assign to ISIT Manager" activiti:class="org.gpms.web.TestActiviti"></serviceTask>
+    <sequenceFlow id="Rejected" name="Rejected" sourceRef="exclusivegateway1" targetRef="RejectMailToISITUser">
+      <conditionExpression xsi:type="tFormalExpression"><![CDATA[${bondedItemReturnApproved == false}]]></conditionExpression>
+    </sequenceFlow>
+    <sequenceFlow id="flow10" sourceRef="RejectMailToISITUser" targetRef="AssigntoISITMember"></sequenceFlow>
+    <sequenceFlow id="flow11" sourceRef="AssigntoISITMember" targetRef="ReturnInformationCorrectionTask "></sequenceFlow>
+    <sequenceFlow id="flow12" sourceRef="ReturnInformationCorrectionTask " targetRef="correctionMailToManager"></sequenceFlow>
+    <sequenceFlow id="flow13" sourceRef="correctionMailToManager" targetRef="AssignToISITManager"></sequenceFlow>
+    <sequenceFlow id="flow14" sourceRef="AssignToISITManager" targetRef="isitManagerApprovalTask"></sequenceFlow>
+  </process>
+  <bpmndi:BPMNDiagram id="BPMNDiagram_myProcess">
+    <bpmndi:BPMNPlane bpmnElement="myProcess" id="BPMNPlane_myProcess">
+      <bpmndi:BPMNShape bpmnElement="startevent1" id="BPMNShape_startevent1">
+        <omgdc:Bounds height="35.0" width="35.0" x="40.0" y="178.0"></omgdc:Bounds>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="bondedItemReturnTask" id="BPMNShape_bondedItemReturnTask">
+        <omgdc:Bounds height="71.0" width="117.0" x="120.0" y="160.0"></omgdc:Bounds>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="isitManagerApprovalTask" id="BPMNShape_isitManagerApprovalTask">
+        <omgdc:Bounds height="71.0" width="117.0" x="280.0" y="160.0"></omgdc:Bounds>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="setDecisionVariableTask" id="BPMNShape_setDecisionVariableTask">
+        <omgdc:Bounds height="71.0" width="116.0" x="430.0" y="160.0"></omgdc:Bounds>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="exclusivegateway1" id="BPMNShape_exclusivegateway1">
+        <omgdc:Bounds height="40.0" width="40.0" x="598.0" y="175.0"></omgdc:Bounds>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="ApproveMailToISITMember" id="BPMNShape_ApproveMailToISITMember">
+        <omgdc:Bounds height="65.0" width="131.0" x="650.0" y="85.0"></omgdc:Bounds>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="ApproveMailToEmployee" id="BPMNShape_ApproveMailToEmployee">
+        <omgdc:Bounds height="70.0" width="130.0" x="810.0" y="80.0"></omgdc:Bounds>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="ApproveMailToSecurity" id="BPMNShape_ApproveMailToSecurity">
+        <omgdc:Bounds height="70.0" width="121.0" x="970.0" y="80.0"></omgdc:Bounds>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="endevent1" id="BPMNShape_endevent1">
+        <omgdc:Bounds height="35.0" width="35.0" x="1120.0" y="97.0"></omgdc:Bounds>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="RejectMailToISITUser" id="BPMNShape_RejectMailToISITUser">
+        <omgdc:Bounds height="71.0" width="121.0" x="655.0" y="252.0"></omgdc:Bounds>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="AssigntoISITMember" id="BPMNShape_AssigntoISITMember">
+        <omgdc:Bounds height="71.0" width="126.0" x="817.0" y="252.0"></omgdc:Bounds>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="ReturnInformationCorrectionTask " id="BPMNShape_ReturnInformationCorrectionTask ">
+        <omgdc:Bounds height="71.0" width="118.0" x="972.0" y="252.0"></omgdc:Bounds>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="correctionMailToManager" id="BPMNShape_correctionMailToManager">
+        <omgdc:Bounds height="70.0" width="118.0" x="972.0" y="385.0"></omgdc:Bounds>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="AssignToISITManager" id="BPMNShape_AssignToISITManager">
+        <omgdc:Bounds height="75.0" width="123.0" x="818.0" y="382.0"></omgdc:Bounds>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge bpmnElement="flow1" id="BPMNEdge_flow1">
+        <omgdi:waypoint x="75.0" y="195.0"></omgdi:waypoint>
+        <omgdi:waypoint x="120.0" y="195.0"></omgdi:waypoint>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="flow2" id="BPMNEdge_flow2">
+        <omgdi:waypoint x="237.0" y="195.0"></omgdi:waypoint>
+        <omgdi:waypoint x="280.0" y="195.0"></omgdi:waypoint>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="flow3" id="BPMNEdge_flow3">
+        <omgdi:waypoint x="397.0" y="195.0"></omgdi:waypoint>
+        <omgdi:waypoint x="430.0" y="195.0"></omgdi:waypoint>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="flow4" id="BPMNEdge_flow4">
+        <omgdi:waypoint x="546.0" y="195.0"></omgdi:waypoint>
+        <omgdi:waypoint x="598.0" y="195.0"></omgdi:waypoint>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="Approved" id="BPMNEdge_Approved">
+        <omgdi:waypoint x="618.0" y="175.0"></omgdi:waypoint>
+        <omgdi:waypoint x="618.0" y="116.0"></omgdi:waypoint>
+        <omgdi:waypoint x="650.0" y="117.0"></omgdi:waypoint>
+        <bpmndi:BPMNLabel>
+          <omgdc:Bounds height="14.0" width="48.0" x="545.0" y="132.0"></omgdc:Bounds>
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="flow6" id="BPMNEdge_flow6">
+        <omgdi:waypoint x="781.0" y="117.0"></omgdi:waypoint>
+        <omgdi:waypoint x="810.0" y="115.0"></omgdi:waypoint>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="flow7" id="BPMNEdge_flow7">
+        <omgdi:waypoint x="940.0" y="115.0"></omgdi:waypoint>
+        <omgdi:waypoint x="970.0" y="115.0"></omgdi:waypoint>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="flow8" id="BPMNEdge_flow8">
+        <omgdi:waypoint x="1091.0" y="115.0"></omgdi:waypoint>
+        <omgdi:waypoint x="1120.0" y="114.0"></omgdi:waypoint>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="Rejected" id="BPMNEdge_Rejected">
+        <omgdi:waypoint x="618.0" y="215.0"></omgdi:waypoint>
+        <omgdi:waypoint x="618.0" y="287.0"></omgdi:waypoint>
+        <omgdi:waypoint x="655.0" y="287.0"></omgdi:waypoint>
+        <bpmndi:BPMNLabel>
+          <omgdc:Bounds height="14.0" width="42.0" x="545.0" y="251.0"></omgdc:Bounds>
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="flow10" id="BPMNEdge_flow10">
+        <omgdi:waypoint x="776.0" y="287.0"></omgdi:waypoint>
+        <omgdi:waypoint x="817.0" y="287.0"></omgdi:waypoint>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="flow11" id="BPMNEdge_flow11">
+        <omgdi:waypoint x="943.0" y="287.0"></omgdi:waypoint>
+        <omgdi:waypoint x="972.0" y="287.0"></omgdi:waypoint>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="flow12" id="BPMNEdge_flow12">
+        <omgdi:waypoint x="1031.0" y="323.0"></omgdi:waypoint>
+        <omgdi:waypoint x="1031.0" y="385.0"></omgdi:waypoint>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="flow13" id="BPMNEdge_flow13">
+        <omgdi:waypoint x="972.0" y="420.0"></omgdi:waypoint>
+        <omgdi:waypoint x="941.0" y="419.0"></omgdi:waypoint>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="flow14" id="BPMNEdge_flow14">
+        <omgdi:waypoint x="818.0" y="419.0"></omgdi:waypoint>
+        <omgdi:waypoint x="338.0" y="419.0"></omgdi:waypoint>
+        <omgdi:waypoint x="338.0" y="231.0"></omgdi:waypoint>
+      </bpmndi:BPMNEdge>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+</definitions>

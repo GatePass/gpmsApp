@@ -24,8 +24,6 @@ import org.springframework.stereotype.Component;
 public class MailService {
 
 	static Properties mailServerProperties;
-	Session mailSession;
-	MimeMessage generateMailMessage;
 
 	static {
 		try {
@@ -49,6 +47,8 @@ public class MailService {
 
 	public Session getMailSession(final String userId, final String password) {
 
+		Session mailSession;
+
 		if (mailServerProperties != null) {
 			try {
 				createMailConfig();
@@ -57,11 +57,10 @@ public class MailService {
 			}
 		}
 
-		mailSession = Session.getDefaultInstance(mailServerProperties,
+		mailSession = Session.getInstance(mailServerProperties,
 				new javax.mail.Authenticator() {
 					protected PasswordAuthentication getPasswordAuthentication() {
 						return new PasswordAuthentication(userId, password);
-						// "gatepassapp1@gmail.com", "gatepass1234");
 					}
 				});
 
@@ -69,26 +68,26 @@ public class MailService {
 
 	}
 
-	public void generateMessage(MailServiceParams mailServiceParams)
-			throws MessagingException {
+	public MimeMessage generateMessage(Session mailSession,
+			MailServiceParams mailServiceParams) throws MessagingException {
 
-		if (mailSession == null) {
-			getMailSession(mailServiceParams.getMailUserId(),
-					mailServiceParams.getMailPassword());
-		}
+		MimeMessage generateMailMessage;
 
 		generateMailMessage = new MimeMessage(mailSession);
 		generateMailMessage.addRecipient(Message.RecipientType.TO,
 				new InternetAddress(mailServiceParams.getMailToAddress()));
-		generateMailMessage.addRecipient(Message.RecipientType.CC,
-				new InternetAddress(mailServiceParams.getMailCcAddress()));
+		// generateMailMessage.addRecipient(Message.RecipientType.CC,
+		// new InternetAddress(mailServiceParams.getMailCcAddress()));
 		generateMailMessage.setSubject(mailServiceParams.getMailSubject());
 		generateMailMessage.setContent(mailServiceParams.getMailHtmlBody(),
 				"text/html");
 
+		return generateMailMessage;
+
 	}
 
-	public void sendMessage(MailServiceParams mailServiceParams)
+	public void sendMessage(Session mailSession,
+			MailServiceParams mailServiceParams, MimeMessage generateMailMessage)
 			throws MessagingException {
 
 		Transport transport = mailSession.getTransport("smtp");

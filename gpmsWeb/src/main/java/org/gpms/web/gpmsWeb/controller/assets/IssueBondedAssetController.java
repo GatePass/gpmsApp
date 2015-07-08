@@ -18,6 +18,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 /**
@@ -61,11 +62,85 @@ public class IssueBondedAssetController {
 	}
 
 	@RequestMapping(value = "/approveRejectAsset", method = RequestMethod.GET)
-	public ModelAndView approveRejectAsset(
+	public ModelAndView approveRejectAssetList(
 			@ModelAttribute BondedAssetBean bondedAssetBean, Model model) {
 
+		// TODO this has to be dynamic and can be enhanced based on the
+		// selection criteria
+		// String userId = "gpmsISITMgr@gmail.com";
+		String userId = "gpmsISITMgr@gmail.com";
+
 		List<AssetAssignModel> assetAssignModelLst = issueAssetsBusinessSrv
-				.getAllTasksForAction();
+				.getAllTasksForAction(userId);
+
+		List<BondedAssetBean> BondedAssetBeanLst = convertModelToBean(assetAssignModelLst);
+
+		System.out
+				.println("BondedAssetBeanLst :  " + BondedAssetBeanLst.size());
+
+		model.addAttribute("BondedAssetBeanLst", BondedAssetBeanLst);
+
+		return new ModelAndView("assets/approveRejectAsset");
+	}
+
+	@RequestMapping(value = "/approveRejectAsset", method = RequestMethod.POST)
+	public ModelAndView approveRejectAsset(
+			@RequestParam String userAssetId,
+			@RequestParam String userAssetIssueProcessId,
+			@RequestParam(value = "approveOrRejectParam") String approveOrReject,
+			@ModelAttribute BondedAssetBean bondedAssetBean, Model model) {
+
+		userAssetId = userAssetId.split(",")[0];
+		userAssetIssueProcessId = userAssetIssueProcessId.split(",")[0];
+		System.out.println("userAssetId : " + userAssetId);
+		System.out.println("approveOrReject : " + approveOrReject);
+		System.out.println("userAssetIssueProcessId : "
+				+ userAssetIssueProcessId);
+
+		AssetAssignModel assetAssignModel = new AssetAssignModel();
+
+		assetAssignModel.setUserAssetId(userAssetId);
+		assetAssignModel.setUserAssetIssueProcessId(userAssetIssueProcessId);
+
+		if (approveOrReject.equalsIgnoreCase("Approve")) {
+			issueAssetsBusinessSrv.approveAsset(assetAssignModel);
+		} else if (approveOrReject.equalsIgnoreCase("Reject")) {
+			issueAssetsBusinessSrv.rejectAsset(assetAssignModel);
+		}
+
+		// TODO this has to be dynamic and can be enhanced based on the
+		// selection criteria
+		// String userId = "gpmsISITMgr@gmail.com";
+		String userId = "gpmsISITManager@gmail.com";
+
+		List<AssetAssignModel> assetAssignModelLst = issueAssetsBusinessSrv
+				.getAllTasksForAction(userId);
+
+		List<BondedAssetBean> BondedAssetBeanLst = convertModelToBean(assetAssignModelLst);
+
+		model.addAttribute("BondedAssetBeanLst", BondedAssetBeanLst);
+
+		return new ModelAndView("assets/approveRejectAsset");
+	}
+
+	@RequestMapping(value = "/resubmitForApproval", method = RequestMethod.GET)
+	public ModelAndView resubmitForApproval(
+			@ModelAttribute BondedAssetBean bondedAssetBean, Model model) {
+
+		AssetAssignModel assetAssignModel = new AssetAssignModel();
+
+		assetAssignModel.setAssetId(bondedAssetBean.getAssetId());
+		assetAssignModel.setUserCorpEmail(bondedAssetBean.getUserCorpEmail());
+
+		// issueAssetsBusinessSrv.approveRejectAsset(assetAssignModel, false);
+
+		model.addAttribute("bondedAssetBean", bondedAssetBean);
+
+		return new ModelAndView("assets/resubmitForApproval");
+	}
+
+	private List<BondedAssetBean> convertModelToBean(
+			List<AssetAssignModel> assetAssignModelLst) {
 
 		List<BondedAssetBean> BondedAssetBeanLst = new ArrayList<BondedAssetBean>();
 
@@ -87,25 +162,15 @@ public class IssueBondedAssetController {
 					.toString());
 			bondedAsset.setAssetAssignedComment(singleAssetAssignModel
 					.getAssetAssignComments());
+			bondedAsset.setUserAssetIssueProcessId(singleAssetAssignModel
+					.getUserAssetIssueProcessId());
+			bondedAsset.setUserAssetReturnProcessId(singleAssetAssignModel
+					.getUserAssetReturnProcessId());
 
 			BondedAssetBeanLst.add(bondedAsset);
 		}
 
-		System.out
-				.println("BondedAssetBeanLst :  " + BondedAssetBeanLst.size());
+		return BondedAssetBeanLst;
 
-		model.addAttribute("BondedAssetBeanLst", BondedAssetBeanLst);
-
-		return new ModelAndView("assets/approveRejectAsset");
 	}
-
-	@RequestMapping(value = "/resubmitForApproval", method = RequestMethod.GET)
-	public ModelAndView resubmitForApproval(
-			@ModelAttribute BondedAssetBean bondedAssetBean, Model model) {
-
-		model.addAttribute("bondedAssetBean", bondedAssetBean);
-
-		return new ModelAndView("assets/resubmitForApproval");
-	}
-
 }

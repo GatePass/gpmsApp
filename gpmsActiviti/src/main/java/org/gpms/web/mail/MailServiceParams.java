@@ -3,6 +3,8 @@
  */
 package org.gpms.web.mail;
 
+import java.io.Serializable;
+
 import org.springframework.stereotype.Component;
 
 /**
@@ -10,7 +12,7 @@ import org.springframework.stereotype.Component;
  * 
  */
 @Component
-public class MailServiceParams {
+public class MailServiceParams implements Serializable {
 
 	private String mailUserId;
 

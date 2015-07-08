@@ -33,6 +33,13 @@ public class UserAssetsRepository {
 		return userAssetIdCreated;
 	}
 
+	public UserAssetEntity getUserAssetById(String userAssetId) {
+
+		UserAssetEntity userAssetEntity = entityManager.find(
+				UserAssetEntity.class, userAssetId);
+		return userAssetEntity;
+	}
+
 	public void revomeAssetFromUser() {
 
 	}

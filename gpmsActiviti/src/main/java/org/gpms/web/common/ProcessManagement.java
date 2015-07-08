@@ -49,4 +49,12 @@ public class ProcessManagement {
 		return execution;
 	}
 
+	public void setVariableOnExecution(String processInstanceId,
+			String variableName, Object variable) {
+
+		Execution execution = getExecutionFromProcessId(processInstanceId);
+
+		runtimeService.setVariable(execution.getId(), variableName, variable);
+
+	}
 }

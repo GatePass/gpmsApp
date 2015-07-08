@@ -56,8 +56,12 @@ public class TaskManagement {
 
 		Task task = getTaskByProcessInstance(processInstanceId);
 
-		taskService.addComment(task.getId(), processInstanceId, comment);
-		taskService.setVariable(task.getId(), variableName, objectValue);
+		if (comment != null) {
+			taskService.addComment(task.getId(), processInstanceId, comment);
+		}
+		if (variableName != null) {
+			taskService.setVariable(task.getId(), variableName, objectValue);
+		}
 
 	}
 
@@ -84,6 +88,12 @@ public class TaskManagement {
 	public void completeTaskByProcessInstanceId(String processInstanceId) {
 		Task task = getTaskByProcessInstance(processInstanceId);
 		taskService.complete(task.getId());
+	}
+
+	public void setVariableOnTask(String processInstanceId,
+			String variableName, Object variable) {
+		Task task = getTaskByProcessInstance(processInstanceId);
+		taskService.setVariable(task.getId(), variableName, variable);
 	}
 
 }

@@ -44,7 +44,7 @@ public class BondedItemIssue {
 	/**
 	 * 
 	 */
-	public String startBondItemIssueProcess(String userAssetId) {
+	public String startBondItemIssueProcess() {
 
 		Deployment deployment = deploymentManagement
 				.getDeploymentByName(DEPLOYMENT_NAME);
@@ -105,9 +105,24 @@ public class BondedItemIssue {
 	}
 
 	public void completeTask(String processInstanceId) {
-
 		taskManagement.completeTaskByProcessInstanceId(processInstanceId);
+	}
 
+	public void setVariableOnExecution(String processInstanceId,
+			String variableName, Object variable) {
+		processManagement.setVariableOnExecution(processInstanceId,
+				variableName, variable);
+	}
+
+	public void setVariableOnTask(String processInstanceId,
+			String variableName, Object variable) {
+		taskManagement.setVariableOnTask(processInstanceId, variableName,
+				variable);
+	}
+
+	public Task getTaskByProcessInstance(String processInstanceId) {
+		Task task = taskManagement.getTaskByProcessInstance(processInstanceId);
+		return task;
 	}
 
 }

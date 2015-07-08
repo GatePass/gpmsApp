@@ -7,6 +7,14 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <link rel="stylesheet" type="text/css" href="resources/gpmsStyle.css" />
+<script type="text/javascript">
+function approveReject(userAssetId,userAssetIssueProcessId ){
+	this.document.getElementById('userAssetId').value = userAssetId;
+	this.document.getElementById('userAssetIssueProcessId').value = userAssetIssueProcessId;
+	this.document.getElementById("approveRejectAssetForm").submit();
+}
+
+</script>
 <title>Gate Pass Management System</title>
 </head>
 <body>
@@ -27,7 +35,7 @@
 					<td>
 						<div align="center">
 							<fieldset id="fieldSet">
-								<sf:form action="approveRejectAsset"
+								<sf:form id="approveRejectAssetForm" action="approveRejectAsset"
 									modelAttribute="bondedAssetBean">
 									<table cellspacing="20px"
 										style="min-height: 50%; min-width: 50%;">
@@ -43,28 +51,38 @@
 														<td align="center" valign="top" width="70px"><b><sf:label
 																	path="assetId">Asset Id</sf:label></b></td>
 														<td align="center" valign="top" width="150px"><b><sf:label
-																	path="userCorpEmail">User corporate email / User Id</sf:label></b></td>
+																	path="userCorpEmail">User Corporate email / User Id</sf:label></b></td>
 														<td align="center" valign="top" width="150px"><b><sf:label
 																	path="userAssetIssueDate">Issue Date</sf:label></b></td>
 														<td align="center" valign="top" width="150px"><b><sf:label
 																	path="createDate">Assign Request Date</sf:label></b></td>
 														<td align="center" valign="top" width="300px"><b><sf:label
 																	path="assetAssignedComment">Assignment Comments</sf:label></b></td>
-														<td align="center" valign="top" width="300px" colspan="2"><b><sf:label
+														<td align="center" valign="top" width="150px" colspan="2"><b><sf:label
 																	path="modifiedDate">Actions</sf:label></b></td>									
 													</tr>
-													<c:forEach items="BondedAssetBeanLst" begin="0" end="1" step="1" var="bondedAsset">
-														<!-- td align="left"><sf:label path="assetId">${bondedAsset.assetId}</sf:label></td-->
-														<td align="left"><sf:label path="userCorpEmail">${bondedAsset.userCorpEmail}</sf:label></td>
-														<td align="left"><sf:label path="userAssetIssueDate">${bondedAsset.userAssetIssueDate}</sf:label></td>
-														<td align="left"><sf:label path="createDate">${bondedAsset.createDate}</sf:label></td>
-														<td align="left"><sf:label path="assetAssignedComment">${bondedAsset.assetAssignedComment}</sf:label></td>
-														<td align="left"><sf:label path="approveButton">
-														<input type="submit" name="approveButton" value="Approve" ${isDisabled eq "true" ? 'disabled'  : '' }/>
-														</sf:label></td>
-														<td align="left"><sf:label path="rejectButton">
-														<input type="submit" name="rejectButton" value="Reject" ${isDisabled eq "true" ? 'disabled'  : '' }/>
-														</sf:label></td>
+													<c:forEach items="${BondedAssetBeanLst}" var="bondedAsset" 
+																varStatus="ctr">
+														<c:set var="userAssetID" value="${BondedAssetBeanLst[ctr.index].userAssetId}"/>
+														<c:set var="userAssetIssueProcessId" value="${BondedAssetBeanLst[ctr.index].userAssetIssueProcessId}"/>		
+														<tr>
+															<td align="left"><sf:label path="assetId">${bondedAsset.assetId}</sf:label></td>
+															<td align="left"><sf:label path="userCorpEmail">${bondedAsset.userCorpEmail}</sf:label></td>
+															<td align="left"><sf:label path="userAssetIssueDate">${bondedAsset.userAssetIssueDate}</sf:label></td>
+															<td align="left"><sf:label path="createDate">${bondedAsset.createDate}</sf:label></td>
+															<td align="left"><sf:label path="assetAssignedComment">${bondedAsset.assetAssignedComment}</sf:label></td>
+															
+															<td align="center" width="75px">
+															<input id="userAssetId" type="hidden" name="userAssetId" value="" />
+															<input id="userAssetIssueProcessId" type="hidden" name="userAssetIssueProcessId" value="" />
+															<input type="submit" name="approveOrRejectParam" value="Approve" ${isDisabled eq "true" ? 'disabled'  : '' } 
+																		onclick="approveReject('${bondedAsset.userAssetId}', '${bondedAsset.userAssetIssueProcessId}');"/>
+															</td>
+															<td align="center" width="75px">
+															<input type="submit" name="approveOrRejectParam" value="Reject" ${isDisabled eq "true" ? 'disabled'  : '' } 
+																		onclick="approveReject('${bondedAsset.userAssetId}', '${bondedAsset.userAssetIssueProcessId}');"/>
+															</td>
+														</tr>	
 													</c:forEach>
 												</table>
 											</td>
