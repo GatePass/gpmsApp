@@ -31,20 +31,20 @@
 									<table cellspacing="20px"
 										style="min-height: 50%; min-width: 50%;">
 										<tr>
-											<td class="boxHeading" align="left"><b> <label>New Asset</label>
+											<td class="boxHeading" align="left"><b> <label><spring:message code="pageHeader.newAsset.text"/></label>
 											</b></td>
 										</tr>
 										<tr>
-											<td align="left" valign="top"><b><sf:label path="assetId">Asset Id :</sf:label></b></td>
+											<td align="left" valign="top"><b><sf:label path="assetId"><spring:message code="label.newAsset.assetId.text"/></sf:label></b></td>
 											<td align="left"><sf:label path="assetId">${assetBean.assetId}</sf:label></td>
 										</tr>
 										<tr>
-											<td align="left" valign="top"><b><sf:label path="assetBarCode">Asset Bar Code :</sf:label></b></td>
+											<td align="left" valign="top"><b><sf:label path="assetBarCode"><spring:message code="label.newAsset.assetBarCode.text"/></sf:label></b></td>
 											<td><sf:input path="assetBarCode" disabled="${isDisabled}"/><br /> 
 											<sf:errors path="assetBarCode" cssClass="error" /></td>
 										</tr>
 										<tr>
-											<td align="left" valign="top"><b><sf:label path="assetTypeId">Select the Asset type :</sf:label></b></td>
+											<td align="left" valign="top"><b><sf:label path="assetTypeId"><spring:message code="label.newAsset.selectTheAssetType.text"/></sf:label></b></td>
 											<td>
 											<sf:select path="assetTypeId" multiple="false" disabled="${isDisabled}" >
 													<sf:option value="" label=""></sf:option>
@@ -57,18 +57,18 @@
 											<sf:errors path="assetTypeId" cssClass="error" /></td>
 										</tr>
 										<tr>
-											<td align="left" valign="top"><b><sf:label path="assetPurchaseDate">Asset Purchase Date :</sf:label></b></td>
+											<td align="left" valign="top"><b><sf:label path="assetPurchaseDate"><spring:message code="label.newAsset.assetPurchaseDate.text"/></sf:label></b></td>
 											<td><sf:input path="assetPurchaseDate" disabled="${isDisabled}"/><br /> 
 											<sf:errors path="assetPurchaseDate" cssClass="error" /></td>
 										</tr>
 											<tr>
-											<td align="left" valign="top"><b><sf:label path="assetRemovalDate">Asset Removal Date :</sf:label></b></td>
+											<td align="left" valign="top"><b><sf:label path="assetRemovalDate"><spring:message code="label.newAsset.assetRemovalDate.text"/></sf:label></b></td>
 											<td><sf:input path="assetRemovalDate" disabled="${isDisabled}"/><br /> 
 											<sf:errors path="assetRemovalDate" cssClass="error" /></td>
 										</tr>
 										
 									</table>
-									<input type="submit" name="createAsset" value="Create Asset" ${isDisabled eq "true" ? 'disabled'  : '' }/>
+									<input type="submit" name="createAsset" value='<spring:message code="button.newAsset.createAsset.text"/>' ${isDisabled eq "true" ? 'disabled'  : '' }/>
 								</sf:form>
 							</fieldset>
 						</div>

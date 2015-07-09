@@ -31,57 +31,57 @@
 							<sf:form action="navigation">
 								<table cellspacing="10px">
 									<tr>
-										<td class="boxHeading" align="left" colspan="2" ><b> <label>User Access Management</label>
+										<td class="boxHeading" align="left" colspan="2" ><b> <label><spring:message code="subHeader.userAccessMgmt.text"/></label>
 										</b></td>
 									</tr>
 									<tr>
-										<td align="left" colspan="2" ><label>Create/Modify an Employee/ISIT Member</label>
+										<td align="left" colspan="2" ><label><spring:message code="label.userAccessMgmt.createModifyUser.text"/></label>
 										</td>
-										<td><input type="submit" name="createUser" value='<spring:message code="button.createuser.text" />' /></td>
-										<td><input type="submit" name="modifyUser" value="Modify User" /></td>
+										<td><input type="submit" name="createUser" value='<spring:message code="button.userAccessMgmt.createuser.text"/>' /></td>
+										<td><input type="submit" name="modifyUser" value='<spring:message code="button.userAccessMgmt.modifyUser.text"/>' /></td>
 									</tr>
 									<tr>
-										<td align="left" colspan="2" ><label>Delete an Employee/ISIT Member</label>
+										<td align="left" colspan="2" ><label><spring:message code="label.userAccessMgmt.deleteUser.text"/></label>
 										</td>
-										<td><input type="submit" name="deleteUser" value="Delete User" /></td>
+										<td><input type="submit" name="deleteUser" value='<spring:message code="button.userAccessMgmt.deleteUser.text"/>' /></td>
 									</tr>
 									<br>
 									<tr>
-										<td class="boxHeading" align="left" colspan="2" ><b> <label>Assets Management</label>
+										<td class="boxHeading" align="left" colspan="2" ><b> <label><spring:message code="subHeader.assetsMgmt.text"/></label>
 										</b></td>
 									</tr>
 									<tr>
-										<td align="left" colspan="2" ><label>Create/Modify a Asset Type</label>
+										<td align="left" colspan="2" ><label><spring:message code="label.userAccessMgmt.createModifyAssetType.text"/></label>
 										</td>
-										<td><input type="submit" name="createAssetType" value="Create Asset Type" /></td>
-										<td><input type="submit" name="modifyAssetType" value="Modify Asset Type" /></td>
+										<td><input type="submit" name="createAssetType" value='<spring:message code="button.userAccessMgmt.createAssetType.text"/>' /></td>
+										<td><input type="submit" name="modifyAssetType" value='<spring:message code="button.userAccessMgmt.modifyAssetType.text"/>' /></td>
 									</tr>
 									<tr>
-										<td align="left" colspan="2" ><label>Create/Modify a bonded asset</label>
+										<td align="left" colspan="2" ><label><spring:message code="label.userAccessMgmt.createModifyBondedAsset.text"/></label>
 										</td>
-										<td><input type="submit" name="createAsset" value="Create Asset" /></td>
-										<td><input type="submit" name="modifyAsset" value="Modify Asset" /></td>
+										<td><input type="submit" name="createAsset" value='<spring:message code="button.userAccessMgmt.createAsset.text"/>' /></td>
+										<td><input type="submit" name="modifyAsset" value='<spring:message code="button.userAccessMgmt.modifyAsset.text"/>' /></td>
 									</tr>
 									<tr>
-										<td align="left" colspan="2" ><label>Delete a bonded asset</label>
+										<td align="left" colspan="2" ><label><spring:message code="label.userAccessMgmt.deleteBondedAsset.text"/></label>
 										</td>
-										<td><input type="submit" name="deleteAsset" value="Delete Asset" /></td>
+										<td><input type="submit" name="deleteAsset" value='<spring:message code="button.userAccessMgmt.deleteAsset.text"/>' /></td>
 									</tr>
 									<tr>
-										<td align="left" colspan="2" ><label>Assign/Return a bonded item to/From Employee</label>
+										<td align="left" colspan="2" ><label><spring:message code="label.userAccessMgmt.assignReturnBondedItem.text"/></label>
 										</td>
-										<td><input type="submit" name="bondedItemAssign" value="Assign Asset" /></td>
-										<td><input type="submit" name="bondedItemReturn" value="Return Asset" /></td>
+										<td><input type="submit" name="bondedItemAssign" value='<spring:message code="button.userAccessMgmt.assignAsset.text"/>' /></td>
+										<td><input type="submit" name="bondedItemReturn" value='<spring:message code="button.userAccessMgmt.returnAsset.text"/>' /></td>
 									</tr>
 									<tr>
-										<td align="left" colspan="2" ><label>Issued Bonded Item Activity</label>
+										<td align="left" colspan="2" ><label><spring:message code="label.userAccessMgmt.issueBondedItemActivity.text"/></label>
 										</td>
-										<td><input type="submit" name="approveRejectAsset" value="Approve/Reject" /></td>
-										<td><input type="submit" name="resubmitForApproval" value="Resubmit for Approval" /></td>
+										<td><input type="submit" name="approveRejectAsset" value='<spring:message code="button.userAccessMgmt.approveReject.text"/>' /></td>
+										<td><input type="submit" name="resubmitForApproval" value='<spring:message code="button.userAccessMgmt.resubmitForApproval.text"/>' /></td>
 									</tr>
 									<br>
 									<tr>
-										<td class="boxHeading" align="left" colspan="2" ><b> <label>Reporting</label>
+										<td class="boxHeading" align="left" colspan="2" ><b> <label><spring:message code="subHeader.reporting.text"/></label>
 										</b></td>
 									</tr>
 								</table>

@@ -30,7 +30,7 @@
 									<table cellspacing="20px"
 										style="min-height: 50%; min-width: 50%;">
 										<tr>
-											<td class="boxHeading" align="left"><b> <label>Return Bonded Asset</label>
+											<td class="boxHeading" align="left"><b> <label><spring:message code="pageHeader.returnBondedAsset.text"/></label>
 											</b></td>
 										</tr>
 									</table>

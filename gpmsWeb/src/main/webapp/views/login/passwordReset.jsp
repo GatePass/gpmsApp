@@ -30,18 +30,17 @@
 									<table cellspacing="20px"
 										style="min-height: 50%; min-width: 50%;">
 										<tr>
-											<td class="boxHeading" align="left"><b> <label>Reset
-														Password</label>
+											<td class="boxHeading" align="left"><b> <label><spring:message code="pageHeader.resetPassword.text"/></label>
 											</b></td>
 										</tr>
 										<tr>
-											<td align="left"><b><sf:label path="loginId">Login Id :</sf:label></b></td>
+											<td align="left"><b><sf:label path="loginId"><spring:message code="label.resetPassword.loginId.text"/></sf:label></b></td>
 											<td><sf:input path="loginId" /><br/>
 											<sf:errors path="loginId" cssClass="error"/>
 											</td>
 										</tr>
 										<tr>
-											<td align="left"><b><sf:label path="questionId">Select the secret question :</sf:label></b></td>
+											<td align="left"><b><sf:label path="questionId"><spring:message code="label.resetPassword.selectTheSecretQuestion.text"/></sf:label></b></td>
 											<td><sf:select path="questionId" multiple="false">
 												<sf:option value="" label="....."></sf:option>
 												<sf:options  items="${questionId}"/>
@@ -49,22 +48,22 @@
 											<sf:errors path="questionId" cssClass="error"/></td>
 										</tr>
 										<tr>
-											<td align="left"><b><sf:label path="secretQuesAnsId">Secret question answer :</sf:label></b></td>
+											<td align="left"><b><sf:label path="secretQuesAnsId"><spring:message code="label.resetPassword.secretQuestionAnswer.text"/></sf:label></b></td>
 											<td><sf:input path="secretQuesAnsId" /><br/>
 											<sf:errors path="secretQuesAnsId" cssClass="error"/></td>
 										</tr>
 										<tr>
-											<td align="left"><b><sf:label path="newPasswordId">Enter New Password :</sf:label></b></td>
+											<td align="left"><b><sf:label path="newPasswordId"><spring:message code="label.resetPassword.enterNewPassword.text"/></sf:label></b></td>
 											<td><sf:password  path="newPasswordId" /><br/>
 											<sf:errors path="newPasswordId" cssClass="error"/></td>
 										</tr>
 										<tr>
-											<td align="left"><b><sf:label path="reenterNewPasswordId">Re-Enter New Password :</sf:label></b></td>
+											<td align="left"><b><sf:label path="reenterNewPasswordId"><spring:message code="label.resetPassword.reenterNewPassword.text"/></sf:label></b></td>
 											<td><sf:password path="reenterNewPasswordId" /><br/>
 											<sf:errors path="reenterNewPasswordId" cssClass="error"/></td>
 										</tr>
 									</table>
-									<input type="submit" value="Submit"   />
+									<input type="submit" value='<spring:message code="button.resetPassword.submit.text"/>'   />
 								</sf:form>
 							</fieldset>
 						</div>

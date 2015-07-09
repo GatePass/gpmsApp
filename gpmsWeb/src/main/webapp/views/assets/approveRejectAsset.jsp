@@ -40,8 +40,7 @@ function approveReject(userAssetId,userAssetIssueProcessId ){
 									<table cellspacing="20px"
 										style="min-height: 50%; min-width: 50%;">
 										<tr>
-											<td class="boxHeading" align="left"><b> <label>Approve/Reject
-														asset</label>
+											<td class="boxHeading" align="left"><b> <label><spring:message code="pageHeader.approveRejectAsset.text"/></label>
 											</b></td>
 										</tr>
 										<tr>
@@ -49,17 +48,17 @@ function approveReject(userAssetId,userAssetIssueProcessId ){
 												<table border="1px">
 													<tr>
 														<td align="center" valign="top" width="70px"><b><sf:label
-																	path="assetId">Asset Id</sf:label></b></td>
+																	path="assetId"><spring:message code="label.approveRejectAsset.assetId.text"/></sf:label></b></td>
 														<td align="center" valign="top" width="150px"><b><sf:label
-																	path="userCorpEmail">User Corporate email / User Id</sf:label></b></td>
+																	path="userCorpEmail"><spring:message code="label.approveRejectAsset.userCorporateEmail.text"/></sf:label></b></td>
 														<td align="center" valign="top" width="150px"><b><sf:label
-																	path="userAssetIssueDate">Issue Date</sf:label></b></td>
+																	path="userAssetIssueDate"><spring:message code="label.approveRejectAsset.issueDate.text"/></sf:label></b></td>
 														<td align="center" valign="top" width="150px"><b><sf:label
-																	path="createDate">Assign Request Date</sf:label></b></td>
+																	path="createDate"><spring:message code="label.approveRejectAsset.assignRequestDate.text"/></sf:label></b></td>
 														<td align="center" valign="top" width="300px"><b><sf:label
-																	path="assetAssignedComment">Assignment Comments</sf:label></b></td>
+																	path="assetAssignedComment"><spring:message code="label.approveRejectAsset.assignmentComments.text"/></sf:label></b></td>
 														<td align="center" valign="top" width="150px" colspan="2"><b><sf:label
-																	path="modifiedDate">Actions</sf:label></b></td>									
+																	path="modifiedDate"><spring:message code="label.approveRejectAsset.actions.text"/></sf:label></b></td>									
 													</tr>
 													<c:forEach items="${BondedAssetBeanLst}" var="bondedAsset" 
 																varStatus="ctr">
@@ -75,11 +74,13 @@ function approveReject(userAssetId,userAssetIssueProcessId ){
 															<td align="center" width="75px">
 															<input id="userAssetId" type="hidden" name="userAssetId" value="" />
 															<input id="userAssetIssueProcessId" type="hidden" name="userAssetIssueProcessId" value="" />
-															<input type="submit" name="approveOrRejectParam" value="Approve" ${isDisabled eq "true" ? 'disabled'  : '' } 
+															<input type="submit" name="approveOrRejectParam" value='<spring:message code="button.approveRejectAsset.approve.text"/>' 
+																		${isDisabled eq "true" ? 'disabled'  : '' } 
 																		onclick="approveReject('${bondedAsset.userAssetId}', '${bondedAsset.userAssetIssueProcessId}');"/>
 															</td>
 															<td align="center" width="75px">
-															<input type="submit" name="approveOrRejectParam" value="Reject" ${isDisabled eq "true" ? 'disabled'  : '' } 
+															<input type="submit" name="approveOrRejectParam" value='<spring:message code="button.approveRejectAsset.reject.text"/>' 
+																		${isDisabled eq "true" ? 'disabled'  : '' } 
 																		onclick="approveReject('${bondedAsset.userAssetId}', '${bondedAsset.userAssetIssueProcessId}');"/>
 															</td>
 														</tr>	

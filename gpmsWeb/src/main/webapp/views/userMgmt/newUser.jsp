@@ -31,37 +31,36 @@
 									<table cellspacing="20px"
 										style="min-height: 50%; min-width: 50%;">
 										<tr>
-											<td class="boxHeading" align="left"><b> <label>New
-														User</label>
+											<td class="boxHeading" align="left"><b> <label><spring:message code="pageHeader.newUser.text"/></label>
 											</b></td>
 										</tr>
 										<tr>
-											<td align="left" valign="top"><b><sf:label path="userId">User Id :</sf:label></b></td>
+											<td align="left" valign="top"><b><sf:label path="userId"><spring:message code="label.newUser.userId.text"/></sf:label></b></td>
 											<td align="left"><sf:label path="userId">${userBean.userId}</sf:label></td>
 										</tr>
 										<tr>
-											<td align="left" valign="top"><b><sf:label path="userFirstName">User First Name :</sf:label></b></td>
+											<td align="left" valign="top"><b><sf:label path="userFirstName"><spring:message code="label.newUser.userFirstName.text"/></sf:label></b></td>
 											<td><sf:input path="userFirstName" disabled="${isDisabled}"/><br /> <sf:errors
 													path="userFirstName" cssClass="error" /></td>
 										</tr>
 										<tr>
-											<td align="left" valign="top"><b><sf:label path="userLastName">User Last Name:</sf:label></b></td>
+											<td align="left" valign="top"><b><sf:label path="userLastName"><spring:message code="label.newUser.userLastName.text"/></sf:label></b></td>
 											<td><sf:input path="userLastName" disabled="${isDisabled}"/><br /> <sf:errors
 													path="userLastName" cssClass="error" /></td>
 										</tr>
 										
 										<tr>
-											<td align="left" valign="top"><b><sf:label path="corpEmailId">Corporate Email Id :</sf:label></b></td>
+											<td align="left" valign="top"><b><sf:label path="corpEmailId"><spring:message code="label.newUser.corporateEmailId.text"/></sf:label></b></td>
 											<td><sf:input path="corpEmailId"   disabled="${isDisabled}" /><br /> <sf:errors
 													path="corpEmailId" cssClass="error" /></td>
 										</tr>
 										<tr>
-											<td align="left" valign="top"><b><sf:label path="personalEmailId">Personal Email Id :</sf:label></b></td>
+											<td align="left" valign="top"><b><sf:label path="personalEmailId"><spring:message code="label.newUser.personalEmailId.text"/></sf:label></b></td>
 											<td><sf:input path="personalEmailId" disabled="${isDisabled}"/><br /> <sf:errors
 													path="personalEmailId" cssClass="error" /></td>
 										</tr>
 										<tr>
-											<td align="left" valign="top"><b><sf:label path="userGroupId">Select the User Group :</sf:label></b></td>
+											<td align="left" valign="top"><b><sf:label path="userGroupId"><spring:message code="label.newUser.selectTheUserGroup.text"/></sf:label></b></td>
 											<td><sf:select path="userGroupId" multiple="false" disabled="${isDisabled}" >
 													<sf:option value="" label=""></sf:option>
 													<c:forEach items="${userGroupModel}"
@@ -74,7 +73,7 @@
 											<sf:errors path="userGroupId" cssClass="error" /></td>
 										</tr>
 										<tr>
-											<td align="left" valign="top"><b><sf:label path="questionId">Select the secret question :</sf:label></b></td>
+											<td align="left" valign="top"><b><sf:label path="questionId"><spring:message code="label.newUser.selectTheSecretQuestion.text"/></sf:label></b></td>
 											<td><sf:select path="questionId" multiple="false" disabled="${isDisabled}">
 													<sf:option value="" label=""></sf:option>
 													<c:forEach items="${securityQuestionsModel}"
@@ -87,13 +86,13 @@
 											<sf:errors path="questionId" cssClass="error" /></td>
 										</tr>
 										<tr>
-											<td align="left" valign="top"><b><sf:label path="secretQuesAnsId">Secret question answer :</sf:label></b></td>
+											<td align="left" valign="top"><b><sf:label path="secretQuesAnsId"><spring:message code="label.newUser.secretQuestionAnswer.text"/></sf:label></b></td>
 											<td><sf:input path="secretQuesAnsId" disabled="${isDisabled}"/><br /> 
 											<sf:errors path="secretQuesAnsId" cssClass="error" /></td>
 										</tr>
 									</table>
 								
-									<input type="submit" name="createUser" value="Create User" ${isDisabled eq "true" ? 'disabled'  : '' }/>
+									<input type="submit" name="createUser" value='<spring:message code="button.newUser.createUser.text"/>' ${isDisabled eq "true" ? 'disabled'  : '' }/>
 								
 								</sf:form>
 							</fieldset>

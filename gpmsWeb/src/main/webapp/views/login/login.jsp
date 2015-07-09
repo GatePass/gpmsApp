@@ -40,7 +40,7 @@ function onLocaleChange(){
 									<table cellspacing="20px">
 										<tr>
 											<td align="left" valign="top"><b><sf:label
-														path="langId">Select the language :</sf:label></b></td>
+														path="langId"><spring:message code="label.loginPage.selectTheLanguage.text"/></sf:label></b></td>
 											<td><sf:select path="langId" multiple="false" onchange="onLocaleChange();">
 													<sf:option value="en" label="English"></sf:option>
 													<sf:option value="fr" label="French"></sf:option>
@@ -50,26 +50,26 @@ function onLocaleChange(){
 
 										<tr>
 											<td class="boxHeading" align="left" colspan="2"><b>
-													<label><spring:message code="label.loginPage.header" /></label>
+													<label><spring:message code="label.loginPage.header"/></label>
 											</b></td>
 										</tr>
 
 										
 										<tr>
 											<td align="left" valign="top"><b><sf:label
-														path="userId">User Name:</sf:label></b></td>
+														path="userId"><spring:message code="label.loginPage.username.text"/></sf:label></b></td>
 											<td><sf:input path="userId" /><br /> <sf:errors
 													path="userId" cssClass="error" /></td>
 										</tr>
 										<tr>
 											<td align="left" valign="top"><b><sf:label
-														path="password">Password:</sf:label></b></td>
+														path="password"><spring:message code="label.loginPage.password.text"/></sf:label></b></td>
 											<td><sf:password path="password" /><br /> <sf:errors
 													path="password" cssClass="error" /></td>
 										</tr>
 									</table>
-									<input type="submit" name="submitL" value="Submit" />
-									<input type="submit" name="reset" value="Reset Password" />
+									<input type="submit" name="submitL" value='<spring:message code="button.loginPage.submit.text"/>' />
+									<input type="submit" name="reset" value='<spring:message code="button.loginPage.resetPassword.text"/>' />
 								</sf:form>
 
 							</fieldset>
