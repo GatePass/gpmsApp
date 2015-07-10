@@ -28,7 +28,7 @@ import org.springframework.stereotype.Service;
  * 
  */
 @Service
-public class IssueAssetsBusinessSrv {
+public class ReturnAssetsBusinessSrv {
 
 	@Autowired
 	BondedItemIssue bondedItemIssue;
@@ -143,7 +143,7 @@ public class IssueAssetsBusinessSrv {
 		return assetAssignModelLst;
 	}
 
-	public void approveAsset(AssetAssignModel assetAssignModel) {
+	public void returnAsset(AssetAssignModel assetAssignModel) {
 
 		String processInstanceId = assetAssignModel
 				.getUserAssetIssueProcessId();

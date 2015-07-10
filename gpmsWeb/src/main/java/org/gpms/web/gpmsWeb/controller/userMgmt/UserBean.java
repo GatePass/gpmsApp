@@ -16,6 +16,8 @@ import org.hibernate.validator.constraints.NotEmpty;
  */
 public class UserBean {
 
+	private String flowType;
+
 	private String userId;
 
 	@NotEmpty(message = "User First Name cannot be Empty")
@@ -41,6 +43,23 @@ public class UserBean {
 
 	@NotEmpty(message = "Secret answer cannot be Empty")
 	private String secretQuesAnsId;
+
+	private String password;
+
+	/**
+	 * @return the flowType
+	 */
+	public String getFlowType() {
+		return flowType;
+	}
+
+	/**
+	 * @param flowType
+	 *            the flowType to set
+	 */
+	public void setFlowType(String flowType) {
+		this.flowType = flowType;
+	}
 
 	/**
 	 * @return the userId
@@ -160,6 +179,29 @@ public class UserBean {
 	 */
 	public void setSecretQuesAnsId(String secretQuesAnsId) {
 		this.secretQuesAnsId = secretQuesAnsId;
+	}
+
+	/**
+	 * @return the password
+	 */
+	public String getPassword() {
+		return password;
+	}
+
+	/**
+	 * @param password
+	 *            the password to set
+	 */
+	public void setPassword(String password) {
+		this.password = password;
+	}
+
+	public String toString() {
+		return "userId" + userId + "\nuserFirstName" + userFirstName
+				+ "\nuserLastName" + userLastName + "\ncorpEmailId"
+				+ corpEmailId + "\npersonalEmailId" + personalEmailId
+				+ "\nuserGroupId" + userGroupId + "\npassword" + password
+				+ "\n";
 	}
 
 }

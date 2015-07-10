@@ -19,6 +19,8 @@ public class AssetModel {
 
 	private String assetRemovalDate;
 
+	private String assetStatus;
+
 	/**
 	 * @return the assetId
 	 */
@@ -92,6 +94,21 @@ public class AssetModel {
 	 */
 	public void setAssetRemovalDate(String assetRemovalDate) {
 		this.assetRemovalDate = assetRemovalDate;
+	}
+
+	/**
+	 * @return the assetStatus
+	 */
+	public String getAssetStatus() {
+		return assetStatus;
+	}
+
+	/**
+	 * @param assetStatus
+	 *            the assetStatus to set
+	 */
+	public void setAssetStatus(String assetStatus) {
+		this.assetStatus = assetStatus;
 	}
 
 }

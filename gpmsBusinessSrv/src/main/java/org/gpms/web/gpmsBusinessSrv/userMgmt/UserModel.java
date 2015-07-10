@@ -27,6 +27,10 @@ public class UserModel {
 
 	private Date userLastLogin;
 
+	private String questionId;
+
+	private String secretQuesAnsId;
+
 	/**
 	 * @return the userId
 	 */
@@ -145,6 +149,44 @@ public class UserModel {
 	 */
 	public void setUserLastLogin(Date userLastLogin) {
 		this.userLastLogin = userLastLogin;
+	}
+
+	/**
+	 * @return the questionId
+	 */
+	public String getQuestionId() {
+		return questionId;
+	}
+
+	/**
+	 * @param questionId
+	 *            the questionId to set
+	 */
+	public void setQuestionId(String questionId) {
+		this.questionId = questionId;
+	}
+
+	/**
+	 * @return the secretQuesAnsId
+	 */
+	public String getSecretQuesAnsId() {
+		return secretQuesAnsId;
+	}
+
+	/**
+	 * @param secretQuesAnsId
+	 *            the secretQuesAnsId to set
+	 */
+	public void setSecretQuesAnsId(String secretQuesAnsId) {
+		this.secretQuesAnsId = secretQuesAnsId;
+	}
+
+	public String toString() {
+		return "userId" + userId + "\nuserFirstName" + userFirstName
+				+ "\nuserLastName" + userLastName + "\nuserCorpEmail"
+				+ userCorpEmail + "\nuserPersonnalEmail" + userPersonnalEmail
+				+ "\nuserGroupId" + userGroupId + "\npassword" + password
+				+ "\nuserLastLogin" + userLastLogin + "\n";
 	}
 
 }

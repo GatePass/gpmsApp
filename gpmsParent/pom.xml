@@ -40,6 +40,8 @@
 		<spring.version>4.1.6.RELEASE</spring.version>
 		<cglib.version>2.2.2</cglib.version>
 		<junit.version>4.12</junit.version>
+		<slf4j.version>1.6.6</slf4j.version>
+		<log4j.version>1.2.17</log4j.version>
 	</properties>
 
 	<dependencyManagement>
@@ -103,6 +105,12 @@
 			</dependency>
 
 			<!-- Other libraries -->
+
+			<dependency>
+				<groupId>log4j</groupId>
+				<artifactId>log4j</artifactId>
+				<version>${log4j.version}</version>
+			</dependency>
 		</dependencies>
 	</dependencyManagement>
 

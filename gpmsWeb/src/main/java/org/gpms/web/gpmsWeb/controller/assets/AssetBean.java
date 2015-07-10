@@ -3,6 +3,8 @@
  */
 package org.gpms.web.gpmsWeb.controller.assets;
 
+import javax.validation.constraints.Null;
+
 import org.hibernate.validator.constraints.NotEmpty;
 
 /**
@@ -10,6 +12,8 @@ import org.hibernate.validator.constraints.NotEmpty;
  * 
  */
 public class AssetBean {
+
+	private String flowType;
 
 	private String assetId;
 
@@ -19,9 +23,27 @@ public class AssetBean {
 	private String assetTypeId;
 
 	@NotEmpty(message = "Asset Purchase Date cannot be be Empty")
+	@Null(message = "Asset Purchase Date cannot be be Empty")
 	private String assetPurchaseDate;
 
 	private String assetRemovalDate;
+
+	private String assetStatus;
+
+	/**
+	 * @return the flowType
+	 */
+	public String getFlowType() {
+		return flowType;
+	}
+
+	/**
+	 * @param flowType
+	 *            the flowType to set
+	 */
+	public void setFlowType(String flowType) {
+		this.flowType = flowType;
+	}
 
 	/**
 	 * @return the assetId
@@ -96,6 +118,21 @@ public class AssetBean {
 	 */
 	public void setAssetRemovalDate(String assetRemovalDate) {
 		this.assetRemovalDate = assetRemovalDate;
+	}
+
+	/**
+	 * @return the assetStatus
+	 */
+	public String getAssetStatus() {
+		return assetStatus;
+	}
+
+	/**
+	 * @param assetStatus
+	 *            the assetStatus to set
+	 */
+	public void setAssetStatus(String assetStatus) {
+		this.assetStatus = assetStatus;
 	}
 
 }

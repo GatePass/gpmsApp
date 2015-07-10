@@ -66,6 +66,16 @@
 											<td><sf:input path="assetRemovalDate" disabled="${isDisabled}"/><br /> 
 											<sf:errors path="assetRemovalDate" cssClass="error" /></td>
 										</tr>
+										<tr>
+												<td align="left" valign="top"><b><sf:label
+															path="assetStatus">Asset Status</sf:label></b></td>
+												<td><sf:select path="assetStatus" multiple="false">
+														<sf:option value="ASSIGNED" label="ASSIGNED"></sf:option>
+														<sf:option value="AVAILABLE" label="AVAILABLE"></sf:option>
+														<sf:option value="REMOVED" label="REMOVED"></sf:option>
+													</sf:select> <br /> 
+													<sf:errors path="assetStatus" cssClass="error" /></td>
+											</tr>
 										
 									</table>
 									<input type="submit" name="createAsset" value='<spring:message code="button.newAsset.createAsset.text"/>' ${isDisabled eq "true" ? 'disabled'  : '' }/>

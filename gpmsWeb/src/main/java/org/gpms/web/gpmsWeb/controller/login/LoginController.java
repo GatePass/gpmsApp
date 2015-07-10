@@ -10,6 +10,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 
+import org.apache.log4j.Logger;
 import org.gpms.web.gpmsBusinessSrv.login.LoginBusinessSrv;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -28,6 +29,9 @@ import org.springframework.web.servlet.ModelAndView;
  */
 @Controller
 public class LoginController {
+
+	private static final Logger logger = Logger
+			.getLogger(LoginController.class);
 
 	@Autowired
 	LoginBusinessSrv loginBusinessSrv;
@@ -52,6 +56,9 @@ public class LoginController {
 	@RequestMapping(value = "/login", method = RequestMethod.GET)
 	public ModelAndView login(@ModelAttribute LoginBean loginBean, Model model)
 			throws IOException {
+
+		logger.debug("login ");
+
 		return new ModelAndView("login/login");
 	}
 

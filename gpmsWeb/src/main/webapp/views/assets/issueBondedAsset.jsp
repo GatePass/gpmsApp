@@ -84,7 +84,7 @@
 										</tr>
 									</table>
 									<input type="submit" name="createAsset"
-										value='<spring:message code="button.AssignAsset.text"/>'
+										value='<spring:message code="button.issueBondedItem.assignAsset.text"/>'
 										${isDisabled eq "true" ? 'disabled'  : '' } />
 								</sf:form>
 							</fieldset>

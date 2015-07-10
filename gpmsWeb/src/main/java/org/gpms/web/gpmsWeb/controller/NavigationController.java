@@ -8,6 +8,7 @@ import java.io.IOException;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 /**
  * @author narenda.kumar
@@ -27,13 +28,17 @@ public class NavigationController {
 	}
 
 	@RequestMapping(value = "/navigation", params = "modifyUser")
-	public String modifyUser() throws IOException {
-		return "redirect:modifyUser";
+	public String modifyUser(RedirectAttributes redirectAttrs)
+			throws IOException {
+		redirectAttrs.addFlashAttribute("flowType", "modifyUser");
+		return "redirect:modifyDeleteUser";
 	}
 
 	@RequestMapping(value = "/navigation", params = "deleteUser")
-	public String deleteUser() throws IOException {
-		return "redirect:deleteUser";
+	public String deleteUser(RedirectAttributes redirectAttrs)
+			throws IOException {
+		redirectAttrs.addFlashAttribute("flowType", "deleteUser");
+		return "redirect:modifyDeleteUser";
 	}
 
 	@RequestMapping(value = "/navigation", params = "createAsset")
@@ -42,13 +47,17 @@ public class NavigationController {
 	}
 
 	@RequestMapping(value = "/navigation", params = "modifyAsset")
-	public String modifyAsset() throws IOException {
-		return "redirect:modifyAsset";
+	public String modifyAsset(RedirectAttributes redirectAttrs)
+			throws IOException {
+		redirectAttrs.addFlashAttribute("flowType", "modifyAsset");
+		return "redirect:modifyDeleteAsset";
 	}
 
 	@RequestMapping(value = "/navigation", params = "deleteAsset")
-	public String deleteAsset() throws IOException {
-		return "redirect:deleteAsset";
+	public String deleteAsset(RedirectAttributes redirectAttrs)
+			throws IOException {
+		redirectAttrs.addFlashAttribute("flowType", "deleteAsset");
+		return "redirect:modifyDeleteAsset";
 	}
 
 	@RequestMapping(value = "/navigation", params = "createAssetType")

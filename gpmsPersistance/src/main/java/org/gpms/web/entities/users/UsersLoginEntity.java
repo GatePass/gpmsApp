@@ -164,4 +164,12 @@ public class UsersLoginEntity {
 		this.userLastLogin = userLastLogin;
 	}
 
+	public String toString() {
+		return "userId" + userId + "\nuserFirstName" + userFirstName
+				+ "\nuserLastName" + userLastName + "\nuserCorpEmail"
+				+ userCorpEmail + "\nuserPersonnalEmail" + userPersonnalEmail
+				+ "\nuserGroupId" + userGroupId + "\npassword" + password
+				+ "\nuserLastLogin" + userLastLogin + "\n";
+	}
+
 }

@@ -31,12 +31,18 @@ public class UsersRepository {
 		return userIdCreated;
 	}
 
+	public String modifyUser(UsersLoginEntity usersLoginEntity) {
+		entityManager.merge(usersLoginEntity);
+		String userIdCreated = usersLoginEntity.getUserId();
+		return userIdCreated;
+	}
+
 	public void deleteUser(UsersLoginEntity usersLoginEntity) {
 		entityManager.remove(usersLoginEntity);
 	}
 
-	public void deleteUserById(String userEmailId) {
-		UsersLoginEntity usersLoginEntity = getUserById(userEmailId);
+	public void deleteUserById(String userId) {
+		UsersLoginEntity usersLoginEntity = getUserById(userId);
 		deleteUser(usersLoginEntity);
 	}
 
@@ -45,10 +51,10 @@ public class UsersRepository {
 		deleteUser(usersLoginEntity);
 	}
 
-	public UsersLoginEntity getUserById(String userEmailId) {
+	public UsersLoginEntity getUserById(String userId) {
 
 		UsersLoginEntity usersLoginEntity = entityManager.find(
-				UsersLoginEntity.class, userEmailId);
+				UsersLoginEntity.class, userId);
 
 		return usersLoginEntity;
 

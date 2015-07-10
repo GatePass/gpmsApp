@@ -9,6 +9,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.transaction.Transactional;
 
+import org.apache.log4j.Logger;
 import org.gpms.web.entities.assets.AssetTypesEntity;
 import org.gpms.web.entities.assets.AssetsEntity;
 import org.springframework.stereotype.Repository;
@@ -21,6 +22,9 @@ import org.springframework.stereotype.Repository;
 @Transactional
 public class AssetsRepository {
 
+	private static final Logger logger = Logger
+			.getLogger(AssetsRepository.class);
+
 	@PersistenceContext(unitName = "gpmsPersistenceUnit")
 	EntityManager entityManager;
 
@@ -30,22 +34,24 @@ public class AssetsRepository {
 		return assetIdCreated;
 	}
 
-	public String updateAssetInfo(AssetsEntity assetsEntity) {
+	public String modifyAsset(AssetsEntity assetsEntity) {
 		entityManager.merge(assetsEntity);
 		String assetIdCreated = assetsEntity.getAssetId();
 		return assetIdCreated;
 	}
 
 	public AssetsEntity getAssetById(String assetId) {
-
 		AssetsEntity assetsEntity = entityManager.find(AssetsEntity.class,
 				assetId);
-
 		return assetsEntity;
-
 	}
 
 	public void deleteAsset(AssetsEntity assetsEntity) {
+		entityManager.remove(assetsEntity);
+	}
+
+	public void deleteAssetById(String assetId) {
+		AssetsEntity assetsEntity = getAssetById(assetId);
 		entityManager.remove(assetsEntity);
 	}
 
@@ -69,6 +75,8 @@ public class AssetsRepository {
 	}
 
 	public List<AssetTypesEntity> getAllAssetTypesEntity() {
+
+		logger.debug("getAllAssetType");
 
 		List<AssetTypesEntity> assetTypesEntityLst = (List<AssetTypesEntity>) entityManager
 				.createQuery(

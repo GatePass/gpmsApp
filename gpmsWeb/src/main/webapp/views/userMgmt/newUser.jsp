@@ -90,6 +90,13 @@
 											<td><sf:input path="secretQuesAnsId" disabled="${isDisabled}"/><br /> 
 											<sf:errors path="secretQuesAnsId" cssClass="error" /></td>
 										</tr>
+										<tr>
+											<td align="left" valign="top"><b><sf:label
+														path="password">Temporary Password</sf:label></b></td>
+											<td><sf:password path="password" /><br /> <sf:errors
+													path="password" cssClass="error" /></td>
+										</tr>
+										
 									</table>
 								
 									<input type="submit" name="createUser" value='<spring:message code="button.newUser.createUser.text"/>' ${isDisabled eq "true" ? 'disabled'  : '' }/>
