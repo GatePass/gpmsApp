@@ -32,9 +32,9 @@
 										style="min-height: 50%; min-width: 50%;">
 										<tr>
 											<td class="boxHeading" align="left"><b> <c:if
-														test="${flowType == 'modifyUser'}">
+														test="${userBean.flowType == 'modifyUser'}">
 														<label>Modify User</label>
-													</c:if> <c:if test="${flowType == 'deleteUser'}">
+													</c:if> <c:if test="${userBean.flowType == 'deleteUser'}">
 														<label>Delete User</label>
 													</c:if>
 
@@ -58,7 +58,7 @@
 											<td><input type="submit" name="getUserData"
 												value="Get Data" /></td>
 										</tr>
-										<c:if test="${flowType == 'modifyUser'}">
+										<c:if test="${userBean.flowType == 'modifyUser'}">
 											<tr>
 												<td align="left" valign="top"><b><sf:label
 															path="userFirstName">
@@ -127,7 +127,7 @@
 														path="secretQuesAnsId" cssClass="error" /></td>
 											</tr>
 										</c:if>
-										<c:if test="${flowType == 'deleteUser'}">
+										<c:if test="${userBean.flowType == 'deleteUser'}">
 											<tr>
 												<td align="left" valign="top"><b><sf:label
 															path="userFirstName">
@@ -176,11 +176,11 @@
 										</c:if>
 									</table>
 									
-									<c:if test="${flowType == 'modifyUser'}">
+									<c:if test="${userBean.flowType == 'modifyUser'}">
 										<input type="submit" name="modifyUser" value="Modify User"
 											${isButtonDisabled eq "true" ? 'disabled'  : '' } />
 									</c:if>
-									<c:if test="${flowType == 'deleteUser'}">
+									<c:if test="${userBean.flowType == 'deleteUser'}">
 										<input type="submit" name="deleteUser" value="Delete User"
 											${isButtonDisabled eq "true" ? 'disabled'  : '' }  onclick="return confirm('Do you really want to delete this User?');"/>
 									</c:if>

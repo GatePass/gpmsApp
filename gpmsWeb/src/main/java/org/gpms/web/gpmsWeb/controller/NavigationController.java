@@ -5,6 +5,9 @@ package org.gpms.web.gpmsWeb.controller;
 
 import java.io.IOException;
 
+import javax.servlet.http.HttpServletRequest;
+
+import org.gpms.web.gpmsWeb.controller.userMgmt.UserBean;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
@@ -23,21 +26,25 @@ public class NavigationController {
 	}
 
 	@RequestMapping(value = "/navigation", params = "createUser")
-	public String createUser() throws IOException {
+	public String createUser(HttpServletRequest request) throws IOException {
+		UserBean userBean = new UserBean();
+		request.getSession().setAttribute("userBean", userBean);
 		return "redirect:newUser";
 	}
 
 	@RequestMapping(value = "/navigation", params = "modifyUser")
-	public String modifyUser(RedirectAttributes redirectAttrs)
-			throws IOException {
-		redirectAttrs.addFlashAttribute("flowType", "modifyUser");
+	public String modifyUser(HttpServletRequest request) throws IOException {
+		UserBean userBean = new UserBean();
+		userBean.setFlowType("modifyUser");
+		request.getSession().setAttribute("userBean", userBean);
 		return "redirect:modifyDeleteUser";
 	}
 
 	@RequestMapping(value = "/navigation", params = "deleteUser")
-	public String deleteUser(RedirectAttributes redirectAttrs)
-			throws IOException {
-		redirectAttrs.addFlashAttribute("flowType", "deleteUser");
+	public String deleteUser(HttpServletRequest request) throws IOException {
+		UserBean userBean = new UserBean();
+		userBean.setFlowType("deleteUser");
+		request.getSession().setAttribute("userBean", userBean);
 		return "redirect:modifyDeleteUser";
 	}
 

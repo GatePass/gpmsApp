@@ -3,6 +3,7 @@
  */
 package org.gpms.web.gpmsWeb.controller.userMgmt;
 
+import java.io.Serializable;
 import java.util.List;
 
 import javax.validation.constraints.Size;
@@ -14,7 +15,7 @@ import org.hibernate.validator.constraints.NotEmpty;
  * @author narenda.kumar
  * 
  */
-public class UserBean {
+public class UserBean implements Serializable {
 
 	private String flowType;
 
@@ -197,11 +198,11 @@ public class UserBean {
 	}
 
 	public String toString() {
-		return "userId" + userId + "\nuserFirstName" + userFirstName
-				+ "\nuserLastName" + userLastName + "\ncorpEmailId"
-				+ corpEmailId + "\npersonalEmailId" + personalEmailId
-				+ "\nuserGroupId" + userGroupId + "\npassword" + password
-				+ "\n";
+		return "flowType" + flowType + "\nuserId" + userId + "\nuserFirstName"
+				+ userFirstName + "\nuserLastName" + userLastName
+				+ "\ncorpEmailId" + corpEmailId + "\npersonalEmailId"
+				+ personalEmailId + "\nuserGroupId" + userGroupId
+				+ "\npassword" + password + "\n";
 	}
 
 }

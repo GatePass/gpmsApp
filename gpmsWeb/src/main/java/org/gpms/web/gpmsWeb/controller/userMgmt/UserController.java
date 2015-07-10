@@ -20,6 +20,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
@@ -28,6 +29,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
  * 
  */
 @Controller
+@SessionAttributes("userBean")
 public class UserController {
 
 	private static final Logger logger = Logger.getLogger(UserController.class);
@@ -125,12 +127,9 @@ public class UserController {
 			logger.debug("userBean\n" + userBean.toString());
 		}
 
-		String flowType = (String) model.asMap().get("flowType");
-
-		userBean.setFlowType(flowType);
-		model.addAttribute("flowType", flowType);
 		model.addAttribute("isDisabled", "false");
 		model.addAttribute("isButtonDisabled", "true");
+		model.addAttribute("userBean", userBean);
 
 		if (logger.isDebugEnabled()) {
 			logger.debug("EXITING");
@@ -175,6 +174,7 @@ public class UserController {
 
 			if (userModel != null) {
 				userBean = copyModelToBean(userModel);
+				userBean.setFlowType(flowType);
 				if (logger.isDebugEnabled()) {
 					logger.debug("userBean\n" + userBean.toString());
 				}
@@ -206,6 +206,8 @@ public class UserController {
 			logger.debug("userBean\n" + userBean.toString());
 		}
 
+		String flowType = userBean.getFlowType();
+
 		List<SecurityQuestionsModel> securityQuestionsModel = userMgmtBusinessSrv
 				.getAllSecurityQuestions();
 		List<UserGroupModel> userGroupModel = userMgmtBusinessSrv
@@ -226,6 +228,7 @@ public class UserController {
 			}
 
 			userBean = copyModelToBean(returnModel);
+			userBean.setFlowType(flowType);
 			if (logger.isDebugEnabled()) {
 				logger.debug("userBean\n" + userBean.toString());
 			}
@@ -240,7 +243,6 @@ public class UserController {
 		model.addAttribute("userBean", userBean);
 		model.addAttribute("isDisabled", "false");
 		model.addAttribute("flowType", "modifyUser");
-		redirectAttrs.addFlashAttribute("flowType", "modifyUser");
 
 		if (logger.isDebugEnabled()) {
 			logger.debug("EXITING");
@@ -262,6 +264,8 @@ public class UserController {
 		if (logger.isDebugEnabled()) {
 			logger.debug("userBean" + userBean);
 		}
+
+		String flowType = userBean.getFlowType();
 
 		if (userBean != null) {
 
@@ -286,7 +290,7 @@ public class UserController {
 
 		model.addAttribute("flowType", "deleteUser");
 		model.addAttribute("isDisabled", "false");
-		redirectAttrs.addFlashAttribute("flowType", "deleteUser");
+		userBean.setFlowType(flowType);
 
 		if (logger.isDebugEnabled()) {
 			logger.debug("EXITING");

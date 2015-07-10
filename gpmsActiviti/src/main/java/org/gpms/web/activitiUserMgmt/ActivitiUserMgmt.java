@@ -38,7 +38,7 @@ public class ActivitiUserMgmt {
 	}
 
 	public void removeUserFromGroup(String userId, String groupId) {
-		identityManagement.assignUserToGroup(userId, groupId);
+		identityManagement.removeUserFromGroup(userId, groupId);
 	}
 
 }
