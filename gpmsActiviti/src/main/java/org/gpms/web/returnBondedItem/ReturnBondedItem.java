@@ -6,10 +6,7 @@ package org.gpms.web.returnBondedItem;
 import org.activiti.engine.repository.Deployment;
 import org.activiti.engine.repository.ProcessDefinition;
 import org.activiti.engine.runtime.ProcessInstance;
-import org.gpms.web.common.DeploymentManagement;
-import org.gpms.web.common.ProcessManagement;
-import org.gpms.web.common.TaskManagement;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.gpms.web.common.BondedItemManagement;
 import org.springframework.stereotype.Component;
 
 /**
@@ -17,16 +14,7 @@ import org.springframework.stereotype.Component;
  * 
  */
 @Component
-public class ReturnBondedItem {
-
-	@Autowired
-	DeploymentManagement deploymentManagement;
-
-	@Autowired
-	ProcessManagement processManagement;
-
-	@Autowired
-	TaskManagement taskManagement;
+public class ReturnBondedItem extends BondedItemManagement {
 
 	String processInstanceId;
 
@@ -39,7 +27,7 @@ public class ReturnBondedItem {
 	/**
 	 * 
 	 */
-	public String startReturnBondedItemProcess(String userAssetId) {
+	public String startReturnBondedItemProcess() {
 
 		Deployment deployment = deploymentManagement
 				.getDeploymentByName(DEPLOYMENT_NAME);

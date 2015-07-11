@@ -7,6 +7,7 @@ import java.io.IOException;
 
 import javax.servlet.http.HttpServletRequest;
 
+import org.gpms.web.gpmsWeb.controller.assets.BondedAssetBean;
 import org.gpms.web.gpmsWeb.controller.userMgmt.UserBean;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -78,22 +79,38 @@ public class NavigationController {
 	}
 
 	@RequestMapping(value = "/navigation", params = "bondedItemAssign")
-	public String bondedItemAssign() throws IOException {
+	public String bondedItemAssign(HttpServletRequest request)
+			throws IOException {
+		BondedAssetBean bondedAssetBean = new BondedAssetBean();
+		bondedAssetBean.setFlowType("bondedItemAssign");
+		request.getSession().setAttribute("bondedAssetBean", bondedAssetBean);
 		return "redirect:issueBondedAsset";
 	}
 
 	@RequestMapping(value = "/navigation", params = "bondedItemReturn")
-	public String bondedItemReturn() throws IOException {
+	public String bondedItemReturn(HttpServletRequest request)
+			throws IOException {
+		BondedAssetBean bondedAssetBean = new BondedAssetBean();
+		bondedAssetBean.setFlowType("bondedItemReturn");
+		request.getSession().setAttribute("bondedAssetBean", bondedAssetBean);
 		return "redirect:returnBondedAsset";
 	}
 
 	@RequestMapping(value = "/navigation", params = "approveRejectAsset")
-	public String approveRejectAsset() throws IOException {
+	public String approveRejectAsset(HttpServletRequest request)
+			throws IOException {
+		BondedAssetBean bondedAssetBean = new BondedAssetBean();
+		bondedAssetBean.setFlowType("approveRejectAsset");
+		request.getSession().setAttribute("bondedAssetBean", bondedAssetBean);
 		return "redirect:approveRejectAsset";
 	}
 
 	@RequestMapping(value = "/navigation", params = "resubmitForApproval")
-	public String resubmitForApproval() throws IOException {
+	public String resubmitForApproval(HttpServletRequest request)
+			throws IOException {
+		BondedAssetBean bondedAssetBean = new BondedAssetBean();
+		bondedAssetBean.setFlowType("resubmitForApproval");
+		request.getSession().setAttribute("bondedAssetBean", bondedAssetBean);
 		return "redirect:resubmitForApproval";
 	}
 

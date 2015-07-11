@@ -3,13 +3,17 @@
  */
 package org.gpms.web.gpmsWeb.controller.assets;
 
+import java.io.Serializable;
+
 import org.hibernate.validator.constraints.NotEmpty;
 
 /**
  * @author narenda.kumar
  * 
  */
-public class BondedAssetBean {
+public class BondedAssetBean implements Serializable {
+
+	private String flowType;
 
 	private String userAssetId;
 
@@ -32,6 +36,21 @@ public class BondedAssetBean {
 	private String modifiedDate;
 
 	private String assetAssignedComment;
+
+	/**
+	 * @return the flowType
+	 */
+	public String getFlowType() {
+		return flowType;
+	}
+
+	/**
+	 * @param flowType
+	 *            the flowType to set
+	 */
+	public void setFlowType(String flowType) {
+		this.flowType = flowType;
+	}
 
 	/**
 	 * @return the userAssetId
@@ -181,6 +200,18 @@ public class BondedAssetBean {
 	 */
 	public void setAssetAssignedComment(String assetAssignedComment) {
 		this.assetAssignedComment = assetAssignedComment;
+	}
+
+	public String toString() {
+		return "\nflowType " + flowType + "\nuserAssetId " + userAssetId
+				+ "\nuserCorpEmail " + userCorpEmail + "\nassetId " + assetId
+				+ "\nuserAssetIssueDate " + userAssetIssueDate
+				+ "\nuserAssetReturnDate " + userAssetReturnDate
+				+ "\nuserAssetIssueProcessId " + userAssetIssueProcessId
+				+ "\nuserAssetReturnProcessId " + userAssetReturnProcessId
+				+ "\ncreateDate " + createDate + "\nmodifiedDate "
+				+ modifiedDate + "\nassetAssignedComment "
+				+ assetAssignedComment;
 	}
 
 }

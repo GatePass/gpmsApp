@@ -198,11 +198,11 @@ public class UserBean implements Serializable {
 	}
 
 	public String toString() {
-		return "flowType" + flowType + "\nuserId" + userId + "\nuserFirstName"
-				+ userFirstName + "\nuserLastName" + userLastName
-				+ "\ncorpEmailId" + corpEmailId + "\npersonalEmailId"
-				+ personalEmailId + "\nuserGroupId" + userGroupId
-				+ "\npassword" + password + "\n";
+		return "\nflowType" + flowType + "\nuserId" + userId
+				+ "\nuserFirstName" + userFirstName + "\nuserLastName"
+				+ userLastName + "\ncorpEmailId" + corpEmailId
+				+ "\npersonalEmailId" + personalEmailId + "\nuserGroupId"
+				+ userGroupId + "\npassword" + password + "\n";
 	}
 
 }

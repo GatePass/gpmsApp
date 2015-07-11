@@ -1,5 +1,6 @@
 <%@taglib prefix="sf" uri="http://www.springframework.org/tags/form"%>
 <%@ taglib uri="http://www.springframework.org/tags" prefix="spring"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
 	pageEncoding="ISO-8859-1"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
@@ -32,8 +33,14 @@
 									<table cellspacing="20px"
 										style="min-height: 50%; min-width: 50%;">
 										<tr>
-											<td class="boxHeading" align="left"><b> <label><spring:message
-															code="pageHeader.issueBondedItem.text" /></label>
+											<td class="boxHeading" align="left"><b> <c:if
+														test="${bondedAssetBean.flowType == 'bondedItemAssign'}">
+														<label><spring:message
+																code="pageHeader.issueBondedItem.text" /></label>
+													</c:if> <c:if
+														test="${bondedAssetBean.flowType == 'bondedItemReturn'}">
+														<label>Return Bonded Item</label>
+													</c:if>
 											</b></td>
 										</tr>
 										<tr>
@@ -42,7 +49,17 @@
 														<spring:message
 															code="label.issueBondedItem.userAssetId.text" />
 													</sf:label></b></td>
-											<td align="left"><sf:label path="userAssetId">${bondedAssetBean.userAssetId}</sf:label></td>
+											<c:if
+												test="${bondedAssetBean.flowType == 'bondedItemAssign'}">
+												<td align="left"><sf:label path="userAssetId">${bondedAssetBean.userAssetId}</sf:label></td>
+											</c:if>
+											<c:if
+												test="${bondedAssetBean.flowType == 'bondedItemReturn'}">
+												<td><sf:input path="userAssetId" /><br /> <sf:errors
+														path="userAssetId" cssClass="error" /></td>
+												<td><input type="submit" name="getAssetAssignedData"
+															value="Get Assigned Asset" /></td>		
+											</c:if>
 										</tr>
 										<tr>
 											<td align="left" valign="top"><b><sf:label
@@ -50,17 +67,31 @@
 														<spring:message
 															code="label.issueBondedItem.userCorpEmail.text" />
 													</sf:label></b></td>
-											<td><sf:input path="userCorpEmail"
-													disabled="${isDisabled}" /><br /> <sf:errors
-													path="userCorpEmail" cssClass="error" /></td>
+											<c:if
+												test="${bondedAssetBean.flowType == 'bondedItemAssign'}">
+												<td><sf:input path="userCorpEmail"
+														disabled="${isDisabled}" /><br /> <sf:errors
+														path="userCorpEmail" cssClass="error" /></td>
+											</c:if>
+											<c:if
+												test="${bondedAssetBean.flowType == 'bondedItemReturn'}">
+												<td><sf:label path="userCorpEmail">${bondedAssetBean.userCorpEmail}</sf:label></td>
+											</c:if>
 										</tr>
 										<tr>
 											<td align="left" valign="top"><b><sf:label
 														path="assetId">
 														<spring:message code="label.issueBondedItem.assetId.text" />
 													</sf:label></b></td>
-											<td><sf:input path="assetId" disabled="${isDisabled}" /><br />
-												<sf:errors path="assetId" cssClass="error" /></td>
+											<c:if
+												test="${bondedAssetBean.flowType == 'bondedItemAssign'}">
+												<td><sf:input path="assetId" disabled="${isDisabled}" /><br />
+													<sf:errors path="assetId" cssClass="error" /></td>
+											</c:if>
+											<c:if
+												test="${bondedAssetBean.flowType == 'bondedItemReturn'}">
+												<td><sf:label path="assetId">${bondedAssetBean.assetId}</sf:label></td>
+											</c:if>
 										</tr>
 										<tr>
 											<td align="left" valign="top"><b><sf:label
@@ -68,9 +99,17 @@
 														<spring:message
 															code="label.issueBondedItem.userAssetIssueDate.text" />
 													</sf:label></b></td>
-											<td><sf:input path="userAssetIssueDate"
-													disabled="${isDisabled}" /><br /> <sf:errors
-													path="userAssetIssueDate" cssClass="error" /></td>
+											<c:if
+												test="${bondedAssetBean.flowType == 'bondedItemAssign'}">
+												<td><sf:input path="userAssetIssueDate"
+														disabled="${isDisabled}" /><br /> <sf:errors
+														path="userAssetIssueDate" cssClass="error" /></td>
+											</c:if>
+											<c:if
+												test="${bondedAssetBean.flowType == 'bondedItemReturn'}">
+												<td><sf:label path="userAssetIssueDate">${bondedAssetBean.userAssetIssueDate}</sf:label></td>
+											</c:if>
+
 										</tr>
 										<tr>
 											<td align="left" valign="top"><b><sf:label
@@ -78,14 +117,31 @@
 														<spring:message
 															code="label.issueBondedItem.userAssetReturnDate.text" />
 													</sf:label></b></td>
-											<td><sf:input path="userAssetReturnDate"
-													disabled="${isDisabled}" /><br /> <sf:errors
-													path="userAssetReturnDate" cssClass="error" /></td>
+											<c:if
+												test="${bondedAssetBean.flowType == 'bondedItemAssign'}">
+												<td><sf:label path="userAssetReturnDate">${bondedAssetBean.userAssetReturnDate}</sf:label></td>
+											</c:if>
+											<c:if
+												test="${bondedAssetBean.flowType == 'bondedItemReturn'}">
+												<td><sf:input path="userAssetReturnDate"
+														disabled="${isDisabled}" /><br /> <sf:errors
+														path="userAssetReturnDate" cssClass="error" /></td>
+											</c:if>
+
 										</tr>
 									</table>
-									<input type="submit" name="createAsset"
-										value='<spring:message code="button.issueBondedItem.assignAsset.text"/>'
+									<c:if test="${bondedAssetBean.flowType == 'bondedItemAssign'}">
+										<input type="submit" name="issueBondedAsset"
+											value='<spring:message code="button.issueBondedItem.assignAsset.text"/>'
+											${isDisabled eq "true" ? 'disabled'  : '' } />
+									</c:if>
+									<c:if test="${bondedAssetBean.flowType == 'bondedItemReturn'}">
+										<input type="submit" name="returnBondedAsset"
+										value="Return Bonded Asset"
 										${isDisabled eq "true" ? 'disabled'  : '' } />
+									</c:if>
+
+
 								</sf:form>
 							</fieldset>
 						</div>

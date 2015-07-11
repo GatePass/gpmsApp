@@ -182,4 +182,15 @@ public class UserAssetEntity implements Serializable {
 		this.modifiedDate = modifiedDate;
 	}
 
+	public String toString() {
+		return "\nuserAssetId " + userAssetId + "\nuserCorpEmail "
+				+ userCorpEmail + "\nassetId " + assetId
+				+ "\nuserAssetIssueDate " + userAssetIssueDate
+				+ "\nuserAssetReturnDate " + userAssetReturnDate
+				+ "\nuserAssetIssueProcessId " + userAssetIssueProcessId
+				+ "\nuserAssetReturnProcessId " + userAssetReturnProcessId
+				+ "\ncreateDate " + createDate + "\nmodifiedDate "
+				+ modifiedDate;
+	}
+
 }
