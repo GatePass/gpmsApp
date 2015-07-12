@@ -13,6 +13,10 @@ import javax.validation.Valid;
 import org.apache.log4j.Logger;
 import org.gpms.web.gpmsBusinessSrv.login.LoginBusinessSrv;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.authentication.AnonymousAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.util.StringUtils;
@@ -79,6 +83,27 @@ public class LoginController {
 	@RequestMapping(value = "/login", method = RequestMethod.POST, params = "reset")
 	public String reset(Model model) throws IOException {
 		return "redirect:passwordReset";
+	}
+
+	@RequestMapping(value = "/403", method = RequestMethod.GET)
+	public ModelAndView accesssDenied() {
+
+		ModelAndView model = new ModelAndView();
+
+		// check if user is login
+		Authentication auth = SecurityContextHolder.getContext()
+				.getAuthentication();
+		if (!(auth instanceof AnonymousAuthenticationToken)) {
+			UserDetails userDetail = (UserDetails) auth.getPrincipal();
+			System.out.println(userDetail);
+
+			model.addObject("username", userDetail.getUsername());
+
+		}
+
+		model.setViewName("common/403");
+		return model;
+
 	}
 
 }

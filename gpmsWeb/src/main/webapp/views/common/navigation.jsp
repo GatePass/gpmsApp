@@ -1,5 +1,6 @@
 <%@taglib prefix="sf" uri="http://www.springframework.org/tags/form"%>
 <%@ taglib uri="http://www.springframework.org/tags" prefix="spring"%>
+<%@ taglib prefix="security" uri="http://www.springframework.org/security/tags" %>
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
 	pageEncoding="ISO-8859-1"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
@@ -30,6 +31,7 @@
 							style="border-width: 2px; background-color: lightblue;  width: 800px;">
 							<sf:form action="navigation">
 								<table cellspacing="10px">
+								 <security:authorize access="hasRole('ROLE_gpmsAdminGroup')">
 									<tr>
 										<td class="boxHeading" align="left" colspan="2" ><b> <label><spring:message code="subHeader.userAccessMgmt.text"/></label>
 										</b></td>
@@ -40,6 +42,7 @@
 										<td><input type="submit" name="createUser" value='<spring:message code="button.userAccessMgmt.createuser.text"/>' /></td>
 										<td><input type="submit" name="modifyUser" value='<spring:message code="button.userAccessMgmt.modifyUser.text"/>' /></td>
 									</tr>
+									</security:authorize>
 									<tr>
 										<td align="left" colspan="2" ><label><spring:message code="label.userAccessMgmt.deleteUser.text"/></label>
 										</td>
