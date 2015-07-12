@@ -54,11 +54,12 @@ public class BondedAssetModelEntityConverter {
 		userAssetEntity.setUserCorpEmail(assetAssignModel.getUserCorpEmail());
 		userAssetEntity.setAssetId(assetAssignModel.getAssetId());
 		userAssetEntity.setUserAssetIssueDate(DateUtil
-				.getSQLDateForAsset(assetAssignModel.getUserAssetIssueDate()));
-		userAssetEntity.setCreateDate(DateUtil.getSQLDate(assetAssignModel
-				.getCreateDate()));
-		userAssetEntity.setModifiedDate(DateUtil.getSQLDate(assetAssignModel
-				.getModifiedDate()));
+				.getSQLDateForTimeStamp(assetAssignModel
+						.getUserAssetIssueDate()));
+		userAssetEntity.setCreateDate(DateUtil
+				.getSQLDateForTimeStamp(assetAssignModel.getCreateDate()));
+		userAssetEntity.setModifiedDate(DateUtil
+				.getSQLDateForTimeStamp(assetAssignModel.getModifiedDate()));
 		userAssetEntity.setUserAssetIssueProcessId(assetAssignModel
 				.getUserAssetIssueProcessId());
 		userAssetEntity.setUserAssetReturnProcessId(assetAssignModel
@@ -67,7 +68,7 @@ public class BondedAssetModelEntityConverter {
 				.getModifiedDate()));
 		if (assetAssignModel.getUserAssetReturnDate() != null) {
 			userAssetEntity.setUserAssetReturnDate(DateUtil
-					.getSQLDateForAsset(assetAssignModel
+					.getSQLDateForTimeStamp(assetAssignModel
 							.getUserAssetReturnDate()));
 		} else {
 			userAssetEntity.setUserAssetReturnDate(null);

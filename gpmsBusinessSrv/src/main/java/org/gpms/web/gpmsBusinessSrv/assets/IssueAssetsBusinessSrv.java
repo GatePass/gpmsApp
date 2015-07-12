@@ -66,44 +66,88 @@ public class IssueAssetsBusinessSrv {
 			return;
 		}
 
-		userAssetEntity = BondedAssetModelEntityConverter
-				.convertModelToEntity(assetAssignModel);
-		userAssetEntity.setUserAssetIssueProcessId("-999999999");
-		String userAssetId = userAssetsRepository
-				.addAssetToUser(userAssetEntity);
+		String processInstanceId = null;
+		String userAssetId = null;
+		if (assetAssignModel.getUserAssetId() == null) {
+			userAssetEntity = BondedAssetModelEntityConverter
+					.convertModelToEntity(assetAssignModel);
+			userAssetEntity.setUserAssetIssueProcessId("-999999999");
+			userAssetId = userAssetsRepository.addAssetToUser(userAssetEntity);
 
-		/*
-		 * Start the process of assigning the asset and getting approval.
-		 */
+			/*
+			 * Start the process of assigning the asset and getting approval.
+			 */
 
-		if (logger.isDebugEnabled()) {
-			logger.debug("Start the process of assigning the asset and approval");
+			if (logger.isDebugEnabled()) {
+				logger.debug("Start the process of assigning the asset and approval");
+			}
+
+			processInstanceId = bondedItemIssue.startBondItemIssueProcess();
+
+			bondedItemIssue.performApprovalAssignment(processInstanceId,
+					ApplicationConstants.GROUP_ISIT_MANAGER,
+					"gpmsISITMgr@gmail.com");
+
+			// Make necessary modification to records in gpms
+
+			userAssetEntity = userAssetsRepository
+					.getUserAssetById(userAssetId);
+			userAssetEntity.setUserAssetIssueProcessId(processInstanceId);
+			userAssetId = userAssetsRepository
+					.updateAssetInfoOfUser(userAssetEntity);
+
+			assetsEntity
+					.setAssetStatus(ApplicationConstants.ASSET_ASSIGNED_STATUS);
+			assetsRepository.modifyAsset(assetsEntity);
+
+			// Make necessary modification to records in activiti
+			String comment = "An asset is for Approval request with id :"
+					+ assetsEntity.getAssetId() + "of Type "
+					+ assetsEntity.getAssetType()
+					+ ". It is to be assigned to "
+					+ assetAssignModel.getUserCorpEmail();
+
+			bondedItemIssue.updateInfoOnTask(processInstanceId, comment,
+					"UserAssetEntity", userAssetEntity);
+
+		} else {
+			userAssetEntity = userAssetsRepository
+					.getUserAssetById(assetAssignModel.getUserAssetId());
+			userAssetsRepository.updateAssetInfoOfUser(userAssetEntity);
+
+			if (logger.isDebugEnabled()) {
+				logger.debug("userAssetEntity :" + userAssetEntity);
+				logger.debug("assetAssignModel :" + assetAssignModel);
+			}
+
+			if (assetAssignModel.getUserAssetReturnProcessId() == null) {
+				bondedItemIssue.performApprovalAssignment(
+						assetAssignModel.getUserAssetIssueProcessId(),
+						ApplicationConstants.GROUP_ISIT_MANAGER,
+						"gpmsISITMgr@gmail.com");
+				processInstanceId = assetAssignModel
+						.getUserAssetIssueProcessId();
+			} else {
+				bondedItemIssue.performApprovalAssignment(
+						assetAssignModel.getUserAssetReturnProcessId(),
+						ApplicationConstants.GROUP_ISIT_MANAGER,
+						"gpmsISITMgr@gmail.com");
+				processInstanceId = assetAssignModel
+						.getUserAssetIssueProcessId();
+			}
+
+			// Make necessary modification to records in activiti
+			String comment = "An asset has been corrected and is for Approval request with id :"
+					+ assetsEntity.getAssetId()
+					+ "of Type "
+					+ assetsEntity.getAssetType()
+					+ ". It is to be assigned to "
+					+ assetAssignModel.getUserCorpEmail();
+
+			bondedItemIssue.updateInfoOnTask(processInstanceId, comment,
+					"UserAssetEntity", userAssetEntity);
+
 		}
-
-		String processInstanceId = bondedItemIssue.startBondItemIssueProcess();
-
-		bondedItemIssue.performApprovalAssignment(processInstanceId,
-				ApplicationConstants.GROUP_ISIT_MANAGER,
-				"gpmsISITMgr@gmail.com");
-
-		// Make necessary modification to records in gpms
-
-		userAssetEntity = userAssetsRepository.getUserAssetById(userAssetId);
-		userAssetEntity.setUserAssetIssueProcessId(processInstanceId);
-		userAssetId = userAssetsRepository
-				.updateAssetInfoOfUser(userAssetEntity);
-
-		assetsEntity.setAssetStatus(ApplicationConstants.ASSET_ASSIGNED_STATUS);
-		assetsRepository.modifyAsset(assetsEntity);
-
-		// Make necessary modification to records in activiti
-		String comment = "An asset is for Approval request with id :"
-				+ assetsEntity.getAssetId() + "of Type "
-				+ assetsEntity.getAssetType() + ". It is to be assigned to "
-				+ assetAssignModel.getUserCorpEmail();
-
-		bondedItemIssue.updateInfoOnTask(processInstanceId, comment,
-				"UserAssetEntity", userAssetEntity);
 
 		if (logger.isDebugEnabled()) {
 			logger.debug("Done - Sync the gpms and activiti db");

@@ -41,6 +41,10 @@
 														test="${bondedAssetBean.flowType == 'bondedItemReturn'}">
 														<label>Return Bonded Item</label>
 													</c:if>
+													<c:if
+														test="${bondedAssetBean.flowType == 'itemCorrection'}">
+														<label>Bonded Item Correction</label>
+													</c:if>
 											</b></td>
 										</tr>
 										<tr>
@@ -50,7 +54,7 @@
 															code="label.issueBondedItem.userAssetId.text" />
 													</sf:label></b></td>
 											<c:if
-												test="${bondedAssetBean.flowType == 'bondedItemAssign'}">
+												test="${bondedAssetBean.flowType == 'bondedItemAssign' || bondedAssetBean.flowType == 'itemCorrection'}">
 												<td align="left"><sf:label path="userAssetId">${bondedAssetBean.userAssetId}</sf:label></td>
 											</c:if>
 											<c:if
@@ -68,7 +72,7 @@
 															code="label.issueBondedItem.userCorpEmail.text" />
 													</sf:label></b></td>
 											<c:if
-												test="${bondedAssetBean.flowType == 'bondedItemAssign'}">
+												test="${bondedAssetBean.flowType == 'bondedItemAssign' || bondedAssetBean.flowType == 'itemCorrection'}">
 												<td><sf:input path="userCorpEmail"
 														disabled="${isDisabled}" /><br /> <sf:errors
 														path="userCorpEmail" cssClass="error" /></td>
@@ -84,7 +88,7 @@
 														<spring:message code="label.issueBondedItem.assetId.text" />
 													</sf:label></b></td>
 											<c:if
-												test="${bondedAssetBean.flowType == 'bondedItemAssign'}">
+												test="${bondedAssetBean.flowType == 'bondedItemAssign' || bondedAssetBean.flowType == 'itemCorrection'}">
 												<td><sf:input path="assetId" disabled="${isDisabled}" /><br />
 													<sf:errors path="assetId" cssClass="error" /></td>
 											</c:if>
@@ -100,7 +104,7 @@
 															code="label.issueBondedItem.userAssetIssueDate.text" />
 													</sf:label></b></td>
 											<c:if
-												test="${bondedAssetBean.flowType == 'bondedItemAssign'}">
+												test="${bondedAssetBean.flowType == 'bondedItemAssign' || bondedAssetBean.flowType == 'itemCorrection'}">
 												<td><sf:input path="userAssetIssueDate"
 														disabled="${isDisabled}" /><br /> <sf:errors
 														path="userAssetIssueDate" cssClass="error" /></td>
@@ -118,7 +122,7 @@
 															code="label.issueBondedItem.userAssetReturnDate.text" />
 													</sf:label></b></td>
 											<c:if
-												test="${bondedAssetBean.flowType == 'bondedItemAssign'}">
+												test="${bondedAssetBean.flowType == 'bondedItemAssign' || bondedAssetBean.flowType == 'itemCorrection'}">
 												<td><sf:label path="userAssetReturnDate">${bondedAssetBean.userAssetReturnDate}</sf:label></td>
 											</c:if>
 											<c:if
@@ -130,7 +134,7 @@
 
 										</tr>
 									</table>
-									<c:if test="${bondedAssetBean.flowType == 'bondedItemAssign'}">
+									<c:if test="${bondedAssetBean.flowType == 'bondedItemAssign' || bondedAssetBean.flowType == 'itemCorrection'}">
 										<input type="submit" name="issueBondedAsset"
 											value='<spring:message code="button.issueBondedItem.assignAsset.text"/>'
 											${isDisabled eq "true" ? 'disabled'  : '' } />

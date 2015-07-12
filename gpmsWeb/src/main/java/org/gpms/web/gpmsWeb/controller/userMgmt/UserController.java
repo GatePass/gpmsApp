@@ -4,6 +4,7 @@
 package org.gpms.web.gpmsWeb.controller.userMgmt;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.validation.Valid;
@@ -14,9 +15,12 @@ import org.gpms.web.gpmsBusinessSrv.userMgmt.UserGroupModel;
 import org.gpms.web.gpmsBusinessSrv.userMgmt.UserMgmtBusinessSrv;
 import org.gpms.web.gpmsBusinessSrv.userMgmt.UserModel;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
+import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -75,17 +79,44 @@ public class UserController {
 		if (logger.isDebugEnabled()) {
 			logger.debug("ENTERING");
 		}
-
-		if (logger.isDebugEnabled()) {
-			logger.debug("userBean\n" + userBean.toString());
-		}
-
+		PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
 		List<SecurityQuestionsModel> securityQuestionsModel = userMgmtBusinessSrv
 				.getAllSecurityQuestions();
 		List<UserGroupModel> userGroupModel = userMgmtBusinessSrv
 				.getUserGroup();
 
+		model.addAttribute("userGroupModel", userGroupModel);
+		model.addAttribute("securityQuestionsModel", securityQuestionsModel);
+
+		if (userBean != null
+				&& !userBean.getCorpEmailId().equals("")
+				&& !userBean.getPersonalEmailId().equals("")
+				&& userBean.getCorpEmailId().equals(
+						userBean.getPersonalEmailId())) {
+			FieldError corpEmailIdFldErr = new FieldError("userBean",
+					"corpEmailId", "Same E-Mail address entered");
+			FieldError personalEmailFldErr = new FieldError("userBean",
+					"personalEmailId", "Same E-Mail address entered");
+			result.addError(corpEmailIdFldErr);
+			result.addError(personalEmailFldErr);
+		}
+
+		if (result.hasErrors()) {
+			return "userMgmt/newUser";
+		}
+
+		if (logger.isDebugEnabled()) {
+			logger.debug("userBean\n" + userBean.toString());
+		}
+
 		if (userBean != null) {
+
+			if (userBean.getPassword() != null) {
+				String encodedPassword = passwordEncoder.encode(userBean
+						.getPassword());
+				userBean.setPassword(encodedPassword);
+			}
+
 			UserModel userModel = copyBeanToModel(userBean);
 
 			if (logger.isDebugEnabled()) {
@@ -103,8 +134,6 @@ public class UserController {
 			}
 		}
 
-		model.addAttribute("userGroupModel", userGroupModel);
-		model.addAttribute("securityQuestionsModel", securityQuestionsModel);
 		model.addAttribute("userBean", userBean);
 
 		if (logger.isDebugEnabled()) {
@@ -123,11 +152,21 @@ public class UserController {
 			logger.debug("ENTERING");
 		}
 
+		String flowType = userBean.getFlowType();
+
+		List<SecurityQuestionsModel> securityQuestionsModel = userMgmtBusinessSrv
+				.getAllSecurityQuestions();
+		List<UserGroupModel> userGroupModel = userMgmtBusinessSrv
+				.getUserGroup();
+
 		if (logger.isDebugEnabled()) {
 			logger.debug("userBean\n" + userBean.toString());
 		}
 
-		model.addAttribute("isDisabled", "false");
+		userBean.setFlowType(flowType);
+		model.addAttribute("userGroupModel", userGroupModel);
+		model.addAttribute("securityQuestionsModel", securityQuestionsModel);
+		model.addAttribute("isDisabled", "true");
 		model.addAttribute("isButtonDisabled", "true");
 		model.addAttribute("userBean", userBean);
 
@@ -140,10 +179,33 @@ public class UserController {
 
 	@RequestMapping(value = "/modifyDeleteUser", method = RequestMethod.POST, params = "getUserData")
 	public ModelAndView getUserData(
-			@ModelAttribute("userBean") UserBean userBean, Model model) {
+			@ModelAttribute("userBean") UserBean userBean,
+			BindingResult result, Model model) {
 
 		if (logger.isDebugEnabled()) {
 			logger.debug("ENTERING");
+		}
+
+		List<SecurityQuestionsModel> securityQuestionsModel = userMgmtBusinessSrv
+				.getAllSecurityQuestions();
+		List<UserGroupModel> userGroupModel = userMgmtBusinessSrv
+				.getUserGroup();
+		model.addAttribute("userGroupModel", userGroupModel);
+		model.addAttribute("securityQuestionsModel", securityQuestionsModel);
+
+		FieldError corpEmailIdFldErr = new FieldError("userBean",
+				"corpEmailId", "Either the Corp Email or User Id is required");
+		FieldError userIdFldErr = new FieldError("userBean", "userId",
+				"Either the Corp Email or User Id is required");
+
+		if (userBean != null && userBean.getUserId().equals("")
+				&& userBean.getCorpEmailId().equals("")) {
+			result.addError(corpEmailIdFldErr);
+			result.addError(userIdFldErr);
+		}
+
+		if (result.hasErrors()) {
+			return new ModelAndView("userMgmt/modifyDeleteUser");
 		}
 
 		if (logger.isDebugEnabled()) {
@@ -181,8 +243,8 @@ public class UserController {
 			}
 		}
 
+		userBean.setFlowType(flowType);
 		model.addAttribute("userBean", userBean);
-		model.addAttribute("flowType", flowType);
 		model.addAttribute("isDisabled", "false");
 
 		if (logger.isDebugEnabled()) {
@@ -212,6 +274,27 @@ public class UserController {
 				.getAllSecurityQuestions();
 		List<UserGroupModel> userGroupModel = userMgmtBusinessSrv
 				.getUserGroup();
+		model.addAttribute("userGroupModel", userGroupModel);
+		model.addAttribute("securityQuestionsModel", securityQuestionsModel);
+
+		if (result.hasErrors()) {
+			return "userMgmt/modifyDeleteUser";
+		}
+
+		FieldError corpEmailIdFldErr = new FieldError("userBean",
+				"corpEmailId", "Either the Corp Email or User Id is required");
+		FieldError userIdFldErr = new FieldError("userBean", "personalEmailId",
+				"Either the Corp Email or User Id is required");
+
+		if (userBean != null && userBean.getUserId().equals("")
+				&& userBean.getCorpEmailId().equals("")) {
+			result.addError(corpEmailIdFldErr);
+			result.addError(userIdFldErr);
+		}
+
+		if (result.hasErrors()) {
+			return "userMgmt/modifyDeleteUser";
+		}
 
 		UserModel returnModel = null;
 
@@ -234,15 +317,8 @@ public class UserController {
 			}
 		}
 
-		if (returnModel != null && returnModel.getUserId() != null) {
-			model.addAttribute("isDisabled", "true");
-		}
-
-		model.addAttribute("userGroupModel", userGroupModel);
-		model.addAttribute("securityQuestionsModel", securityQuestionsModel);
 		model.addAttribute("userBean", userBean);
-		model.addAttribute("isDisabled", "false");
-		model.addAttribute("flowType", "modifyUser");
+		model.addAttribute("isDisabled", "true");
 
 		if (logger.isDebugEnabled()) {
 			logger.debug("EXITING");
@@ -252,8 +328,7 @@ public class UserController {
 	}
 
 	@RequestMapping(value = "/modifyDeleteUser", method = RequestMethod.POST, params = "deleteUser")
-	public String deleteAsset(
-			@ModelAttribute("userBean") @Valid UserBean userBean,
+	public String deleteAsset(@ModelAttribute("userBean") UserBean userBean,
 			BindingResult result, Model model, RedirectAttributes redirectAttrs)
 			throws IOException {
 
@@ -267,6 +342,21 @@ public class UserController {
 
 		String flowType = userBean.getFlowType();
 
+		FieldError corpEmailIdFldErr = new FieldError("userBean",
+				"corpEmailId", "Either the Corp Email or User Id is required");
+		FieldError userIdFldErr = new FieldError("userBean", "personalEmailId",
+				"Either the Corp Email or User Id is required");
+
+		if (userBean != null && userBean.getUserId().equals("")
+				&& userBean.getCorpEmailId().equals("")) {
+			result.addError(corpEmailIdFldErr);
+			result.addError(userIdFldErr);
+		}
+
+		if (result.hasErrors()) {
+			return "userMgmt/modifyDeleteUser";
+		}
+
 		if (userBean != null) {
 
 			String userId = userBean.getUserId();
@@ -279,17 +369,17 @@ public class UserController {
 			}
 
 			if (corpEmailId != null || userId != null) {
-				if (corpEmailId != null) {
+				if (corpEmailId != null && !corpEmailId.equals("")) {
 					userMgmtBusinessSrv.deleteUserByCorpEmailId(corpEmailId,
 							groupId);
 				} else {
 					userMgmtBusinessSrv.deleteUserById(userId, groupId);
 				}
+				userBean = new UserBean();
 			}
 		}
 
-		model.addAttribute("flowType", "deleteUser");
-		model.addAttribute("isDisabled", "false");
+		model.addAttribute("isDisabled", "true");
 		userBean.setFlowType(flowType);
 
 		if (logger.isDebugEnabled()) {
@@ -309,6 +399,9 @@ public class UserController {
 		userModel.setUserPersonnalEmail(userBean.getPersonalEmailId());
 		userModel.setPassword(userBean.getPassword());
 		userModel.setUserGroupId(userBean.getUserGroupId());
+		userModel.setQuestionId(userBean.getQuestionId().get(0));
+		userModel.setSecretQuesAnsId(userBean.getSecretQuesAnsId());
+
 		return userModel;
 	}
 
@@ -322,6 +415,11 @@ public class UserController {
 		userBean.setPersonalEmailId(userModel.getUserPersonnalEmail());
 		userBean.setPassword(userModel.getPassword());
 		userBean.setUserGroupId(userModel.getUserGroupId());
+		ArrayList<String> arrayList = new ArrayList<String>();
+		arrayList.add(userModel.getQuestionId());
+		userBean.setQuestionId(arrayList);
+		userBean.setSecretQuesAnsId(userModel.getSecretQuesAnsId());
+
 		return userBean;
 	}
 

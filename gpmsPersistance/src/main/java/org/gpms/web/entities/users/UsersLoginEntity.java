@@ -44,6 +44,12 @@ public class UsersLoginEntity {
 	@Column(name = "USER_LAST_LOGIN")
 	private Date userLastLogin;
 
+	@Column(name = "USER_SECURITY_QUESTION")
+	private String userSecurityQuestion;
+
+	@Column(name = "USER_SECURITY_ANSWER")
+	private String userSecurityAnswer;
+
 	/**
 	 * @return the userId
 	 */
@@ -164,12 +170,44 @@ public class UsersLoginEntity {
 		this.userLastLogin = userLastLogin;
 	}
 
+	/**
+	 * @return the userSecurityQuestion
+	 */
+	public String getUserSecurityQuestion() {
+		return userSecurityQuestion;
+	}
+
+	/**
+	 * @param userSecurityQuestion
+	 *            the userSecurityQuestion to set
+	 */
+	public void setUserSecurityQuestion(String userSecurityQuestion) {
+		this.userSecurityQuestion = userSecurityQuestion;
+	}
+
+	/**
+	 * @return the userSecurityAnswer
+	 */
+	public String getUserSecurityAnswer() {
+		return userSecurityAnswer;
+	}
+
+	/**
+	 * @param userSecurityAnswer
+	 *            the userSecurityAnswer to set
+	 */
+	public void setUserSecurityAnswer(String userSecurityAnswer) {
+		this.userSecurityAnswer = userSecurityAnswer;
+	}
+
 	public String toString() {
 		return "userId" + userId + "\nuserFirstName" + userFirstName
 				+ "\nuserLastName" + userLastName + "\nuserCorpEmail"
 				+ userCorpEmail + "\nuserPersonnalEmail" + userPersonnalEmail
 				+ "\nuserGroupId" + userGroupId + "\npassword" + password
-				+ "\nuserLastLogin" + userLastLogin + "\n";
+				+ "\nuserLastLogin" + userLastLogin + "\nuserSecurityQuestion "
+				+ userSecurityQuestion + "\nuserSecurityAnswer "
+				+ userSecurityAnswer + "\n";
 	}
 
 }

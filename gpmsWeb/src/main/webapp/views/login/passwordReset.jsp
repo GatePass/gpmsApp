@@ -1,4 +1,5 @@
 <%@taglib prefix="sf" uri="http://www.springframework.org/tags/form"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
 	pageEncoding="ISO-8859-1"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
@@ -40,12 +41,17 @@
 											</td>
 										</tr>
 										<tr>
-											<td align="left"><b><sf:label path="questionId"><spring:message code="label.resetPassword.selectTheSecretQuestion.text"/></sf:label></b></td>
+											<td align="left" valign="top"><b><sf:label path="questionId"><spring:message code="label.newUser.selectTheSecretQuestion.text"/></sf:label></b></td>
 											<td><sf:select path="questionId" multiple="false">
-												<sf:option value="" label="....."></sf:option>
-												<sf:options  items="${questionId}"/>
-												</sf:select><br/>
-											<sf:errors path="questionId" cssClass="error"/></td>
+													<sf:option value="" label=""></sf:option>
+													<c:forEach items="${securityQuestionsModel}"
+														var="securityQuestionsModel">
+														<sf:option
+															value="${securityQuestionsModel.securityQuestionId}">${securityQuestionsModel.securityQuestion}</sf:option>
+													</c:forEach>
+												</sf:select>
+												<br /> 
+											<sf:errors path="questionId" cssClass="error" /></td>
 										</tr>
 										<tr>
 											<td align="left"><b><sf:label path="secretQuesAnsId"><spring:message code="label.resetPassword.secretQuestionAnswer.text"/></sf:label></b></td>

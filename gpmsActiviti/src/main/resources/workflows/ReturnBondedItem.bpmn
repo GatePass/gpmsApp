@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <definitions xmlns="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:activiti="http://activiti.org/bpmn" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:omgdc="http://www.omg.org/spec/DD/20100524/DC" xmlns:omgdi="http://www.omg.org/spec/DD/20100524/DI" typeLanguage="http://www.w3.org/2001/XMLSchema" expressionLanguage="http://www.w3.org/1999/XPath" targetNamespace="http://www.activiti.org/test">
-  <process id="myProcess" name="My process" isExecutable="true">
+  <process id="ReturnBondedItem" name="Return Bonded Item" isExecutable="true">
     <startEvent id="startevent1" name="Start"></startEvent>
     <serviceTask id="bondedItemReturnTask" name="Bonded Item Return and Mail to ISIT Mgr" activiti:class="org.gpms.web.TestActiviti"></serviceTask>
     <userTask id="isitManagerApprovalTask" name="ISIT Manager Approval Task"></userTask>
@@ -34,8 +34,8 @@
     <sequenceFlow id="flow13" sourceRef="correctionMailToManager" targetRef="AssignToISITManager"></sequenceFlow>
     <sequenceFlow id="flow14" sourceRef="AssignToISITManager" targetRef="isitManagerApprovalTask"></sequenceFlow>
   </process>
-  <bpmndi:BPMNDiagram id="BPMNDiagram_myProcess">
-    <bpmndi:BPMNPlane bpmnElement="myProcess" id="BPMNPlane_myProcess">
+  <bpmndi:BPMNDiagram id="BPMNDiagram_ReturnBondedItem">
+    <bpmndi:BPMNPlane bpmnElement="ReturnBondedItem" id="BPMNPlane_ReturnBondedItem">
       <bpmndi:BPMNShape bpmnElement="startevent1" id="BPMNShape_startevent1">
         <omgdc:Bounds height="35.0" width="35.0" x="40.0" y="178.0"></omgdc:Bounds>
       </bpmndi:BPMNShape>

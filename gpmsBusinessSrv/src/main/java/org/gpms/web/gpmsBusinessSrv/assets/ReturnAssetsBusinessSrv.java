@@ -91,10 +91,6 @@ public class ReturnAssetsBusinessSrv {
 		userAssetId = userAssetsRepository
 				.updateAssetInfoOfUser(userAssetEntity);
 
-		assetsEntity
-				.setAssetStatus(ApplicationConstants.ASSET_AVAILABLE_STATUS);
-		assetsRepository.modifyAsset(assetsEntity);
-
 		// Make necessary modification to records in activiti
 		String comment = "An asset is for Approval request with id :"
 				+ assetsEntity.getAssetId() + "of Type "

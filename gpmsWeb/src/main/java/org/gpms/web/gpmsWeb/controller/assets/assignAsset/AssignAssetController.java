@@ -55,6 +55,15 @@ public class AssignAssetController {
 
 		String flowType = bondedAssetBean.getFlowType();
 
+		// TODO
+		// Validation if the asset is in available state
+		// To check if user exists
+		// To check if asset exists
+
+		if (result.hasErrors()) {
+			return new ModelAndView("assets/issueBondedAsset");
+		}
+
 		if (logger.isDebugEnabled()) {
 			logger.debug("bondedAssetBean " + bondedAssetBean);
 		}

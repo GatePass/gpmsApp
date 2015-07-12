@@ -43,8 +43,10 @@ public class UserBean implements Serializable {
 	private List<String> questionId;
 
 	@NotEmpty(message = "Secret answer cannot be Empty")
+	@Size(min = 10, message = "Minimum 10 character secret answer")
 	private String secretQuesAnsId;
 
+	@Size(min = 10, message = "Password criteria not met")
 	private String password;
 
 	/**
@@ -198,11 +200,12 @@ public class UserBean implements Serializable {
 	}
 
 	public String toString() {
-		return "\nflowType" + flowType + "\nuserId" + userId
-				+ "\nuserFirstName" + userFirstName + "\nuserLastName"
-				+ userLastName + "\ncorpEmailId" + corpEmailId
-				+ "\npersonalEmailId" + personalEmailId + "\nuserGroupId"
-				+ userGroupId + "\npassword" + password + "\n";
+		return "\nflowType " + flowType + "\nuserId " + userId
+				+ "\nuserFirstName " + userFirstName + "\nuserLastName "
+				+ userLastName + "\ncorpEmailId " + corpEmailId
+				+ "\npersonalEmailId " + personalEmailId + "\nuserGroupId "
+				+ userGroupId + "\npassword " + password + "\nquestionId "
+				+ questionId + "\nsecretQuesAnsId " + secretQuesAnsId + "\n";
 	}
 
 }

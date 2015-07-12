@@ -105,13 +105,13 @@ public class NavigationController {
 		return "redirect:approveRejectAsset";
 	}
 
-	@RequestMapping(value = "/navigation", params = "resubmitForApproval")
+	@RequestMapping(value = "/navigation", params = "modifyBondedAsset")
 	public String resubmitForApproval(HttpServletRequest request)
 			throws IOException {
 		BondedAssetBean bondedAssetBean = new BondedAssetBean();
-		bondedAssetBean.setFlowType("resubmitForApproval");
+		bondedAssetBean.setFlowType("itemCorrection");
 		request.getSession().setAttribute("bondedAssetBean", bondedAssetBean);
-		return "redirect:resubmitForApproval";
+		return "redirect:modifyBondedAsset";
 	}
 
 }

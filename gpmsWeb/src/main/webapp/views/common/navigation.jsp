@@ -77,7 +77,7 @@
 										<td align="left" colspan="2" ><label><spring:message code="label.userAccessMgmt.issueBondedItemActivity.text"/></label>
 										</td>
 										<td><input type="submit" name="approveRejectAsset" value='<spring:message code="button.userAccessMgmt.approveReject.text"/>' /></td>
-										<td><input type="submit" name="resubmitForApproval" value='<spring:message code="button.userAccessMgmt.resubmitForApproval.text"/>' /></td>
+										<td><input type="submit" name="modifyBondedAsset" value='<spring:message code="button.userAccessMgmt.modifyBondedAsset.text"/>' /></td>
 									</tr>
 									<br>
 									<tr>

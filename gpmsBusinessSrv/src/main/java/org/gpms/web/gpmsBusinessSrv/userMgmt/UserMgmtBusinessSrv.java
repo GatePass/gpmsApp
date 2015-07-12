@@ -188,6 +188,8 @@ public class UserMgmtBusinessSrv {
 		usersLoginEntity.setUserGroupId(userModel.getUserGroupId());
 		usersLoginEntity.setPassword(userModel.getPassword());
 		usersLoginEntity.setUserLastLogin(userModel.getUserLastLogin());
+		usersLoginEntity.setUserSecurityQuestion(userModel.getQuestionId());
+		usersLoginEntity.setUserSecurityAnswer(userModel.getSecretQuesAnsId());
 
 		return usersLoginEntity;
 
@@ -205,6 +207,8 @@ public class UserMgmtBusinessSrv {
 		userModel.setUserGroupId(usersLoginEntity.getUserGroupId());
 		userModel.setPassword(usersLoginEntity.getPassword());
 		userModel.setUserLastLogin(usersLoginEntity.getUserLastLogin());
+		userModel.setQuestionId(usersLoginEntity.getUserSecurityQuestion());
+		userModel.setSecretQuesAnsId(usersLoginEntity.getUserSecurityAnswer());
 
 		return userModel;
 

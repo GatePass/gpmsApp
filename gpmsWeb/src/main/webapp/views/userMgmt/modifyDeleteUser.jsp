@@ -155,7 +155,13 @@
 															<spring:message
 																code="label.newUser.selectTheUserGroup.text" />
 														</sf:label></b></td>
-												<td><sf:label path="userGroupId">${userBean.userGroupId}</sf:label></td>
+												<td><sf:select path="userGroupId" multiple="false"
+														disabled="${isDisabled}">
+														<sf:option value="" label=""></sf:option>
+														<c:forEach items="${userGroupModel}" var="userGroupModel">
+															<sf:option value="${userGroupModel.userGroupId}">${userGroupModel.userGroupName}</sf:option>
+														</c:forEach>
+													</sf:select> <br /> <sf:errors path="userGroupId" cssClass="error" /></td>
 											</tr>
 											<tr>
 												<td align="left" valign="top"><b><sf:label
@@ -163,7 +169,15 @@
 															<spring:message
 																code="label.newUser.selectTheSecretQuestion.text" />
 														</sf:label></b></td>
-												<td><sf:label path="questionId">${userBean.questionId}</sf:label></td>
+												<td><sf:select path="questionId" multiple="false"
+														disabled="${isDisabled}">
+														<sf:option value="" label=""></sf:option>
+														<c:forEach items="${securityQuestionsModel}"
+															var="securityQuestionsModel">
+															<sf:option
+																value="${securityQuestionsModel.securityQuestionId}">${securityQuestionsModel.securityQuestion}</sf:option>
+														</c:forEach>
+													</sf:select> <br /> <sf:errors path="questionId" cssClass="error" /></td>
 											</tr>
 											<tr>
 												<td align="left" valign="top"><b><sf:label

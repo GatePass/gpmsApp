@@ -31,7 +31,7 @@ public class DateUtil {
 		return dateDB;
 	}
 
-	public static Date getSQLDateForAsset(String dateToConvert) {
+	public static Date getSQLDateForTimeStamp(String dateToConvert) {
 
 		java.sql.Date dateDB = null;
 

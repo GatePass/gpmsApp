@@ -5,6 +5,9 @@ package org.gpms.web.gpmsWeb.controller.assets;
 
 import java.io.Serializable;
 
+import javax.validation.constraints.Size;
+
+import org.hibernate.validator.constraints.Email;
 import org.hibernate.validator.constraints.NotEmpty;
 
 /**
@@ -17,14 +20,18 @@ public class BondedAssetBean implements Serializable {
 
 	private String userAssetId;
 
-	@NotEmpty(message = "Email Id of the employee to whom asset is to be assigned cannot be be Empty")
+	@NotEmpty(message = "Employee to whom asset is to be assigned cannot be be Empty")
+	@Email(message = "Please enter the corporate mail id")
+	@Size(min = 6, message = "Wrong Email Id Entered")
 	private String userCorpEmail;
 
 	@NotEmpty(message = "Asset Id to be assigned cannot be be Empty")
 	private String assetId;
 
+	@NotEmpty(message = "Asset Issue Date cannot be empty for issuing asset")
 	private String userAssetIssueDate;
 
+	@NotEmpty(message = "Asset Return Date cannot be empty for returning asset")
 	private String userAssetReturnDate;
 
 	private String userAssetIssueProcessId;

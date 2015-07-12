@@ -116,4 +116,11 @@ public class MailServiceParams implements Serializable {
 		this.mailHtmlBody = mailHtmlBody;
 	}
 
+	public String toString() {
+		return "\nmailUserId " + mailUserId + "\nmailPassword " + mailPassword
+				+ "\nmailToAddress " + mailToAddress + "\nmailCcAddress "
+				+ mailCcAddress + "\nmailSubject " + mailSubject
+				+ "\nmailHtmlBody " + mailHtmlBody + "\n";
+	}
+
 }

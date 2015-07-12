@@ -5,7 +5,10 @@ package org.gpms.web.gpmsWeb.controller.login;
 
 import java.util.List;
 
-import javax.validation.constraints.Null;
+import javax.validation.constraints.Size;
+
+import org.hibernate.validator.constraints.Email;
+import org.hibernate.validator.constraints.NotEmpty;
 
 /**
  * @author narenda.kumar
@@ -13,19 +16,23 @@ import javax.validation.constraints.Null;
  */
 public class PasswordResetBean {
 
-	@Null(message = "Login Id cannot be Empty")
+	@NotEmpty(message = "Corp Email Id cannot be Empty")
+	@Email(message = "Not a valid Email Id")
+	@Size(min = 6, message = "Wrong Email Id Entered")
 	private String loginId;
 
-	@Null(message = "Select a question for Security reason")
+	@NotEmpty(message = "Select a question for Security reason")
 	private List<String> questionId;
 
-	@Null(message = "Secret answer for the selected question cannot be Empty")
+	@NotEmpty(message = "Secret answer for the selected question cannot be Empty")
 	private String secretQuesAnsId;
 
-	@Null(message = "New password cannot be Empty")
+	@NotEmpty(message = "New password cannot be Empty")
+	@Size(min = 10, message = "Password criteria not met")
 	private String newPasswordId;
 
-	@Null(message = "Re-enter New password cannot be Empty")
+	@NotEmpty(message = "Re-enter New password cannot be Empty")
+	@Size(min = 10, message = "Password criteria not met")
 	private String reenterNewPasswordId;
 
 	/**

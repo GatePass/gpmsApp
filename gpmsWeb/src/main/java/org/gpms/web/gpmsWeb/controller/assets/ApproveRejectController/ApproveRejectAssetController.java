@@ -12,7 +12,6 @@ import org.gpms.web.gpmsBusinessSrv.assets.ApproveRejectAssetBusinessSrv;
 import org.gpms.web.gpmsBusinessSrv.assets.AssetAssignModel;
 import org.gpms.web.gpmsWeb.controller.assets.BondedAssetBean;
 import org.gpms.web.gpmsWeb.controller.assets.BondedAssetDataConverter;
-import org.gpms.web.gpmsWeb.controller.userMgmt.UserController;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -31,7 +30,8 @@ import org.springframework.web.servlet.ModelAndView;
 @SessionAttributes("bondedAssetBean")
 public class ApproveRejectAssetController {
 
-	private static final Logger logger = Logger.getLogger(UserController.class);
+	private static final Logger logger = Logger
+			.getLogger(ApproveRejectAssetController.class);
 
 	@Autowired
 	ApproveRejectAssetBusinessSrv approveRejectAssetBusinessSrv;

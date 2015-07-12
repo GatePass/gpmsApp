@@ -8,6 +8,9 @@ import org.activiti.engine.task.Comment;
 import org.activiti.engine.task.Task;
 import org.apache.log4j.Logger;
 import org.gpms.web.common.BondedItemManagement;
+import org.gpms.web.domain.AssetsRepository;
+import org.gpms.web.domain.UserAssetsRepository;
+import org.gpms.web.entities.assets.AssetsEntity;
 import org.gpms.web.entities.assets.UserAssetEntity;
 import org.gpms.web.gpmsBusinessSrv.util.ApplicationConstants;
 import org.gpms.web.mail.MailServiceParams;
@@ -19,6 +22,12 @@ public class ApproveRejectAssetBusinessSrv {
 
 	@Autowired
 	BondedItemManagement bondedItemManagement;
+
+	@Autowired
+	UserAssetsRepository userAssetsRepository;
+
+	@Autowired
+	private AssetsRepository assetsRepository;
 
 	private static final Logger logger = Logger
 			.getLogger(ApproveRejectAssetBusinessSrv.class);
@@ -106,6 +115,12 @@ public class ApproveRejectAssetBusinessSrv {
 				null);
 		bondedItemManagement.completeTask(processInstanceId);
 
+		AssetsEntity assetsEntity = assetsRepository
+				.getAssetById(assetAssignModel.getAssetId());
+		assetsEntity
+				.setAssetStatus(ApplicationConstants.ASSET_AVAILABLE_STATUS);
+		assetsRepository.modifyAsset(assetsEntity);
+
 		if (logger.isDebugEnabled()) {
 			logger.debug("Approval has approved the task for asset to be issued");
 		}
@@ -145,10 +160,19 @@ public class ApproveRejectAssetBusinessSrv {
 				+ " is rejected for the user "
 				+ assetAssignModel.getUserCorpEmail();
 
+		// TODO To be values to be read from login details
+		bondedItemManagement.performApprovalAssignment(processInstanceId,
+				ApplicationConstants.GROUP_ISIT_MANAGER,
+				"gpmsisituser3@gmail.com");
+
+		String userAssetId = assetAssignModel.getUserAssetId();
+		UserAssetEntity userAssetEntity = userAssetsRepository
+				.getUserAssetById(userAssetId);
+
 		bondedItemManagement.setVariableOnTask(processInstanceId, "isApproved",
 				false);
-		bondedItemManagement.updateInfoOnTask(processInstanceId, comment, null,
-				null);
+		bondedItemManagement.updateInfoOnTask(processInstanceId, comment,
+				"userAssetEntity", userAssetEntity);
 		bondedItemManagement.completeTask(processInstanceId);
 
 		if (logger.isDebugEnabled()) {
@@ -198,6 +222,22 @@ public class ApproveRejectAssetBusinessSrv {
 		}
 
 		return assetAssignModelLst;
+	}
+
+	public AssetAssignModel getUserAssetById(String userAssetId) {
+
+		UserAssetEntity userAssetEntity = userAssetsRepository
+				.getUserAssetById(userAssetId);
+
+		AssetAssignModel assetAssignModel = BondedAssetModelEntityConverter
+				.convertEntityToModel(userAssetEntity);
+
+		if (logger.isDebugEnabled()) {
+			logger.debug("assetAssignModel :" + assetAssignModel);
+		}
+
+		return assetAssignModel;
+
 	}
 
 }
