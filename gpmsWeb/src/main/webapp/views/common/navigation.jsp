@@ -31,7 +31,7 @@
 							style="border-width: 2px; background-color: lightblue;  width: 800px;">
 							<sf:form action="navigation">
 								<table cellspacing="10px">
-								 <security:authorize access="hasRole('ROLE_gpmsAdminGroup')">
+								 <!-- security:authorize access="hasAnyRole('ROLE_gpmsAdminGroup', 'ROLE_gpmsSecurityGroup')" -->
 									<tr>
 										<td class="boxHeading" align="left" colspan="2" ><b> <label><spring:message code="subHeader.userAccessMgmt.text"/></label>
 										</b></td>
@@ -42,12 +42,14 @@
 										<td><input type="submit" name="createUser" value='<spring:message code="button.userAccessMgmt.createuser.text"/>' /></td>
 										<td><input type="submit" name="modifyUser" value='<spring:message code="button.userAccessMgmt.modifyUser.text"/>' /></td>
 									</tr>
-									</security:authorize>
+									
 									<tr>
 										<td align="left" colspan="2" ><label><spring:message code="label.userAccessMgmt.deleteUser.text"/></label>
 										</td>
 										<td><input type="submit" name="deleteUser" value='<spring:message code="button.userAccessMgmt.deleteUser.text"/>' /></td>
 									</tr>
+									<!-- /security:authorize-->
+									<!--security:authorize access="hasAnyRole('ROLE_gpmsAdminGroup')" -->
 									<br>
 									<tr>
 										<td class="boxHeading" align="left" colspan="2" ><b> <label><spring:message code="subHeader.assetsMgmt.text"/></label>
@@ -83,9 +85,14 @@
 										<td><input type="submit" name="modifyBondedAsset" value='<spring:message code="button.userAccessMgmt.modifyBondedAsset.text"/>' /></td>
 									</tr>
 									<br>
+									<!-- /security:authorize-->
 									<tr>
 										<td class="boxHeading" align="left" colspan="2" ><b> <label><spring:message code="subHeader.reporting.text"/></label>
 										</b></td>
+									</tr>
+								    <tr>
+										<td align="left" colspan="2" ><label>Reset Password</label>
+										<td><input type="submit" name="passwordReset" value='<spring:message code="button.loginPage.resetPassword.text"/>' /></td>
 									</tr>
 								</table>
 							</sf:form>

@@ -42,7 +42,7 @@ public class GpmsMvcSecurityConfig extends WebSecurityConfigurerAdapter {
 		http.anonymous().and().authorizeRequests().antMatchers("/resources/**")
 				.permitAll();
 
-		http.anonymous().and().authorizeRequests().antMatchers("/login?lang")
+		http.anonymous().and().authorizeRequests().antMatchers("/login?lang**")
 				.permitAll();
 
 		http.formLogin().loginPage("/login").usernameParameter("userId")
@@ -50,9 +50,9 @@ public class GpmsMvcSecurityConfig extends WebSecurityConfigurerAdapter {
 
 		http.exceptionHandling().accessDeniedPage("/403");
 
-		http.authorizeRequests().antMatchers("/navigation")
-				.access("hasRole('gpmsAdminGroup')").anyRequest()
-				.authenticated();
+		http.authorizeRequests().antMatchers("/*", "/navigation")
+				.access("hasAnyRole('gpmsAdminGroup', 'gpmsSecurityGroup')")
+				.anyRequest().authenticated();
 
 	}
 

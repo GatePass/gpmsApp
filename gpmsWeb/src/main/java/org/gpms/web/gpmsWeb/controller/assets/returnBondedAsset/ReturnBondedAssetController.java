@@ -3,6 +3,7 @@
  */
 package org.gpms.web.gpmsWeb.controller.assets.returnBondedAsset;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 
 import org.apache.log4j.Logger;
@@ -14,11 +15,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
+import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.servlet.ModelAndView;
+
+import exceptions.GPMSApplicationException;
 
 /**
  * @author narenda.kumar
@@ -36,7 +40,7 @@ public class ReturnBondedAssetController {
 
 	@RequestMapping(value = "/returnBondedAsset", method = { RequestMethod.GET,
 			RequestMethod.POST })
-	public ModelAndView returnBondedAsset(
+	public ModelAndView returnBondedAsset(HttpServletRequest request,
 			@ModelAttribute("bondedAssetBean") BondedAssetBean bondedAssetBean,
 			Model model) {
 
@@ -51,6 +55,7 @@ public class ReturnBondedAssetController {
 
 	@RequestMapping(value = "/issueBondedAsset", method = RequestMethod.POST, params = "getAssetAssignedData")
 	public ModelAndView getAssetAssignedData(
+			HttpServletRequest request,
 			@ModelAttribute("bondedAssetBean") @Valid BondedAssetBean bondedAssetBean,
 			BindingResult result, Model model) {
 
@@ -109,7 +114,16 @@ public class ReturnBondedAssetController {
 			}
 
 			if (userAssetId != null && userReturnDate != null) {
-				returnAssetsBusinessSrv.ReturnBondedItems(assetAssignModel);
+
+				try {
+					returnAssetsBusinessSrv.ReturnBondedItems(assetAssignModel);
+				} catch (GPMSApplicationException appExp) {
+
+					FieldError appError = new FieldError("bondedAssetBean",
+							"errorMessage", appExp.getErrorMessage());
+					result.addError(appError);
+				}
+
 			}
 
 		}

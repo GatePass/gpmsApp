@@ -8,6 +8,7 @@ import java.io.IOException;
 import javax.servlet.http.HttpServletRequest;
 
 import org.gpms.web.gpmsWeb.controller.assets.BondedAssetBean;
+import org.gpms.web.gpmsWeb.controller.login.PasswordResetBean;
 import org.gpms.web.gpmsWeb.controller.userMgmt.UserBean;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -28,6 +29,10 @@ public class NavigationController {
 
 	@RequestMapping(value = "/navigation", params = "createUser")
 	public String createUser(HttpServletRequest request) throws IOException {
+
+		System.out.println("request.getUserPrincipal() "
+				+ request.getUserPrincipal());
+
 		UserBean userBean = new UserBean();
 		request.getSession().setAttribute("userBean", userBean);
 		return "redirect:newUser";
@@ -112,6 +117,14 @@ public class NavigationController {
 		bondedAssetBean.setFlowType("itemCorrection");
 		request.getSession().setAttribute("bondedAssetBean", bondedAssetBean);
 		return "redirect:modifyBondedAsset";
+	}
+
+	@RequestMapping(value = "/navigation", params = "passwordReset")
+	public String passwordReset(HttpServletRequest request) throws IOException {
+		PasswordResetBean passwordResetBean = new PasswordResetBean();
+		request.getSession().setAttribute("passwordResetBean",
+				passwordResetBean);
+		return "redirect:passwordReset";
 	}
 
 }

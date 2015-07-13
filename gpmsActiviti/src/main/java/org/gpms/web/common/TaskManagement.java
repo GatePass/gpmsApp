@@ -39,6 +39,14 @@ public class TaskManagement {
 		return task;
 	}
 
+	public Task getTaskByProcessInstAndDefKey(String taskDefinitionKey,
+			String processInstanceId) {
+		Task task = taskService.createTaskQuery()
+				.taskDefinitionKey(taskDefinitionKey)
+				.processInstanceId(processInstanceId).singleResult();
+		return task;
+	}
+
 	public Task getTaskByExecutionId(String executionId) {
 		Task task = taskService.createTaskQuery().executionId(executionId)
 				.singleResult();
@@ -94,6 +102,7 @@ public class TaskManagement {
 			String variableName, Object variable) {
 		Task task = getTaskByProcessInstance(processInstanceId);
 		taskService.setVariable(task.getId(), variableName, variable);
+
 	}
 
 }

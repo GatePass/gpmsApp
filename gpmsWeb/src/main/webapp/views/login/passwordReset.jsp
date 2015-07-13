@@ -36,13 +36,13 @@
 										</tr>
 										<tr>
 											<td align="left"><b><sf:label path="loginId"><spring:message code="label.resetPassword.loginId.text"/></sf:label></b></td>
-											<td><sf:input path="loginId" /><br/>
+											<td><sf:input path="loginId" disabled="${isDisabled}"/><br/>
 											<sf:errors path="loginId" cssClass="error"/>
 											</td>
 										</tr>
 										<tr>
 											<td align="left" valign="top"><b><sf:label path="questionId"><spring:message code="label.newUser.selectTheSecretQuestion.text"/></sf:label></b></td>
-											<td><sf:select path="questionId" multiple="false">
+											<td><sf:select path="questionId" multiple="false" disabled="${isDisabled}">
 													<sf:option value="" label=""></sf:option>
 													<c:forEach items="${securityQuestionsModel}"
 														var="securityQuestionsModel">
@@ -55,7 +55,7 @@
 										</tr>
 										<tr>
 											<td align="left"><b><sf:label path="secretQuesAnsId"><spring:message code="label.resetPassword.secretQuestionAnswer.text"/></sf:label></b></td>
-											<td><sf:input path="secretQuesAnsId" /><br/>
+											<td><sf:input path="secretQuesAnsId"/><br/>
 											<sf:errors path="secretQuesAnsId" cssClass="error"/></td>
 										</tr>
 										<tr>

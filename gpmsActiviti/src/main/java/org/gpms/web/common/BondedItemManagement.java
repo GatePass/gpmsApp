@@ -44,6 +44,17 @@ public class BondedItemManagement {
 		return commentsList;
 	}
 
+	public void performApprovalAssignment(String taskDefinitionKey,
+			String processId, String groupId, String userId) {
+
+		Task task = taskManagement.getTaskByProcessInstAndDefKey(
+				taskDefinitionKey, processId);
+
+		taskManagement.assignTaskToUser(task.getId(), userId);
+		taskManagement.assignTaskToGroup(task.getId(), groupId);
+
+	}
+
 	public void performApprovalAssignment(String processId, String groupId,
 			String userId) {
 
@@ -80,6 +91,13 @@ public class BondedItemManagement {
 
 	public Task getTaskByProcessInstance(String processInstanceId) {
 		Task task = taskManagement.getTaskByProcessInstance(processInstanceId);
+		return task;
+	}
+
+	public Task getTaskByProcessInstAndDefKey(String taskDefinitionKey,
+			String processInstanceId) {
+		Task task = taskManagement.getTaskByProcessInstAndDefKey(
+				taskDefinitionKey, processInstanceId);
 		return task;
 	}
 

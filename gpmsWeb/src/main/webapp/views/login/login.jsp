@@ -70,7 +70,6 @@ function onLocaleChange(){
 									</table>
 									<input type="hidden" name="${_csrf.parameterName}"	value="${_csrf.token}" />
 									<input type="submit" name="submitL" value='<spring:message code="button.loginPage.submit.text"/>' />
-									<input type="submit" name="reset" value='<spring:message code="button.loginPage.resetPassword.text"/>' />
 								</sf:form>
 
 							</fieldset>

@@ -7,8 +7,6 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
-import javax.validation.Valid;
-
 import org.apache.log4j.Logger;
 import org.gpms.web.gpmsBusinessSrv.assets.ApproveRejectAssetBusinessSrv;
 import org.gpms.web.gpmsBusinessSrv.assets.AssetAssignModel;
@@ -65,7 +63,7 @@ public class ResubmitForApprovalController {
 	public ModelAndView modifyBondedAsset(@RequestParam String userAssetId,
 			@RequestParam String userAssetIssueProcessId,
 			@RequestParam(value = "correctionParam") String correctionParam,
-			@ModelAttribute @Valid BondedAssetBean bondedAssetBean, Model model) {
+			@ModelAttribute BondedAssetBean bondedAssetBean, Model model) {
 
 		if (userAssetId != null) {
 			userAssetId = userAssetId.split(",")[0];

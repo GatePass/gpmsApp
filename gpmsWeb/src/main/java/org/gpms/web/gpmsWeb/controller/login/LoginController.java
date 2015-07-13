@@ -43,10 +43,13 @@ public class LoginController {
 	@Autowired
 	LocaleResolver localeResolver;
 
-	@RequestMapping(value = "/login", method = RequestMethod.POST)
-	public ModelAndView localeChange(HttpServletRequest request,
+	@RequestMapping(value = "/login", method = { RequestMethod.GET })
+	public ModelAndView login(HttpServletRequest request,
 			HttpServletResponse response, @ModelAttribute LoginBean loginBean,
 			Model model) throws Exception {
+
+		System.out.println(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>  "
+				+ request.getParameter("lang"));
 
 		if (loginBean.getLangId() != null) {
 			Locale locale = StringUtils
@@ -57,14 +60,18 @@ public class LoginController {
 		return new ModelAndView("login/login");
 	}
 
-	@RequestMapping(value = "/login", method = RequestMethod.GET)
-	public ModelAndView login(@ModelAttribute LoginBean loginBean, Model model)
-			throws IOException {
-
-		logger.debug("login ");
-
-		return new ModelAndView("login/login");
-	}
+	// @RequestMapping(value = "/login", method = RequestMethod.GET)
+	// public ModelAndView login(@ModelAttribute LoginBean loginBean, Model
+	// model)
+	// throws IOException {
+	//
+	// System.out
+	// .println(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>  ???????????????????");
+	//
+	// logger.debug("login ");
+	//
+	// return new ModelAndView("login/login");
+	// }
 
 	@RequestMapping(value = "/login", method = RequestMethod.POST, params = "submitL")
 	public String submitL(@ModelAttribute @Valid LoginBean loginBean,

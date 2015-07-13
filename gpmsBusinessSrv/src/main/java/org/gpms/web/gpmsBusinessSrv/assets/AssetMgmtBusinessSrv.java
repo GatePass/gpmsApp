@@ -88,10 +88,16 @@ public class AssetMgmtBusinessSrv {
 		assetsEntity.setAssetId(assetModel.getAssetId());
 		assetsEntity.setAssetBarCode(assetModel.getAssetBarCode());
 		assetsEntity.setAssetType(assetModel.getAssetTypeId());
-		assetsEntity.setAssetPurchaseDate(DateUtil.getSQLDate(assetModel
-				.getAssetPurchaseDate()));
-		assetsEntity.setAssetRemovalDate(DateUtil.getSQLDate(assetModel
-				.getAssetRemovalDate()));
+		if (assetModel.getAssetPurchaseDate() != null
+				&& assetModel.getAssetPurchaseDate() != "") {
+			assetsEntity.setAssetPurchaseDate(DateUtil
+					.getSQLDateForTimeStamp(assetModel.getAssetPurchaseDate()));
+		}
+		if (assetModel.getAssetRemovalDate() != null
+				&& assetModel.getAssetRemovalDate() != "") {
+			assetsEntity.setAssetRemovalDate(DateUtil
+					.getSQLDateForTimeStamp(assetModel.getAssetRemovalDate()));
+		}
 		assetsEntity.setAssetStatus(assetModel.getAssetStatus());
 
 		return assetsEntity;
@@ -103,9 +109,13 @@ public class AssetMgmtBusinessSrv {
 		assetModel.setAssetId(assetsEntity.getAssetId());
 		assetModel.setAssetBarCode(assetsEntity.getAssetBarCode());
 		assetModel.setAssetTypeId(assetsEntity.getAssetType());
-		assetModel.setAssetPurchaseDate(assetsEntity.getAssetPurchaseDate()
-				.toString());
-		if (assetsEntity.getAssetRemovalDate() != null) {
+		if (assetModel.getAssetPurchaseDate() != null
+				&& assetModel.getAssetPurchaseDate() != "") {
+			assetModel.setAssetPurchaseDate(assetsEntity.getAssetPurchaseDate()
+					.toString());
+		}
+		if (assetModel.getAssetRemovalDate() != null
+				&& assetModel.getAssetRemovalDate() != "") {
 			assetModel.setAssetRemovalDate(assetsEntity.getAssetRemovalDate()
 					.toString());
 		}

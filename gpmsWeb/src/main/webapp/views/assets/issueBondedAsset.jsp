@@ -48,6 +48,16 @@
 											</b></td>
 										</tr>
 										<tr>
+											<td align="left" valign="top" ><b><sf:label
+														path="errorMessage" cssClass="error">
+														Error : 
+													</sf:label></b></td>
+											<td><sf:errors
+														path="errorMessage" cssClass="error" /></td>
+										</tr>
+										
+										
+										<tr>
 											<td align="left" valign="top"><b><sf:label
 														path="userAssetId">
 														<spring:message
@@ -144,8 +154,7 @@
 										value="Return Bonded Asset"
 										${isDisabled eq "true" ? 'disabled'  : '' } />
 									</c:if>
-
-
+									
 								</sf:form>
 							</fieldset>
 						</div>

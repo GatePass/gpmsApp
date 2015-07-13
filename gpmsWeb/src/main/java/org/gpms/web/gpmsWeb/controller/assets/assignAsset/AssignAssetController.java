@@ -3,6 +3,7 @@
  */
 package org.gpms.web.gpmsWeb.controller.assets.assignAsset;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 
 import org.apache.log4j.Logger;
@@ -14,11 +15,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
+import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.servlet.ModelAndView;
+
+import exceptions.GPMSApplicationException;
 
 /**
  * @author narenda.kumar
@@ -35,7 +39,7 @@ public class AssignAssetController {
 	IssueAssetsBusinessSrv issueAssetsBusinessSrv;
 
 	@RequestMapping(value = "/issueBondedAsset", method = { RequestMethod.GET })
-	public ModelAndView issueBondedAsset(
+	public ModelAndView issueBondedAsset(HttpServletRequest request,
 			@ModelAttribute("bondedAssetBean") BondedAssetBean bondedAssetBean,
 			Model model) {
 
@@ -49,16 +53,11 @@ public class AssignAssetController {
 	}
 
 	@RequestMapping(value = "/issueBondedAsset", method = { RequestMethod.POST }, params = "issueBondedAsset")
-	public ModelAndView issueBondedAsset(
+	public ModelAndView issueBondedAsset(HttpServletRequest request,
 			@ModelAttribute @Valid BondedAssetBean bondedAssetBean,
 			BindingResult result, Model model) {
 
 		String flowType = bondedAssetBean.getFlowType();
-
-		// TODO
-		// Validation if the asset is in available state
-		// To check if user exists
-		// To check if asset exists
 
 		if (result.hasErrors()) {
 			return new ModelAndView("assets/issueBondedAsset");
@@ -77,7 +76,17 @@ public class AssignAssetController {
 				logger.debug("assetAssignModel :" + assetAssignModel);
 			}
 
-			issueAssetsBusinessSrv.IssueBondedItems(assetAssignModel);
+			try {
+				issueAssetsBusinessSrv.IssueBondedItems(assetAssignModel);
+			} catch (GPMSApplicationException appExp) {
+				System.out.println("**********************************    "
+						+ appExp.getErrorCode());
+				FieldError appError = new FieldError("bondedAssetBean",
+						"errorMessage", appExp.getErrorMessage());
+				result.addError(appError);
+
+				return new ModelAndView("assets/issueBondedAsset");
+			}
 
 		}
 
@@ -86,5 +95,4 @@ public class AssignAssetController {
 
 		return new ModelAndView("assets/issueBondedAsset");
 	}
-
 }

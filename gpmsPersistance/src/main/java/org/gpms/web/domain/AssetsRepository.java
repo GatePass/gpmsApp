@@ -7,6 +7,7 @@ import java.util.List;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.PersistenceException;
 import javax.transaction.Transactional;
 
 import org.apache.log4j.Logger;
@@ -28,40 +29,46 @@ public class AssetsRepository {
 	@PersistenceContext(unitName = "gpmsPersistenceUnit")
 	EntityManager entityManager;
 
-	public String createAsset(AssetsEntity assetsEntity) {
+	public String createAsset(AssetsEntity assetsEntity)
+			throws PersistenceException {
 		entityManager.persist(assetsEntity);
 		String assetIdCreated = assetsEntity.getAssetId();
 		return assetIdCreated;
 	}
 
-	public String modifyAsset(AssetsEntity assetsEntity) {
+	public String modifyAsset(AssetsEntity assetsEntity)
+			throws PersistenceException {
 		entityManager.merge(assetsEntity);
 		String assetIdCreated = assetsEntity.getAssetId();
 		return assetIdCreated;
 	}
 
-	public AssetsEntity getAssetById(String assetId) {
+	public AssetsEntity getAssetById(String assetId)
+			throws PersistenceException {
 		AssetsEntity assetsEntity = entityManager.find(AssetsEntity.class,
 				assetId);
 		return assetsEntity;
 	}
 
-	public void deleteAsset(AssetsEntity assetsEntity) {
+	public void deleteAsset(AssetsEntity assetsEntity)
+			throws PersistenceException {
 		entityManager.remove(assetsEntity);
 	}
 
-	public void deleteAssetById(String assetId) {
+	public void deleteAssetById(String assetId) throws PersistenceException {
 		AssetsEntity assetsEntity = getAssetById(assetId);
 		entityManager.remove(assetsEntity);
 	}
 
-	public String createAssetType(AssetTypesEntity assetTypesEntity) {
+	public String createAssetType(AssetTypesEntity assetTypesEntity)
+			throws PersistenceException {
 		entityManager.persist(assetTypesEntity);
 		String assetTypeIdCreated = assetTypesEntity.getAssetTypeId();
 		return assetTypeIdCreated;
 	}
 
-	public AssetTypesEntity getAssetTypeById(String assetId) {
+	public AssetTypesEntity getAssetTypeById(String assetId)
+			throws PersistenceException {
 
 		AssetTypesEntity assetTypesEntity = entityManager.find(
 				AssetTypesEntity.class, assetId);
@@ -70,11 +77,13 @@ public class AssetsRepository {
 
 	}
 
-	public void deleteAssetType(AssetTypesEntity assetTypesEntity) {
+	public void deleteAssetType(AssetTypesEntity assetTypesEntity)
+			throws PersistenceException {
 		entityManager.remove(assetTypesEntity);
 	}
 
-	public List<AssetTypesEntity> getAllAssetTypesEntity() {
+	public List<AssetTypesEntity> getAllAssetTypesEntity()
+			throws PersistenceException {
 
 		logger.debug("getAllAssetType");
 

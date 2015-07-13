@@ -3,13 +3,14 @@
  */
 package org.gpms.web.gpmsBusinessSrv.userMgmt;
 
+import java.io.Serializable;
 import java.util.Date;
 
 /**
  * @author narenda.kumar
  * 
  */
-public class UserModel {
+public class UserModel implements Serializable {
 
 	private String userId;
 

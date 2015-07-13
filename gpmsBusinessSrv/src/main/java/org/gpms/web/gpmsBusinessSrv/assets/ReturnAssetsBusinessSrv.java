@@ -16,6 +16,10 @@ import org.gpms.web.returnBondedItem.ReturnBondedItem;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import exceptions.ErrorCodeList;
+import exceptions.ExceptionMessageList;
+import exceptions.GPMSApplicationException;
+
 /**
  * @author narenda.kumar
  * 
@@ -38,27 +42,49 @@ public class ReturnAssetsBusinessSrv {
 	@Autowired
 	AssetsRepository assetsRepository;
 
-	public void ReturnBondedItems(AssetAssignModel assetAssignModel) {
+	public void ReturnBondedItems(AssetAssignModel assetAssignModel)
+			throws GPMSApplicationException {
+
+		if (logger.isDebugEnabled()) {
+			logger.debug("assetAssignModel :" + assetAssignModel);
+		}
 
 		/*
 		 * Update the gpms database with the record
 		 */
 		UserAssetEntity userAssetEntity = new UserAssetEntity();
 
-		if (logger.isDebugEnabled()) {
-			logger.debug("assetAssignModel :" + assetAssignModel);
-		}
+		AssetsEntity assetsEntity = assetsRepository
+				.getAssetById(assetAssignModel.getAssetId());
 
 		UsersLoginEntity userLoginEntity = usersRepository
 				.getUserByCorpEmailId(assetAssignModel.getUserCorpEmail());
-		if (userLoginEntity == null) {
-			return;
+
+		if (logger.isDebugEnabled()) {
+			logger.debug("userLoginEntity :" + userLoginEntity);
 		}
 
-		AssetsEntity assetsEntity = assetsRepository
-				.getAssetById(assetAssignModel.getAssetId());
+		if (userLoginEntity == null) {
+			throw new GPMSApplicationException(
+					ErrorCodeList.ERROR_NO_USER_FOUND,
+					ExceptionMessageList.ERROR_NO_USER_FOUND_MSG);
+		}
+
+		if (logger.isDebugEnabled()) {
+			logger.debug("assetsEntity :" + assetsEntity);
+		}
+
 		if (assetsEntity == null) {
-			return;
+			throw new GPMSApplicationException(
+					ErrorCodeList.ERROR_NO_USER_FOUND,
+					ExceptionMessageList.ERROR_NO_ASSET_FOUND_MSG);
+		}
+		if (assetsEntity != null
+				& !ApplicationConstants.ASSET_AVAILABLE_STATUS
+						.equals(assetsEntity.getAssetStatus())) {
+			throw new GPMSApplicationException(
+					ErrorCodeList.ERROR_ASSET_IS_NOT_AVAILABLE,
+					ExceptionMessageList.ERROR_ASSET_IS_NOT_AVAILABLE_MSG);
 		}
 
 		String userAssetId = assetAssignModel.getUserAssetId();
@@ -80,7 +106,8 @@ public class ReturnAssetsBusinessSrv {
 		String processInstanceId = returnBondedItem
 				.startReturnBondedItemProcess();
 
-		returnBondedItem.performApprovalAssignment(processInstanceId,
+		returnBondedItem.performApprovalAssignment(
+				ApplicationConstants.ISIT_MGR_APPROVAL_TASK, processInstanceId,
 				ApplicationConstants.GROUP_ISIT_MANAGER,
 				"gpmsISITMgr@gmail.com");
 

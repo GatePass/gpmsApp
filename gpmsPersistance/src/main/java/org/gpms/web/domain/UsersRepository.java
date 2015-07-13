@@ -7,6 +7,7 @@ import java.util.List;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.PersistenceException;
 import javax.transaction.Transactional;
 
 import org.gpms.web.entities.users.SecurityQuestionEntity;
@@ -25,33 +26,38 @@ public class UsersRepository {
 	@PersistenceContext(unitName = "gpmsPersistenceUnit")
 	EntityManager entityManager;
 
-	public String createUser(UsersLoginEntity usersLoginEntity) {
+	public String createUser(UsersLoginEntity usersLoginEntity)
+			throws PersistenceException {
 		entityManager.persist(usersLoginEntity);
 		String userIdCreated = usersLoginEntity.getUserId();
 		return userIdCreated;
 	}
 
-	public String modifyUser(UsersLoginEntity usersLoginEntity) {
+	public String modifyUser(UsersLoginEntity usersLoginEntity)
+			throws PersistenceException {
 		entityManager.merge(usersLoginEntity);
 		String userIdCreated = usersLoginEntity.getUserId();
 		return userIdCreated;
 	}
 
-	public void deleteUser(UsersLoginEntity usersLoginEntity) {
+	public void deleteUser(UsersLoginEntity usersLoginEntity)
+			throws PersistenceException {
 		entityManager.remove(usersLoginEntity);
 	}
 
-	public void deleteUserById(String userId) {
+	public void deleteUserById(String userId) throws PersistenceException {
 		UsersLoginEntity usersLoginEntity = getUserById(userId);
 		deleteUser(usersLoginEntity);
 	}
 
-	public void deleteUserByCorpEmailId(String userEmailId) {
+	public void deleteUserByCorpEmailId(String userEmailId)
+			throws PersistenceException {
 		UsersLoginEntity usersLoginEntity = getUserByCorpEmailId(userEmailId);
 		deleteUser(usersLoginEntity);
 	}
 
-	public UsersLoginEntity getUserById(String userId) {
+	public UsersLoginEntity getUserById(String userId)
+			throws PersistenceException {
 
 		UsersLoginEntity usersLoginEntity = entityManager.find(
 				UsersLoginEntity.class, userId);
@@ -60,7 +66,8 @@ public class UsersRepository {
 
 	}
 
-	public UsersLoginEntity getUserByCorpEmailId(String userEmailId) {
+	public UsersLoginEntity getUserByCorpEmailId(String userEmailId)
+			throws PersistenceException {
 
 		UsersLoginEntity usersLoginEntity = (UsersLoginEntity) entityManager
 				.createQuery(

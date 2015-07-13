@@ -1,6 +1,7 @@
 package org.gpms.web.gpmsWeb.config;
 
 import java.util.Locale;
+import java.util.Properties;
 
 import org.springframework.context.MessageSource;
 import org.springframework.context.annotation.Bean;
@@ -12,6 +13,7 @@ import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
+import org.springframework.web.servlet.handler.SimpleMappingExceptionResolver;
 import org.springframework.web.servlet.i18n.LocaleChangeInterceptor;
 import org.springframework.web.servlet.i18n.SessionLocaleResolver;
 import org.springframework.web.servlet.view.InternalResourceViewResolver;
@@ -68,5 +70,20 @@ public class GpmsMvcConfiguration extends WebMvcConfigurerAdapter {
 	public void addInterceptors(InterceptorRegistry registry) {
 		System.out.println("In add Interceptor");
 		registry.addInterceptor(localeChangeInterceptor());
+	}
+
+	@Bean(name = "simpleMappingExceptionResolver")
+	public SimpleMappingExceptionResolver createSimpleMappingExceptionResolver() {
+		SimpleMappingExceptionResolver r = new SimpleMappingExceptionResolver();
+
+		Properties mappings = new Properties();
+		mappings.setProperty("DatabaseException", "databaseError");
+		mappings.setProperty("InvalidCreditCardException", "creditCardError");
+
+		r.setExceptionMappings(mappings); // None by default
+		r.setDefaultErrorView("error"); // No default
+		r.setExceptionAttribute("exception"); // Default is "exception"
+		r.setWarnLogCategory("example.MvcLogger"); // No default
+		return r;
 	}
 }

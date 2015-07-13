@@ -1,6 +1,5 @@
 package org.gpms.web;
 
-import java.util.Iterator;
 import java.util.List;
 
 import org.activiti.engine.IdentityService;
@@ -17,6 +16,7 @@ import org.activiti.engine.repository.ProcessDefinitionQuery;
 import org.activiti.engine.runtime.Execution;
 import org.activiti.engine.runtime.ProcessInstance;
 import org.activiti.engine.task.Task;
+import org.gpms.web.common.BondedItemManagement;
 import org.gpms.web.common.TaskManagement;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -52,6 +52,9 @@ public class AppTest extends AbstractJUnit4SpringContextTests {
 	@Autowired
 	TaskManagement taskManagement;
 
+	@Autowired
+	BondedItemManagement bondedItemManagement;
+
 	@Test
 	public void testTask() {
 
@@ -63,23 +66,26 @@ public class AppTest extends AbstractJUnit4SpringContextTests {
 
 		// repositoryService.deleteDeploymentCascade("65002");
 
-		List<Task> taskList = taskManagement
-				.getAllTasksByAssignee("gpmsISITManager@gmail.com");
+		bondedItemManagement.performApprovalAssignment("bondedItemCorrection",
+				"15073", "ROLE_gpmsISITUserGroup", "gpmsisituser3@gmail.com");
 
-		Iterator<Task> taskListIter = taskList.iterator();
-
-		Task task = null;
-		while (taskListIter.hasNext()) {
-			task = taskListIter.next();
-			System.out.println("task  : " + task.getId());
-		}
-
-		if (task != null) {
-			String taskId = task.getId();
-
-			taskService.setVariable(taskId, "isApproved", true);
-			taskService.complete(taskId);
-		}
+		// List<Task> taskList = taskManagement
+		// .getAllTasksByAssignee("gpmsISITManager@gmail.com");
+		//
+		// Iterator<Task> taskListIter = taskList.iterator();
+		//
+		// Task task = null;
+		// while (taskListIter.hasNext()) {
+		// task = taskListIter.next();
+		// System.out.println("task  : " + task.getId());
+		// }
+		//
+		// if (task != null) {
+		// String taskId = task.getId();
+		//
+		// taskService.setVariable(taskId, "isApproved", true);
+		// taskService.complete(taskId);
+		// }
 
 	}
 

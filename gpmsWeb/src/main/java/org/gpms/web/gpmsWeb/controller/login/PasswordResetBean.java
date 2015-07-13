@@ -3,6 +3,7 @@
  */
 package org.gpms.web.gpmsWeb.controller.login;
 
+import java.io.Serializable;
 import java.util.List;
 
 import javax.validation.constraints.Size;
@@ -14,7 +15,7 @@ import org.hibernate.validator.constraints.NotEmpty;
  * @author narenda.kumar
  * 
  */
-public class PasswordResetBean {
+public class PasswordResetBean implements Serializable {
 
 	@NotEmpty(message = "Corp Email Id cannot be Empty")
 	@Email(message = "Not a valid Email Id")
@@ -108,6 +109,12 @@ public class PasswordResetBean {
 	 */
 	public void setReenterNewPasswordId(String reenterNewPasswordId) {
 		this.reenterNewPasswordId = reenterNewPasswordId;
+	}
+
+	public String toString() {
+		return "\nloginId " + loginId + "\nquestionId " + questionId
+				+ "\nsecretQuesAnsId " + secretQuesAnsId + "\n";
+
 	}
 
 }
