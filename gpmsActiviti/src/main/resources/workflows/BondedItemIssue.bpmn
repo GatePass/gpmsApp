@@ -8,14 +8,14 @@
     <userTask id="ISITMgrApprovalTask" name="ISIT Mgr Approval Task"></userTask>
     <sequenceFlow id="flow5" sourceRef="ISITMgrApprovalTask" targetRef="setDecisionVariable"></sequenceFlow>
     <exclusiveGateway id="exclusivegateway1" name="Exclusive Gateway"></exclusiveGateway>
-    <sequenceFlow id="Approved" name="Approved" sourceRef="exclusivegateway1" targetRef="ApproveMailTOISITMember">
+    <sequenceFlow id="Approved" name="Approved" sourceRef="exclusivegateway1" targetRef="ApproveMailToISITMember">
       <conditionExpression xsi:type="tFormalExpression"><![CDATA[${bondedItemApproved == true}]]></conditionExpression>
     </sequenceFlow>
     <sequenceFlow id="Rejected" name="Rejected" sourceRef="exclusivegateway1" targetRef="RejectMailToISITUser">
       <conditionExpression xsi:type="tFormalExpression"><![CDATA[${bondedItemApproved == false}]]></conditionExpression>
     </sequenceFlow>
-    <serviceTask id="ApproveMailTOISITMember" name="Approve Mail to ISIT Member and Issue Bonded Item Task" activiti:class="org.gpms.web.mail.MailServiceTask"></serviceTask>
-    <sequenceFlow id="flow7" sourceRef="ApproveMailTOISITMember" targetRef="ApproveMailToSecurity"></sequenceFlow>
+    <serviceTask id="ApproveMailToISITMember" name="Approve Mail to ISIT Member and Issue Bonded Item Task" activiti:class="org.gpms.web.mail.MailServiceTask"></serviceTask>
+    <sequenceFlow id="flow7" sourceRef="ApproveMailToISITMember" targetRef="ApproveMailToSecurity"></sequenceFlow>
     <serviceTask id="ApproveMailToSecurity" name="Approve Mail To Security" activiti:class="org.gpms.web.mail.MailServiceTask"></serviceTask>
     <sequenceFlow id="flow4" sourceRef="ApproveMailToSecurity" targetRef="ApproveMailToEmployee"></sequenceFlow>
     <serviceTask id="ApproveMailToEmployee" name="Approve Mail to Employee" activiti:class="org.gpms.web.mail.MailServiceTask"></serviceTask>
@@ -48,7 +48,7 @@
       <bpmndi:BPMNShape bpmnElement="exclusivegateway1" id="BPMNShape_exclusivegateway1">
         <omgdc:Bounds height="40.0" width="40.0" x="544.0" y="145.0"></omgdc:Bounds>
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape bpmnElement="ApproveMailTOISITMember" id="BPMNShape_ApproveMailTOISITMember">
+      <bpmndi:BPMNShape bpmnElement="ApproveMailToISITMember" id="BPMNShape_ApproveMailToISITMember">
         <omgdc:Bounds height="71.0" width="116.0" x="594.0" y="60.0"></omgdc:Bounds>
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape bpmnElement="ApproveMailToSecurity" id="BPMNShape_ApproveMailToSecurity">

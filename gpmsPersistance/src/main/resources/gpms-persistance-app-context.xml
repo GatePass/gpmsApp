@@ -12,7 +12,7 @@
 		configure as beans -->
 	<import resource="classpath*:**/*gpms-persistance-app-db.xml" />
 
-	<tx:annotation-driven transaction-manager="transactionManager"/>
+	<tx:annotation-driven transaction-manager="jpaTransactionManager"/>
 	<context:annotation-config/>
 	
 	<context:component-scan base-package="org.gpms.web" />

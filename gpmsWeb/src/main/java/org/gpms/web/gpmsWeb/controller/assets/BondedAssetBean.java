@@ -28,7 +28,7 @@ public class BondedAssetBean implements Serializable {
 	@NotEmpty(message = "Asset Id to be assigned cannot be be Empty")
 	private String assetId;
 
-	@NotEmpty(message = "Asset Issue Date cannot be empty for issuing asset")
+	// @NotEmpty(message = "Asset Issue Date cannot be empty for issuing asset")
 	private String userAssetIssueDate;
 
 	// @NotEmpty(message =

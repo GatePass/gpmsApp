@@ -66,8 +66,8 @@ public class AppTest extends AbstractJUnit4SpringContextTests {
 
 		// repositoryService.deleteDeploymentCascade("65002");
 
-		bondedItemManagement.performApprovalAssignment("bondedItemCorrection",
-				"15073", "ROLE_gpmsISITUserGroup", "gpmsisituser3@gmail.com");
+		// bondedItemManagement.performApprovalAssignment("bondedItemCorrection",
+		// "15073", "ROLE_gpmsISITUserGroup", "gpmsisituser3@gmail.com");
 
 		// List<Task> taskList = taskManagement
 		// .getAllTasksByAssignee("gpmsISITManager@gmail.com");

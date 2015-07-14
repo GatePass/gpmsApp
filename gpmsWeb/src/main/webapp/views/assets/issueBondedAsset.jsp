@@ -145,15 +145,23 @@
 										</tr>
 									</table>
 									<c:if test="${bondedAssetBean.flowType == 'bondedItemAssign' || bondedAssetBean.flowType == 'itemCorrection'}">
-										<input type="submit" name="issueBondedAsset"
+									<c:if test="${returnFlow == 'false' }">
+									       <input type="submit" name="issueBondedAsset"
 											value='<spring:message code="button.issueBondedItem.assignAsset.text"/>'
 											${isDisabled eq "true" ? 'disabled'  : '' } />
+									</c:if>
+									<c:if test="${returnFlow == 'true' }">
+									       <input type="submit" name="returnBondedCorrection"
+											value='<spring:message code="button.issueBondedItem.assignAsset.text"/>'
+											${isDisabled eq "true" ? 'disabled'  : '' } />
+									</c:if>
 									</c:if>
 									<c:if test="${bondedAssetBean.flowType == 'bondedItemReturn'}">
 										<input type="submit" name="returnBondedAsset"
 										value="Return Bonded Asset"
 										${isDisabled eq "true" ? 'disabled'  : '' } />
 									</c:if>
+									
 									
 								</sf:form>
 							</fieldset>

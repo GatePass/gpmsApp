@@ -15,6 +15,7 @@ import org.gpms.web.gpmsBusinessSrv.util.ApplicationConstants;
 import org.gpms.web.mail.MailServiceParams;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import exceptions.GPMSApplicationException;
 
@@ -40,6 +41,7 @@ public class IssueAssetsBusinessSrv {
 	@Autowired
 	AssetsRepository assetsRepository;
 
+	@Transactional
 	public void IssueBondedItems(AssetAssignModel assetAssignModel)
 			throws GPMSApplicationException {
 
@@ -153,7 +155,7 @@ public class IssueAssetsBusinessSrv {
 		} else {
 			userAssetEntity = userAssetsRepository
 					.getUserAssetById(assetAssignModel.getUserAssetId());
-			userAssetsRepository.updateAssetInfoOfUser(userAssetEntity);
+			// userAssetsRepository.updateAssetInfoOfUser(userAssetEntity);
 
 			if (logger.isDebugEnabled()) {
 				logger.debug("userAssetEntity :" + userAssetEntity);
@@ -164,9 +166,9 @@ public class IssueAssetsBusinessSrv {
 			mailServiceParams.setMailUserId("gpmsisituser3@gmail.com");
 			mailServiceParams.setMailPassword("gpmsisituser3777#$");
 			mailServiceParams.setMailToAddress("gpmsISITMgr@gmail.com");
-			mailServiceParams.setMailSubject(assetAssignModel.getAssetId()
+			mailServiceParams.setMailSubject(userAssetEntity.getAssetId()
 					+ " is Corrected for the user "
-					+ assetAssignModel.getUserCorpEmail());
+					+ userAssetEntity.getUserCorpEmail());
 			String mailHtmlBody = "Test email from gpmsisituser3@gmail.com to gpmsISITMgr@gmail.com"
 					+ "<br><br> Regards, <br>gpmsisituser3@gmail.com";
 			mailServiceParams.setMailHtmlBody(mailHtmlBody);

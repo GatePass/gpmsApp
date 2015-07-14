@@ -15,6 +15,9 @@ import org.gpms.web.entities.users.UserGroupsEntity;
 import org.gpms.web.entities.users.UsersLoginEntity;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Isolation;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 
 /**
  * @author narenda.kumar
@@ -32,6 +35,7 @@ public class UserMgmtBusinessSrv {
 	@Autowired
 	ActivitiUserMgmt activitiUserMgmt;
 
+	@Transactional(propagation = Propagation.REQUIRED, isolation = Isolation.DEFAULT)
 	public UserModel createUser(UserModel userModel) {
 
 		if (logger.isDebugEnabled()) {

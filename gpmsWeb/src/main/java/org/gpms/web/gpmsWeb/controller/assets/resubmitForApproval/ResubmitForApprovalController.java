@@ -62,6 +62,8 @@ public class ResubmitForApprovalController {
 	@RequestMapping(value = "/modifyBondedAsset", method = RequestMethod.POST)
 	public ModelAndView modifyBondedAsset(@RequestParam String userAssetId,
 			@RequestParam String userAssetIssueProcessId,
+			@RequestParam String userAssetReturnProcessId,
+			@RequestParam String assetId,
 			@RequestParam(value = "correctionParam") String correctionParam,
 			@ModelAttribute BondedAssetBean bondedAssetBean, Model model) {
 
@@ -73,10 +75,28 @@ public class ResubmitForApprovalController {
 			userAssetIssueProcessId = userAssetIssueProcessId.split(",")[0];
 		}
 
+		if (userAssetReturnProcessId != null) {
+			userAssetReturnProcessId = userAssetReturnProcessId.split(",")[0];
+			if (userAssetReturnProcessId.equals("NONE")) {
+				userAssetReturnProcessId = null;
+			}
+		}
+
+		if (assetId != null) {
+			assetId = assetId.split(",")[0];
+		}
+
 		if (logger.isDebugEnabled()) {
 			logger.debug("Passed Parameter of the Row " + "\nuserAssetId : "
-					+ userAssetId + "\nuserAssetIssueProcessId : "
-					+ userAssetIssueProcessId);
+					+ userAssetId + "\ncorrectionParam : " + correctionParam
+					+ "\nuserAssetIssueProcessId : " + userAssetIssueProcessId
+					+ "\nuserAssetReturnProcessId : "
+					+ userAssetReturnProcessId + "\nassetId :" + assetId);
+		}
+
+		String returnFlow = null;
+		if (userAssetReturnProcessId != null) {
+			returnFlow = "true";
 		}
 
 		AssetAssignModel assetAssignModel = new AssetAssignModel();
@@ -99,6 +119,7 @@ public class ResubmitForApprovalController {
 
 		bondedAssetBean.setFlowType(flowType);
 		model.addAttribute("bondedAssetBean", bondedAssetBean);
+		model.addAttribute("returnFlow", returnFlow);
 
 		return new ModelAndView("assets/issueBondedAsset");
 	}

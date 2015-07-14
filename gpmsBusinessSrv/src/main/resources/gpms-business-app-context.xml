@@ -13,6 +13,7 @@
 	
 	<tx:annotation-driven />
 	<context:annotation-config/>
+	<tx:jta-transaction-manager/>
 	
 	<context:component-scan base-package="org.gpms.web" />	
 

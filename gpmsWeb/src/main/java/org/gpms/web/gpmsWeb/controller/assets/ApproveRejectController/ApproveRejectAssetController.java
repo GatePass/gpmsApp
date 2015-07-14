@@ -10,6 +10,8 @@ import java.util.List;
 import org.apache.log4j.Logger;
 import org.gpms.web.gpmsBusinessSrv.assets.ApproveRejectAssetBusinessSrv;
 import org.gpms.web.gpmsBusinessSrv.assets.AssetAssignModel;
+import org.gpms.web.gpmsBusinessSrv.assets.AssetMgmtBusinessSrv;
+import org.gpms.web.gpmsBusinessSrv.assets.AssetModel;
 import org.gpms.web.gpmsWeb.controller.assets.BondedAssetBean;
 import org.gpms.web.gpmsWeb.controller.assets.BondedAssetDataConverter;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -35,6 +37,9 @@ public class ApproveRejectAssetController {
 
 	@Autowired
 	ApproveRejectAssetBusinessSrv approveRejectAssetBusinessSrv;
+
+	@Autowired
+	AssetMgmtBusinessSrv assetMgmtBusinessSrv;
 
 	@RequestMapping(value = "/approveRejectAsset", method = RequestMethod.GET)
 	public ModelAndView approveRejectAssetList(
@@ -63,6 +68,8 @@ public class ApproveRejectAssetController {
 	public ModelAndView approveRejectAsset(
 			@RequestParam String userAssetId,
 			@RequestParam String userAssetIssueProcessId,
+			@RequestParam String userAssetReturnProcessId,
+			@RequestParam String assetId,
 			@RequestParam(value = "approveOrRejectParam") String approveOrReject,
 			@ModelAttribute BondedAssetBean bondedAssetBean, Model model) {
 
@@ -74,20 +81,58 @@ public class ApproveRejectAssetController {
 			userAssetIssueProcessId = userAssetIssueProcessId.split(",")[0];
 		}
 
+		if (userAssetReturnProcessId != null) {
+			userAssetReturnProcessId = userAssetReturnProcessId.split(",")[0];
+			if (userAssetReturnProcessId.equals("NONE")) {
+				userAssetReturnProcessId = null;
+			}
+		}
+
+		if (assetId != null) {
+			assetId = assetId.split(",")[0];
+		}
+
 		if (logger.isDebugEnabled()) {
 			logger.debug("Passed Parameter of the Row " + "\nuserAssetId : "
 					+ userAssetId + "\napproveOrReject : " + approveOrReject
-					+ "\nuserAssetIssueProcessId : " + userAssetIssueProcessId);
+					+ "\nuserAssetIssueProcessId : " + userAssetIssueProcessId
+					+ "\nuserAssetReturnProcessId : "
+					+ userAssetReturnProcessId + "\nassetId :" + assetId);
 		}
 
 		AssetAssignModel assetAssignModel = new AssetAssignModel();
 		assetAssignModel.setUserAssetId(userAssetId);
 		assetAssignModel.setUserAssetIssueProcessId(userAssetIssueProcessId);
+		assetAssignModel.setUserAssetReturnProcessId(userAssetReturnProcessId);
+		assetAssignModel.setAssetId(assetId);
+
+		AssetModel assetModel = assetMgmtBusinessSrv
+				.getAssetById(assetAssignModel.getAssetId());
+		String processId = null;
+		if (assetModel != null) {
+			if ("AVAILABLE".equals(assetModel.getAssetStatus())) {
+				processId = userAssetIssueProcessId;
+			} else if ("ASSIGNED".equals(assetModel.getAssetStatus())) {
+				if (userAssetReturnProcessId != null) {
+					processId = userAssetReturnProcessId;
+				}
+			} else if ("INPROCESS".equals(assetModel.getAssetStatus())) {
+				if (userAssetIssueProcessId != null
+						&& userAssetReturnProcessId == null) {
+					processId = userAssetIssueProcessId;
+				}
+				if (userAssetReturnProcessId != null) {
+					processId = userAssetReturnProcessId;
+				}
+			}
+		}
 
 		if (approveOrReject.equalsIgnoreCase("Approve")) {
-			approveRejectAssetBusinessSrv.approveAsset(assetAssignModel);
+			approveRejectAssetBusinessSrv.approveAsset(assetAssignModel,
+					processId);
 		} else if (approveOrReject.equalsIgnoreCase("Reject")) {
-			approveRejectAssetBusinessSrv.rejectAsset(assetAssignModel);
+			approveRejectAssetBusinessSrv.rejectAsset(assetAssignModel,
+					processId);
 		}
 
 		// TODO this has to be dynamic and can be enhanced based on the

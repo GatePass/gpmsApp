@@ -19,11 +19,17 @@
 		<table>
 			<tr>
 				<th style="font-size: 25px"><spring:message code="gpms.header"/></th>
-				<sf:form action="navigation" id="navRedirectForm">
-					<td><a href="javascript:formSubmit()"> Back to Navigation</a></td>
-				</sf:form>
 			</tr>
 		</table>
+	</div>
+	<div>
+		<table id="breadcrump">
+ 		<tr>
+ 			<sf:form action="navigation" id="navRedirectForm">
+					<td><a href="javascript:formSubmit()"> Back to Navigation</a></td>
+				</sf:form>
+ 		</tr>
+ 		</table>
 	</div>
 </body>
 </html>

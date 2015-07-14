@@ -95,4 +95,21 @@ public class AssignAssetController {
 
 		return new ModelAndView("assets/issueBondedAsset");
 	}
+
+	@RequestMapping(value = "/issueBondedAsset", method = { RequestMethod.POST }, params = "returnBondedCorrection")
+	public ModelAndView returnBondedCorrection(HttpServletRequest request,
+			@ModelAttribute @Valid BondedAssetBean bondedAssetBean,
+			BindingResult result, Model model) {
+
+		String flowType = bondedAssetBean.getFlowType();
+
+		System.out
+				.println("??????????????????????????????????????????????????");
+
+		bondedAssetBean.setFlowType(flowType);
+		model.addAttribute("bondedAssetBean", bondedAssetBean);
+
+		return new ModelAndView("assets/issueBondedAsset");
+	}
+
 }

@@ -32,10 +32,9 @@ public class ApproveRejectAssetBusinessSrv {
 	private static final Logger logger = Logger
 			.getLogger(ApproveRejectAssetBusinessSrv.class);
 
-	public void approveAsset(AssetAssignModel assetAssignModel) {
+	public void approveAsset(AssetAssignModel assetAssignModel, String processId) {
 
-		String processInstanceId = assetAssignModel
-				.getUserAssetIssueProcessId();
+		String processInstanceId = processId;
 
 		if (logger.isDebugEnabled()) {
 			logger.debug("processInstanceId : " + processInstanceId);
@@ -129,10 +128,9 @@ public class ApproveRejectAssetBusinessSrv {
 
 	}
 
-	public void rejectAsset(AssetAssignModel assetAssignModel) {
+	public void rejectAsset(AssetAssignModel assetAssignModel, String processId) {
 
-		String processInstanceId = assetAssignModel
-				.getUserAssetIssueProcessId();
+		String processInstanceId = processId;
 
 		if (logger.isDebugEnabled()) {
 			logger.debug("processInstanceId : " + processInstanceId);

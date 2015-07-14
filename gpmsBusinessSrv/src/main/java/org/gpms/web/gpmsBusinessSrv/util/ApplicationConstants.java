@@ -21,7 +21,7 @@ public interface ApplicationConstants {
 	String GROUP_EMPLOYEE = "ROLE_gpmsEmployeeGroup";
 
 	String BONDED_ITEM_CREATED_TASK = "bondedItemCreatedMailtask";
-	String APPROVE_MAIL_TO_ISIT_MEMBER_TASK = "ApproveMailTOISITMember";
+	String APPROVE_MAIL_TO_ISIT_MEMBER_TASK = "ApproveMailToISITMember";
 	String APPROVE_MAIL_TO_SECURITY_TASK = "ApproveMailToSecurity";
 	String APPROVE_MAIL_TO_EMPLOYEE_TASK = "ApproveMailToEmployee";
 	String REJECT_MAIL_TO_ISIT_USER_TASK = "RejectMailToISITUser";
