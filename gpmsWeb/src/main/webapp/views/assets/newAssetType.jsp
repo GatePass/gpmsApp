@@ -14,7 +14,7 @@
 		<div id="header">
 			<table width="100%">
 				<tr>
-					<td><%@include file="gpmsHeader.jsp"%></td>
+					<td><%@include file="../common/gpmsHeader.jsp"%></td>
 				</tr>
 			</table>
 		</div>
