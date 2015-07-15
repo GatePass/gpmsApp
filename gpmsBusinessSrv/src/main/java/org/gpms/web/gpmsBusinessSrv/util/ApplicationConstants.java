@@ -25,7 +25,7 @@ public interface ApplicationConstants {
 	String APPROVE_MAIL_TO_SECURITY_TASK = "ApproveMailToSecurity";
 	String APPROVE_MAIL_TO_EMPLOYEE_TASK = "ApproveMailToEmployee";
 	String REJECT_MAIL_TO_ISIT_USER_TASK = "RejectMailToISITUser";
-	String CORRECTION_MAIL_TO_MANAGER_TASK = "correctionMailtoManager";
+	String CORRECTION_MAIL_TO_MANAGER_TASK = "correctionMailToManager";
 	String BONDED_ITEM_RETURN_TASK = "bondedItemReturnTask";
 
 	String ISIT_MGR_APPROVAL_TASK = "ISITMgrApprovalTask";

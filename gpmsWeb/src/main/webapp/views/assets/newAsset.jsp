@@ -12,10 +12,10 @@
 <body>
 	<div id="wrapper">
 
-		<div id="header" align="center">
-			<table>
+		<div id="header">
+			<table width="100%">
 				<tr>
-					<td><%@include file="../common/gpmsHeader.jsp"%></td>
+					<td><%@include file="gpmsHeader.jsp"%></td>
 				</tr>
 			</table>
 		</div>
@@ -31,54 +31,75 @@
 									<table cellspacing="20px"
 										style="min-height: 50%; min-width: 50%;">
 										<tr>
-											<td class="boxHeading" align="left"><b> <label><spring:message code="pageHeader.newAsset.text"/></label>
+											<td class="boxHeading" align="left"><b> <label><spring:message
+															code="pageHeader.newAsset.text" /></label>
 											</b></td>
 										</tr>
 										<tr>
-											<td align="left" valign="top"><b><sf:label path="assetId"><spring:message code="label.newAsset.assetId.text"/></sf:label></b></td>
+											<td align="left" valign="top"><b><sf:label
+														path="assetId">
+														<spring:message code="label.newAsset.assetId.text" />
+													</sf:label></b></td>
 											<td align="left"><sf:label path="assetId">${assetBean.assetId}</sf:label></td>
 										</tr>
 										<tr>
-											<td align="left" valign="top"><b><sf:label path="assetBarCode"><spring:message code="label.newAsset.assetBarCode.text"/></sf:label></b></td>
-											<td><sf:input path="assetBarCode" disabled="${isDisabled}"/><br /> 
-											<sf:errors path="assetBarCode" cssClass="error" /></td>
+											<td align="left" valign="top"><b><sf:label
+														path="assetBarCode">
+														<spring:message code="label.newAsset.assetBarCode.text" />
+													</sf:label></b></td>
+											<td><sf:input path="assetBarCode"
+													disabled="${isDisabled}" /><br /> <sf:errors
+													path="assetBarCode" cssClass="error" /></td>
 										</tr>
 										<tr>
-											<td align="left" valign="top"><b><sf:label path="assetTypeId"><spring:message code="label.newAsset.selectTheAssetType.text"/></sf:label></b></td>
-											<td>
-											<sf:select path="assetTypeId" multiple="false" disabled="${isDisabled}" >
+											<td align="left" valign="top"><b><sf:label
+														path="assetTypeId">
+														<spring:message
+															code="label.newAsset.selectTheAssetType.text" />
+													</sf:label></b></td>
+											<td><sf:select path="assetTypeId" multiple="false"
+													disabled="${isDisabled}">
 													<sf:option value="" label=""></sf:option>
-													<c:forEach items="${assetTypeModelLst}" var="assetTypeModelLst">
-														<sf:option
-															value="${assetTypeModelLst.assetTypeId}">${assetTypeModelLst.assetTypeName}</sf:option>
+													<c:forEach items="${assetTypeModelLst}"
+														var="assetTypeModelLst">
+														<sf:option value="${assetTypeModelLst.assetTypeId}">${assetTypeModelLst.assetTypeName}</sf:option>
 													</c:forEach>
-											</sf:select>
-											<br/> 
-											<sf:errors path="assetTypeId" cssClass="error" /></td>
+												</sf:select> <br /> <sf:errors path="assetTypeId" cssClass="error" /></td>
 										</tr>
 										<tr>
-											<td align="left" valign="top"><b><sf:label path="assetPurchaseDate"><spring:message code="label.newAsset.assetPurchaseDate.text"/></sf:label></b></td>
-											<td><sf:input path="assetPurchaseDate" disabled="${isDisabled}"/><br /> 
-											<sf:errors path="assetPurchaseDate" cssClass="error" /></td>
-										</tr>
-											<tr>
-											<td align="left" valign="top"><b><sf:label path="assetRemovalDate"><spring:message code="label.newAsset.assetRemovalDate.text"/></sf:label></b></td>
-											<td><sf:input path="assetRemovalDate" disabled="${isDisabled}"/><br /> 
-											<sf:errors path="assetRemovalDate" cssClass="error" /></td>
+											<td align="left" valign="top"><b><sf:label
+														path="assetPurchaseDate">
+														<spring:message
+															code="label.newAsset.assetPurchaseDate.text" />
+													</sf:label></b></td>
+											<td><sf:input path="assetPurchaseDate"
+													disabled="${isDisabled}" /><br /> <sf:errors
+													path="assetPurchaseDate" cssClass="error" /></td>
 										</tr>
 										<tr>
-												<td align="left" valign="top"><b><sf:label
-															path="assetStatus">Asset Status</sf:label></b></td>
-												<td><sf:select path="assetStatus" multiple="false">
-														<sf:option value="ASSIGNED" label="ASSIGNED"></sf:option>
-														<sf:option value="AVAILABLE" label="AVAILABLE"></sf:option>
-														<sf:option value="REMOVED" label="REMOVED"></sf:option>
-													</sf:select> <br /> 
-													<sf:errors path="assetStatus" cssClass="error" /></td>
-											</tr>
-										
+											<td align="left" valign="top"><b><sf:label
+														path="assetRemovalDate">
+														<spring:message
+															code="label.newAsset.assetRemovalDate.text" />
+													</sf:label></b></td>
+											<td><sf:input path="assetRemovalDate"
+													disabled="${isDisabled}" /><br /> <sf:errors
+													path="assetRemovalDate" cssClass="error" /></td>
+										</tr>
+										<tr>
+											<td align="left" valign="top"><b><sf:label
+														path="assetStatus">Asset Status</sf:label></b></td>
+											<td><sf:select path="assetStatus" multiple="false">
+													<sf:option value="ASSIGNED" label="ASSIGNED"></sf:option>
+													<sf:option value="AVAILABLE" label="AVAILABLE"></sf:option>
+													<sf:option value="REMOVED" label="REMOVED"></sf:option>
+												</sf:select> <br /> <sf:errors path="assetStatus" cssClass="error" /></td>
+										</tr>
+
 									</table>
-									<input type="submit" name="createAsset" value='<spring:message code="button.newAsset.createAsset.text"/>' ${isDisabled eq "true" ? 'disabled'  : '' }/>
+									<input type="submit" name="createAsset"
+										value='<spring:message code="button.newAsset.createAsset.text"/>'
+										${isDisabled eq "true" ? 'disabled'  : '' } />
 								</sf:form>
 							</fieldset>
 						</div>

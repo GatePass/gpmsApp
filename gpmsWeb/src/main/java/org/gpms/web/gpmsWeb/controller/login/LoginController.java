@@ -51,11 +51,14 @@ public class LoginController {
 		System.out.println(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>  "
 				+ request.getParameter("lang"));
 
-		if (loginBean.getLangId() != null) {
-			Locale locale = StringUtils
-					.parseLocaleString(loginBean.getLangId());
+		if (request.getParameter("lang") != null) {
+			Locale locale = StringUtils.parseLocaleString(request
+					.getParameter("lang"));
 			localeResolver.setLocale(request, response, locale);
+			loginBean.setLangId(request.getParameter("lang"));
 		}
+
+		model.addAttribute("loginBean", loginBean);
 
 		return new ModelAndView("login/login");
 	}
@@ -76,6 +79,8 @@ public class LoginController {
 	@RequestMapping(value = "/login", method = RequestMethod.POST, params = "submitL")
 	public String submitL(@ModelAttribute @Valid LoginBean loginBean,
 			BindingResult result, Model model) throws IOException {
+
+		System.out.println("22222222222222222222222222222");
 
 		boolean isValidatedUser = loginBusinessSrv.validateLoginCredentials(
 				loginBean.getUserId(), loginBean.getPassword());

@@ -32,7 +32,8 @@ public class ApproveRejectAssetBusinessSrv {
 	private static final Logger logger = Logger
 			.getLogger(ApproveRejectAssetBusinessSrv.class);
 
-	public void approveAsset(AssetAssignModel assetAssignModel, String processId) {
+	public void approveAsset(AssetAssignModel assetAssignModel,
+			String processId, String flowType) {
 
 		String processInstanceId = processId;
 
@@ -119,7 +120,14 @@ public class ApproveRejectAssetBusinessSrv {
 
 		AssetsEntity assetsEntity = assetsRepository
 				.getAssetById(userAssetEntity.getAssetId());
-		assetsEntity.setAssetStatus(ApplicationConstants.ASSET_ASSIGNED_STATUS);
+		if ("ISSUE".equals(flowType)) {
+			assetsEntity
+					.setAssetStatus(ApplicationConstants.ASSET_ASSIGNED_STATUS);
+		} else {
+			assetsEntity
+					.setAssetStatus(ApplicationConstants.ASSET_AVAILABLE_STATUS);
+		}
+
 		assetsRepository.modifyAsset(assetsEntity);
 
 		if (logger.isDebugEnabled()) {
@@ -128,7 +136,8 @@ public class ApproveRejectAssetBusinessSrv {
 
 	}
 
-	public void rejectAsset(AssetAssignModel assetAssignModel, String processId) {
+	public void rejectAsset(AssetAssignModel assetAssignModel,
+			String processId, String flowType) {
 
 		String processInstanceId = processId;
 

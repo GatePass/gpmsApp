@@ -109,30 +109,35 @@ public class ApproveRejectAssetController {
 		AssetModel assetModel = assetMgmtBusinessSrv
 				.getAssetById(assetAssignModel.getAssetId());
 		String processId = null;
+		String flowType = null;
 		if (assetModel != null) {
 			if ("AVAILABLE".equals(assetModel.getAssetStatus())) {
 				processId = userAssetIssueProcessId;
+				flowType = "ISSUE";
 			} else if ("ASSIGNED".equals(assetModel.getAssetStatus())) {
 				if (userAssetReturnProcessId != null) {
 					processId = userAssetReturnProcessId;
+					flowType = "RETURN";
 				}
 			} else if ("INPROCESS".equals(assetModel.getAssetStatus())) {
 				if (userAssetIssueProcessId != null
 						&& userAssetReturnProcessId == null) {
 					processId = userAssetIssueProcessId;
+					flowType = "ISSUE";
 				}
 				if (userAssetReturnProcessId != null) {
 					processId = userAssetReturnProcessId;
+					flowType = "RETURN";
 				}
 			}
 		}
 
 		if (approveOrReject.equalsIgnoreCase("Approve")) {
 			approveRejectAssetBusinessSrv.approveAsset(assetAssignModel,
-					processId);
+					processId, flowType);
 		} else if (approveOrReject.equalsIgnoreCase("Reject")) {
 			approveRejectAssetBusinessSrv.rejectAsset(assetAssignModel,
-					processId);
+					processId, flowType);
 		}
 
 		// TODO this has to be dynamic and can be enhanced based on the

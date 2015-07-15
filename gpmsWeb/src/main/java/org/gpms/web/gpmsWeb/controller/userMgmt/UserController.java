@@ -7,6 +7,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 
 import org.apache.log4j.Logger;
@@ -43,8 +44,8 @@ public class UserController {
 
 	@RequestMapping(value = "/newUser", method = { RequestMethod.GET,
 			RequestMethod.POST })
-	public ModelAndView newUser(@ModelAttribute("userBean") UserBean userBean,
-			Model model) {
+	public ModelAndView newUser(HttpServletRequest request,
+			@ModelAttribute("userBean") UserBean userBean, Model model) {
 
 		if (logger.isDebugEnabled()) {
 			logger.debug("ENTERING");
@@ -53,6 +54,10 @@ public class UserController {
 		if (logger.isDebugEnabled()) {
 			logger.debug("userBean\n" + userBean.toString());
 		}
+
+		boolean isitMgrRole = request.isUserInRole("gpmsISITMgrGroup");
+
+		System.out.println("isitMgrRole : " + isitMgrRole);
 
 		List<SecurityQuestionsModel> securityQuestionsModel = userMgmtBusinessSrv
 				.getAllSecurityQuestions();

@@ -11,10 +11,10 @@
 <body>
 	<div id="wrapper">
 
-		<div id="header" align="center">
-			<table>
+		<div id="header">
+			<table width="100%">
 				<tr>
-					<td><%@include file="common/gpmsHeader.jsp"%></td>
+					<td><%@include file="gpmsHeader.jsp"%></td>
 				</tr>
 			</table>
 		</div>
@@ -24,9 +24,9 @@
 			<table style="margin-top: 20px">
 				<tr>
 					<td>
-						<h1>Error Page</h1>
-						Failed URL: ${url} Exception: ${exception.message}
-						<c:forEach items="${exception.stackTrace}" var="ste">    ${ste} 
+						<h1>Error Page</h1> Failed URL: ${url} Exception:
+						${exception.message} <c:forEach items="${exception.stackTrace}"
+							var="ste">    ${ste} 
    						 </c:forEach>
 					</td>
 				</tr>

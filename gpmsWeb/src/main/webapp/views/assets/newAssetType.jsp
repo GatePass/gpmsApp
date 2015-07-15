@@ -11,10 +11,10 @@
 <body>
 	<div id="wrapper">
 
-		<div id="header" align="center">
-			<table>
+		<div id="header">
+			<table width="100%">
 				<tr>
-					<td><%@include file="../common/gpmsHeader.jsp"%></td>
+					<td><%@include file="gpmsHeader.jsp"%></td>
 				</tr>
 			</table>
 		</div>
@@ -30,25 +30,41 @@
 									<table cellspacing="20px"
 										style="min-height: 50%; min-width: 50%;">
 										<tr>
-											<td class="boxHeading" align="left"><b> <label><spring:message code="pageHeader.newAssetType.text"/></label>
+											<td class="boxHeading" align="left"><b> <label><spring:message
+															code="pageHeader.newAssetType.text" /></label>
 											</b></td>
 										</tr>
 										<tr>
-											<td align="left" valign="top"><b><sf:label path="assetTypeId"><spring:message code="label.newAssetType.assetTypeId.text"/></sf:label></b></td>
+											<td align="left" valign="top"><b><sf:label
+														path="assetTypeId">
+														<spring:message code="label.newAssetType.assetTypeId.text" />
+													</sf:label></b></td>
 											<td align="left"><sf:label path="assetTypeId">${assetBean.assetTypeId}</sf:label></td>
 										</tr>
 										<tr>
-											<td align="left" valign="top"><b><sf:label path="assetTypeName"><spring:message code="label.newAssetType.assetTypeName.text"/></sf:label></b></td>
-											<td><sf:input path="assetTypeName" disabled="${isDisabled}"/><br /> 
-											<sf:errors path="assetTypeName" cssClass="error" /></td>
+											<td align="left" valign="top"><b><sf:label
+														path="assetTypeName">
+														<spring:message
+															code="label.newAssetType.assetTypeName.text" />
+													</sf:label></b></td>
+											<td><sf:input path="assetTypeName"
+													disabled="${isDisabled}" /><br /> <sf:errors
+													path="assetTypeName" cssClass="error" /></td>
 										</tr>
-											<tr>
-											<td align="left" valign="top"><b><sf:label path="assetTypeDesc"><spring:message code="label.newAssetType.assetTypeDescription.text"/></sf:label></b></td>
-											<td><sf:textarea path="assetTypeDesc" disabled="${isDisabled}"/><br /> 
-											<sf:errors path="assetTypeDesc" cssClass="error" /></td>
+										<tr>
+											<td align="left" valign="top"><b><sf:label
+														path="assetTypeDesc">
+														<spring:message
+															code="label.newAssetType.assetTypeDescription.text" />
+													</sf:label></b></td>
+											<td><sf:textarea path="assetTypeDesc"
+													disabled="${isDisabled}" /><br /> <sf:errors
+													path="assetTypeDesc" cssClass="error" /></td>
 										</tr>
 									</table>
-									<input type="submit" name="createAssetType" value='<spring:message code="button.newAssetType.createAssetType.text"/>' ${isDisabled eq "true" ? 'disabled'  : '' }/>
+									<input type="submit" name="createAssetType"
+										value='<spring:message code="button.newAssetType.createAssetType.text"/>'
+										${isDisabled eq "true" ? 'disabled'  : '' } />
 								</sf:form>
 							</fieldset>
 						</div>

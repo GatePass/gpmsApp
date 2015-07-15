@@ -8,31 +8,30 @@
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <link rel="stylesheet" type="text/css" href="resources/gpmsStyle.css" />
 <script type="text/javascript">
-function approveReject(userAssetId,userAssetIssueProcessId,userAssetReturnProcessId,assetId){
-	
-	if(userAssetReturnProcessId == ''){
-		userAssetReturnProcessId = 'NONE';
+	function approveReject(userAssetId, userAssetIssueProcessId,
+			userAssetReturnProcessId, assetId) {
+
+		if (userAssetReturnProcessId == '') {
+			userAssetReturnProcessId = 'NONE';
+		}
+
+		this.document.getElementById('userAssetId').value = userAssetId;
+		this.document.getElementById('userAssetIssueProcessId').value = userAssetIssueProcessId;
+		this.document.getElementById('userAssetReturnProcessId').value = userAssetReturnProcessId;
+		this.document.getElementById('assetId').value = assetId;
+		this.document.getElementById("approveRejectAssetForm").submit();
+
 	}
-
-	
-	this.document.getElementById('userAssetId').value = userAssetId;
-	this.document.getElementById('userAssetIssueProcessId').value = userAssetIssueProcessId;
-	this.document.getElementById('userAssetReturnProcessId').value = userAssetReturnProcessId;
-	this.document.getElementById('assetId').value = assetId;
-	this.document.getElementById("approveRejectAssetForm").submit();
-		
-}
-
 </script>
 <title>Gate Pass Management System</title>
 </head>
 <body>
 	<div id="wrapper">
 
-		<div id="header" align="center">
-			<table>
+		<div id="header">
+			<table width="100%">
 				<tr>
-					<td><%@include file="../common/gpmsHeader.jsp"%></td>
+					<td><%@include file="gpmsHeader.jsp"%></td>
 				</tr>
 			</table>
 		</div>
@@ -49,7 +48,8 @@ function approveReject(userAssetId,userAssetIssueProcessId,userAssetReturnProces
 									<table cellspacing="20px"
 										style="min-height: 50%; min-width: 50%;">
 										<tr>
-											<td class="boxHeading" align="left"><b> <label><spring:message code="pageHeader.approveRejectAsset.text"/></label>
+											<td class="boxHeading" align="left"><b> <label><spring:message
+															code="pageHeader.approveRejectAsset.text" /></label>
 											</b></td>
 										</tr>
 										<tr>
@@ -57,55 +57,78 @@ function approveReject(userAssetId,userAssetIssueProcessId,userAssetReturnProces
 												<table border="1px">
 													<tr>
 														<td align="center" valign="top" width="70px"><b><sf:label
-																	path="assetId"><spring:message code="label.approveRejectAsset.assetId.text"/></sf:label></b></td>
+																	path="assetId">
+																	<spring:message
+																		code="label.approveRejectAsset.assetId.text" />
+																</sf:label></b></td>
 														<td align="center" valign="top" width="150px"><b><sf:label
-																	path="userCorpEmail"><spring:message code="label.approveRejectAsset.userCorporateEmail.text"/></sf:label></b></td>
+																	path="userCorpEmail">
+																	<spring:message
+																		code="label.approveRejectAsset.userCorporateEmail.text" />
+																</sf:label></b></td>
 														<td align="center" valign="top" width="150px"><b><sf:label
-																	path="userAssetIssueDate"><spring:message code="label.approveRejectAsset.issueDate.text"/></sf:label></b></td>
+																	path="userAssetIssueDate">
+																	<spring:message
+																		code="label.approveRejectAsset.issueDate.text" />
+																</sf:label></b></td>
 														<td align="center" valign="top" width="150px"><b><sf:label
-																	path="createDate"><spring:message code="label.approveRejectAsset.assignRequestDate.text"/></sf:label></b></td>
+																	path="createDate">
+																	<spring:message
+																		code="label.approveRejectAsset.assignRequestDate.text" />
+																</sf:label></b></td>
 														<td align="center" valign="top" width="300px"><b><sf:label
-																	path="assetAssignedComment"><spring:message code="label.approveRejectAsset.assignmentComments.text"/></sf:label></b></td>
+																	path="assetAssignedComment">
+																	<spring:message
+																		code="label.approveRejectAsset.assignmentComments.text" />
+																</sf:label></b></td>
 														<td align="center" valign="top" width="150px" colspan="2"><b><sf:label
-																	path="modifiedDate"><spring:message code="label.approveRejectAsset.actions.text"/></sf:label></b></td>									
+																	path="modifiedDate">
+																	<spring:message
+																		code="label.approveRejectAsset.actions.text" />
+																</sf:label></b></td>
 													</tr>
-													<c:forEach items="${BondedAssetBeanLst}" var="bondedAsset" 
-																varStatus="ctr">
-														<c:set var="userAssetID" value="${BondedAssetBeanLst[ctr.index].userAssetId}"/>
-														<c:set var="userAssetIssueProcessId" value="${BondedAssetBeanLst[ctr.index].userAssetIssueProcessId}"/>
-														<c:set var="userAssetReturnProcessId" value="${BondedAssetBeanLst[ctr.index].userAssetReturnProcessId}"/>
-														<c:set var="assetId" value="${BondedAssetBeanLst[ctr.index].assetId}"/>		
+													<c:forEach items="${BondedAssetBeanLst}" var="bondedAsset"
+														varStatus="ctr">
+														<c:set var="userAssetID"
+															value="${BondedAssetBeanLst[ctr.index].userAssetId}" />
+														<c:set var="userAssetIssueProcessId"
+															value="${BondedAssetBeanLst[ctr.index].userAssetIssueProcessId}" />
+														<c:set var="userAssetReturnProcessId"
+															value="${BondedAssetBeanLst[ctr.index].userAssetReturnProcessId}" />
+														<c:set var="assetId"
+															value="${BondedAssetBeanLst[ctr.index].assetId}" />
 														<tr>
 															<td align="left"><sf:label path="assetId">${bondedAsset.assetId}</sf:label></td>
 															<td align="left"><sf:label path="userCorpEmail">${bondedAsset.userCorpEmail}</sf:label></td>
 															<td align="left"><sf:label path="userAssetIssueDate">${bondedAsset.userAssetIssueDate}</sf:label></td>
 															<td align="left"><sf:label path="createDate">${bondedAsset.createDate}</sf:label></td>
-															<td align="left"><sf:label path="assetAssignedComment">${bondedAsset.assetAssignedComment}</sf:label></td>
-															
-															<td align="center" width="75px">
-															<input id="userAssetId" type="hidden" name="userAssetId" value="" />
-															<input id="userAssetIssueProcessId" type="hidden" name="userAssetIssueProcessId" value="" />
-															<input id="userAssetReturnProcessId" type="hidden" name="userAssetReturnProcessId" value="" />
-															<input id="assetId" type="hidden" name="assetId" value="" />
-															<input type="submit" name="approveOrRejectParam" value='<spring:message code="button.approveRejectAsset.approve.text"/>' 
-																		${isDisabled eq "true" ? 'disabled'  : '' } 
-																		onclick="approveReject('${bondedAsset.userAssetId}', '${bondedAsset.userAssetIssueProcessId}', '${bondedAsset.userAssetReturnProcessId}','${bondedAsset.assetId}' );"/>
+															<td align="left"><sf:label
+																	path="assetAssignedComment">${bondedAsset.assetAssignedComment}</sf:label></td>
+
+															<td align="center" width="75px"><input
+																id="userAssetId" type="hidden" name="userAssetId"
+																value="" /> <input id="userAssetIssueProcessId"
+																type="hidden" name="userAssetIssueProcessId" value="" />
+																<input id="userAssetReturnProcessId" type="hidden"
+																name="userAssetReturnProcessId" value="" /> <input
+																id="assetId" type="hidden" name="assetId" value="" /> <input
+																type="submit" name="approveOrRejectParam"
+																value='<spring:message code="button.approveRejectAsset.approve.text"/>'
+																${isDisabled eq "true" ? 'disabled'  : '' }
+																onclick="approveReject('${bondedAsset.userAssetId}', '${bondedAsset.userAssetIssueProcessId}', '${bondedAsset.userAssetReturnProcessId}','${bondedAsset.assetId}' );" />
 															</td>
-															<td align="center" width="75px">
-															<input type="submit" name="approveOrRejectParam" value='<spring:message code="button.approveRejectAsset.reject.text"/>' 
-																		${isDisabled eq "true" ? 'disabled'  : '' } 
-																		onclick="approveReject('${bondedAsset.userAssetId}', '${bondedAsset.userAssetIssueProcessId}', '${bondedAsset.userAssetReturnProcessId}', '${bondedAsset.assetId}' );"/>
+															<td align="center" width="75px"><input type="submit"
+																name="approveOrRejectParam"
+																value='<spring:message code="button.approveRejectAsset.reject.text"/>'
+																${isDisabled eq "true" ? 'disabled'  : '' }
+																onclick="approveReject('${bondedAsset.userAssetId}', '${bondedAsset.userAssetIssueProcessId}', '${bondedAsset.userAssetReturnProcessId}', '${bondedAsset.assetId}' );" />
 															</td>
-														</tr>	
+														</tr>
 													</c:forEach>
 												</table>
 											</td>
 										</tr>
-										
-
-
 									</table>
-
 								</sf:form>
 							</fieldset>
 						</div>

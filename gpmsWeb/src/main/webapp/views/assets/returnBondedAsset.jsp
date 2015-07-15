@@ -11,10 +11,10 @@
 <body>
 	<div id="wrapper">
 
-		<div id="header" align="center">
-			<table>
+		<div id="header">
+			<table width="100%">
 				<tr>
-					<td><%@include file="../common/gpmsHeader.jsp"%></td>
+					<td><%@include file="gpmsHeader.jsp"%></td>
 				</tr>
 			</table>
 		</div>
@@ -26,11 +26,13 @@
 					<td>
 						<div align="center">
 							<fieldset id="fieldSet">
-								<sf:form action="returnBondedAsset" modelAttribute="bondedAssetBean">
+								<sf:form action="returnBondedAsset"
+									modelAttribute="bondedAssetBean">
 									<table cellspacing="20px"
 										style="min-height: 50%; min-width: 50%;">
 										<tr>
-											<td class="boxHeading" align="left"><b> <label><spring:message code="pageHeader.returnBondedAsset.text"/></label>
+											<td class="boxHeading" align="left"><b> <label><spring:message
+															code="pageHeader.returnBondedAsset.text" /></label>
 											</b></td>
 										</tr>
 									</table>

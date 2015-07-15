@@ -10,20 +10,27 @@
 <link rel="stylesheet" type="text/css" href="resources/gpmsStyle.css" />
 <title>Gate Pass Management System</title>
 <script type="text/javascript">
-
-function onLocaleChange(){
-	this.document.getElementById("loginForm").submit();
-}
-
+	function onLocaleChange(lang) {
+		var e = document.getElementById('language');
+		var baseUri = null;
+		uri = window.location.href;
+		if (uri.indexOf('?') !== -1) {
+			baseUri = uri.substring(0, uri.indexOf('?'));
+		} else {
+			baseUri = uri;
+		}
+		langId = e.options[e.selectedIndex].value;
+		window.location = baseUri + "?lang=" + langId;
+	}
 </script>
 </head>
 <body>
 	<div id="wrapper">
 
 		<div id="header" align="center">
-			<table>
+			<table width="100%">
 				<tr>
-					<td><%@include file="../common/gpmsHeader.jsp"%></td>
+					<td><%@include file="loginHeader.jsp"%></td>
 				</tr>
 			</table>
 		</div>
@@ -36,40 +43,52 @@ function onLocaleChange(){
 						<div align="center">
 							<fieldset id="fieldSet"
 								style="border-width: 2px; background-color: lightblue; height: 250px; width: 400px;">
-								<sf:form id="loginForm" action="login" modelAttribute="loginBean">
+								<sf:form id="loginForm" action="login"
+									modelAttribute="loginBean">
 									<table cellspacing="20px">
 										<tr>
 											<td align="left" valign="top"><b><sf:label
-														path="langId"><spring:message code="label.loginPage.selectTheLanguage.text"/></sf:label></b></td>
-											<td><sf:select path="langId" multiple="false" onchange="onLocaleChange();">
+														path="langId">
+														<spring:message
+															code="label.loginPage.selectTheLanguage.text" />
+													</sf:label></b></td>
+											<td><sf:select id="language" path="langId"
+													multiple="false" onchange="onLocaleChange(this);">
 													<sf:option value="en" label="English"></sf:option>
 													<sf:option value="fr" label="French"></sf:option>
-												</sf:select> <br /> 
-												<sf:errors path="langId" cssClass="error" /></td>
+												</sf:select> <br /> <sf:errors path="langId" cssClass="error" /></td>
 										</tr>
 
 										<tr>
 											<td class="boxHeading" align="left" colspan="2"><b>
-													<label><spring:message code="label.loginPage.header"/></label>
+													<label><spring:message
+															code="label.loginPage.header" /></label>
 											</b></td>
 										</tr>
 
-										
+
 										<tr>
 											<td align="left" valign="top"><b><sf:label
-														path="userId"><spring:message code="label.loginPage.username.text"/></sf:label></b></td>
+														path="userId">
+														<spring:message code="label.loginPage.username.text" />
+													</sf:label></b></td>
 											<td><sf:input path="userId" /><br /> <sf:errors
 													path="userId" cssClass="error" /></td>
 										</tr>
 										<tr>
 											<td align="left" valign="top"><b><sf:label
-														path="password"><spring:message code="label.loginPage.password.text"/></sf:label></b></td>
+														path="password">
+														<spring:message code="label.loginPage.password.text" />
+													</sf:label></b></td>
 											<td><sf:password path="password" /><br /> <sf:errors
 													path="password" cssClass="error" /></td>
 										</tr>
 									</table>
-									<input type="hidden" name="${_csrf.parameterName}"	value="${_csrf.token}" />
-									<input type="submit" name="submitL" value='<spring:message code="button.loginPage.submit.text"/>' />
+									<input id="lang" type="hidden" name="lang" value="" />
+									<input type="hidden" name="${_csrf.parameterName}"
+										value="${_csrf.token}" />
+									<input type="submit" name="submitL"
+										value='<spring:message code="button.loginPage.submit.text"/>' />
 								</sf:form>
 
 							</fieldset>
@@ -89,10 +108,6 @@ function onLocaleChange(){
 			</table>
 		</div>
 		<!-- #footer -->
-
-
-
-
 	</div>
 </body>
 </html>

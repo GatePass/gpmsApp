@@ -26,10 +26,10 @@
     <serviceTask id="AssignToISITUser" name="Assign to ISIT User" activiti:class="org.gpms.web.TestActiviti"></serviceTask>
     <sequenceFlow id="flow14" sourceRef="AssignToISITUser" targetRef="bondedItemCorrection"></sequenceFlow>
     <userTask id="bondedItemCorrection" name="Bonded item Correction"></userTask>
-    <serviceTask id="correctionMailtoManager" name="Correction Mail to Manager" activiti:class="org.gpms.web.mail.MailServiceTask"></serviceTask>
-    <sequenceFlow id="flow15" sourceRef="bondedItemCorrection" targetRef="correctionMailtoManager"></sequenceFlow>
+    <serviceTask id="correctionMailToManager" name="Correction Mail to Manager" activiti:class="org.gpms.web.mail.MailServiceTask"></serviceTask>
+    <sequenceFlow id="flow15" sourceRef="bondedItemCorrection" targetRef="correctionMailToManager"></sequenceFlow>
     <serviceTask id="assignToISITManager" name="Assign to ISIT Manager" activiti:class="org.gpms.web.TestActiviti"></serviceTask>
-    <sequenceFlow id="flow16" sourceRef="correctionMailtoManager" targetRef="assignToISITManager"></sequenceFlow>
+    <sequenceFlow id="flow16" sourceRef="correctionMailToManager" targetRef="assignToISITManager"></sequenceFlow>
     <sequenceFlow id="flow17" sourceRef="assignToISITManager" targetRef="ISITMgrApprovalTask"></sequenceFlow>
     <serviceTask id="setDecisionVariable" name="Set The decision Variable" activiti:class="org.gpms.web.bondedItemIssue.BondedItemExclusiveGateway"></serviceTask>
     <sequenceFlow id="flow18" sourceRef="setDecisionVariable" targetRef="exclusivegateway1"></sequenceFlow>
@@ -69,7 +69,7 @@
       <bpmndi:BPMNShape bpmnElement="bondedItemCorrection" id="BPMNShape_bondedItemCorrection">
         <omgdc:Bounds height="71.0" width="121.0" x="964.0" y="210.0"></omgdc:Bounds>
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape bpmnElement="correctionMailtoManager" id="BPMNShape_correctionMailtoManager">
+      <bpmndi:BPMNShape bpmnElement="correctionMailToManager" id="BPMNShape_correctionMailToManager">
         <omgdc:Bounds height="75.0" width="113.0" x="968.0" y="330.0"></omgdc:Bounds>
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape bpmnElement="assignToISITManager" id="BPMNShape_assignToISITManager">

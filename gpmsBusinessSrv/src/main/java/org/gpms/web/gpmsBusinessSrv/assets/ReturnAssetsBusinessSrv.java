@@ -82,13 +82,6 @@ public class ReturnAssetsBusinessSrv {
 					ErrorCodeList.ERROR_NO_USER_FOUND,
 					ExceptionMessageList.ERROR_NO_ASSET_FOUND_MSG);
 		}
-		if (assetsEntity != null
-				& !ApplicationConstants.ASSET_ASSIGNED_STATUS
-						.equals(assetsEntity.getAssetStatus())) {
-			throw new GPMSApplicationException(
-					ErrorCodeList.ERROR_ASSET_IS_ALREADY_ASSIGNED,
-					ExceptionMessageList.ERROR_ASSET_IS_ALREADY_ASSIGNED_MSG);
-		}
 
 		String userAssetId = assetAssignModel.getUserAssetId();
 
@@ -103,6 +96,15 @@ public class ReturnAssetsBusinessSrv {
 
 		if (userAssetEntity != null
 				&& userAssetEntity.getUserAssetReturnProcessId() == null) {
+
+			if (assetsEntity != null
+					& !ApplicationConstants.ASSET_ASSIGNED_STATUS
+							.equals(assetsEntity.getAssetStatus())) {
+				throw new GPMSApplicationException(
+						ErrorCodeList.ERROR_ASSET_IS_ALREADY_ASSIGNED,
+						ExceptionMessageList.ERROR_ASSET_IS_ALREADY_ASSIGNED_MSG);
+			}
+
 			String processInstanceId = returnBondedItem
 					.startReturnBondedItemProcess();
 
@@ -112,10 +114,10 @@ public class ReturnAssetsBusinessSrv {
 
 			// Make necessary modification to records in gpms
 
-			userAssetEntity.setUserAssetReturnDate(DateUtil
-					.getSQLDate(assetAssignModel.getUserAssetReturnDate()));
 			userAssetEntity = userAssetsRepository
 					.getUserAssetById(userAssetId);
+			userAssetEntity.setUserAssetReturnDate(DateUtil
+					.getSQLDate(assetAssignModel.getUserAssetReturnDate()));
 			userAssetEntity.setUserAssetReturnProcessId(processInstanceId);
 			userAssetId = userAssetsRepository
 					.updateAssetInfoOfUser(userAssetEntity);
@@ -135,6 +137,14 @@ public class ReturnAssetsBusinessSrv {
 					"UserAssetEntity", userAssetEntity);
 
 		} else {
+
+			if (assetsEntity != null
+					& !ApplicationConstants.ASSET_IN_PROCESS_STATUS
+							.equals(assetsEntity.getAssetStatus())) {
+				throw new GPMSApplicationException(
+						ErrorCodeList.ERROR_ASSET_IS_ALREADY_ASSIGNED,
+						ExceptionMessageList.ERROR_ASSET_IS_ALREADY_ASSIGNED_MSG);
+			}
 
 			MailServiceParams mailServiceParams = new MailServiceParams();
 			mailServiceParams.setMailUserId("gpmsisituser3@gmail.com");

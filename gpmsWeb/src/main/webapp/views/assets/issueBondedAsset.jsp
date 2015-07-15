@@ -13,10 +13,10 @@
 <body>
 	<div id="wrapper">
 
-		<div id="header" align="center">
-			<table>
+		<div id="header">
+			<table width="100%">
 				<tr>
-					<td><%@include file="../common/gpmsHeader.jsp"%></td>
+					<td><%@include file="gpmsHeader.jsp"%></td>
 				</tr>
 			</table>
 		</div>
@@ -40,23 +40,21 @@
 													</c:if> <c:if
 														test="${bondedAssetBean.flowType == 'bondedItemReturn'}">
 														<label>Return Bonded Item</label>
-													</c:if>
-													<c:if
+													</c:if> <c:if
 														test="${bondedAssetBean.flowType == 'itemCorrection'}">
 														<label>Bonded Item Correction</label>
 													</c:if>
 											</b></td>
 										</tr>
 										<tr>
-											<td align="left" valign="top" ><b><sf:label
+											<td align="left" valign="top"><b><sf:label
 														path="errorMessage" cssClass="error">
 														Error : 
 													</sf:label></b></td>
-											<td><sf:errors
-														path="errorMessage" cssClass="error" /></td>
+											<td><sf:errors path="errorMessage" cssClass="error" /></td>
 										</tr>
-										
-										
+
+
 										<tr>
 											<td align="left" valign="top"><b><sf:label
 														path="userAssetId">
@@ -72,7 +70,7 @@
 												<td><sf:input path="userAssetId" /><br /> <sf:errors
 														path="userAssetId" cssClass="error" /></td>
 												<td><input type="submit" name="getAssetAssignedData"
-															value="Get Assigned Asset" /></td>		
+													value="Get Assigned Asset" /></td>
 											</c:if>
 										</tr>
 										<tr>
@@ -144,25 +142,26 @@
 
 										</tr>
 									</table>
-									<c:if test="${bondedAssetBean.flowType == 'bondedItemAssign' || bondedAssetBean.flowType == 'itemCorrection'}">
-									<c:if test="${returnFlow == 'false' }">
-									       <input type="submit" name="issueBondedAsset"
-											value='<spring:message code="button.issueBondedItem.assignAsset.text"/>'
-											${isDisabled eq "true" ? 'disabled'  : '' } />
-									</c:if>
-									<c:if test="${returnFlow == 'true' }">
-									       <input type="submit" name="returnBondedCorrection"
-											value='<spring:message code="button.issueBondedItem.assignAsset.text"/>'
-											${isDisabled eq "true" ? 'disabled'  : '' } />
-									</c:if>
+									<c:if
+										test="${bondedAssetBean.flowType == 'bondedItemAssign' || bondedAssetBean.flowType == 'itemCorrection'}">
+										<c:if test="${returnFlow == 'false' }">
+											<input type="submit" name="issueBondedAsset"
+												value='<spring:message code="button.issueBondedItem.assignAsset.text"/>'
+												${isDisabled eq "true" ? 'disabled'  : '' } />
+										</c:if>
+										<c:if test="${returnFlow == 'true' }">
+											<input type="submit" name="returnBondedCorrection"
+												value='<spring:message code="button.issueBondedItem.assignAsset.text"/>'
+												${isDisabled eq "true" ? 'disabled'  : '' } />
+										</c:if>
 									</c:if>
 									<c:if test="${bondedAssetBean.flowType == 'bondedItemReturn'}">
 										<input type="submit" name="returnBondedAsset"
-										value="Return Bonded Asset"
-										${isDisabled eq "true" ? 'disabled'  : '' } />
+											value="Return Bonded Asset"
+											${isDisabled eq "true" ? 'disabled'  : '' } />
 									</c:if>
-									
-									
+
+
 								</sf:form>
 							</fieldset>
 						</div>

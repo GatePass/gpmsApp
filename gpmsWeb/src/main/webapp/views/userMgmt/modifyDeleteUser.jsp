@@ -12,10 +12,10 @@
 <body>
 	<div id="wrapper">
 
-		<div id="header" align="center">
-			<table>
+		<div id="header">
+			<table width="100%">
 				<tr>
-					<td><%@include file="../common/gpmsHeader.jsp"%></td>
+					<td><%@include file="gpmsHeader.jsp"%></td>
 				</tr>
 			</table>
 		</div>
@@ -45,15 +45,15 @@
 														path="userId">
 														<spring:message code="label.newUser.userId.text" />
 													</sf:label></b></td>
-											<td align="left"><sf:input path="userId"/><sf:errors
-													path="userId" cssClass="error" /></td>
+											<td align="left"><sf:input path="userId" />
+												<sf:errors path="userId" cssClass="error" /></td>
 										</tr>
 										<tr>
 											<td align="left" valign="top"><b><sf:label
 														path="corpEmailId">
 														<spring:message code="label.newUser.corporateEmailId.text" />
 													</sf:label></b></td>
-											<td><sf:input path="corpEmailId"/><br /> <sf:errors
+											<td><sf:input path="corpEmailId" /><br /> <sf:errors
 													path="corpEmailId" cssClass="error" /></td>
 											<td><input type="submit" name="getUserData"
 												value="Get Data" /></td>
@@ -189,17 +189,19 @@
 											</tr>
 										</c:if>
 									</table>
-									
+
 									<c:if test="${userBean.flowType == 'modifyUser'}">
 										<input type="submit" name="modifyUser" value="Modify User"
 											${isButtonDisabled eq "true" ? 'disabled'  : '' } />
 									</c:if>
 									<c:if test="${userBean.flowType == 'deleteUser'}">
 										<input type="submit" name="deleteUser" value="Delete User"
-											${isButtonDisabled eq "true" ? 'disabled'  : '' }  onclick="return confirm('Do you really want to delete this User?');"/>
+											${isButtonDisabled eq "true" ? 'disabled'  : '' }
+											onclick="return confirm('Do you really want to delete this User?');" />
 									</c:if>
-									<input id="flowType" type="hidden" name="flowType" value="${userBean.flowType}">
-									
+									<input id="flowType" type="hidden" name="flowType"
+										value="${userBean.flowType}">
+
 								</sf:form>
 							</fieldset>
 						</div>

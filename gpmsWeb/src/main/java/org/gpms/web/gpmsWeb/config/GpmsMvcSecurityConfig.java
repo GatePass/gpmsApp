@@ -42,16 +42,19 @@ public class GpmsMvcSecurityConfig extends WebSecurityConfigurerAdapter {
 		http.anonymous().and().authorizeRequests().antMatchers("/resources/**")
 				.permitAll();
 
-		http.anonymous().and().authorizeRequests().antMatchers("/login?lang**")
+		http.anonymous().and().authorizeRequests().antMatchers("/login*")
 				.permitAll();
 
-		http.formLogin().loginPage("/login").usernameParameter("userId")
-				.passwordParameter("password").permitAll().and().csrf();
+		http.formLogin().loginPage("/login").failureUrl("/login?error")
+				.usernameParameter("userId").passwordParameter("password")
+				.permitAll().and().csrf();
 
+		http.logout().logoutSuccessUrl("/login?logout");
 		http.exceptionHandling().accessDeniedPage("/403");
 
-		http.authorizeRequests().antMatchers("/*", "/navigation")
-				.access("hasAnyRole('gpmsAdminGroup', 'gpmsSecurityGroup')")
+		http.authorizeRequests()
+				.antMatchers("/*", "/navigation")
+				.access("hasAnyRole('gpmsAdminGroup', 'gpmsSecurityGroup','gpmsISITMgrGroup', 'gpmsISITUserGroup', 'gpmsEmployeeGroup')")
 				.anyRequest().authenticated();
 
 	}

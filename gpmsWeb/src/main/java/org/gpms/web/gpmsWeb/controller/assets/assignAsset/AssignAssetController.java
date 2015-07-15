@@ -9,6 +9,7 @@ import javax.validation.Valid;
 import org.apache.log4j.Logger;
 import org.gpms.web.gpmsBusinessSrv.assets.AssetAssignModel;
 import org.gpms.web.gpmsBusinessSrv.assets.IssueAssetsBusinessSrv;
+import org.gpms.web.gpmsBusinessSrv.assets.ReturnAssetsBusinessSrv;
 import org.gpms.web.gpmsWeb.controller.assets.BondedAssetBean;
 import org.gpms.web.gpmsWeb.controller.assets.BondedAssetDataConverter;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -37,6 +38,9 @@ public class AssignAssetController {
 
 	@Autowired
 	IssueAssetsBusinessSrv issueAssetsBusinessSrv;
+
+	@Autowired
+	ReturnAssetsBusinessSrv returnAssetsBusinessSrv;
 
 	@RequestMapping(value = "/issueBondedAsset", method = { RequestMethod.GET })
 	public ModelAndView issueBondedAsset(HttpServletRequest request,
@@ -79,8 +83,6 @@ public class AssignAssetController {
 			try {
 				issueAssetsBusinessSrv.IssueBondedItems(assetAssignModel);
 			} catch (GPMSApplicationException appExp) {
-				System.out.println("**********************************    "
-						+ appExp.getErrorCode());
 				FieldError appError = new FieldError("bondedAssetBean",
 						"errorMessage", appExp.getErrorMessage());
 				result.addError(appError);
@@ -103,8 +105,36 @@ public class AssignAssetController {
 
 		String flowType = bondedAssetBean.getFlowType();
 
-		System.out
-				.println("??????????????????????????????????????????????????");
+		if (result.hasErrors()) {
+			return new ModelAndView("assets/issueBondedAsset");
+		}
+
+		request.getSession().setAttribute("bondedAssetBean", bondedAssetBean);
+
+		if (logger.isDebugEnabled()) {
+			logger.debug("bondedAssetBean " + bondedAssetBean);
+		}
+
+		if (bondedAssetBean != null) {
+
+			AssetAssignModel assetAssignModel = BondedAssetDataConverter
+					.convertBeanToModel(bondedAssetBean);
+
+			if (logger.isDebugEnabled()) {
+				logger.debug("assetAssignModel :" + assetAssignModel);
+			}
+
+			try {
+				returnAssetsBusinessSrv.ReturnBondedItems(assetAssignModel);
+			} catch (GPMSApplicationException appExp) {
+				FieldError appError = new FieldError("bondedAssetBean",
+						"errorMessage", appExp.getErrorMessage());
+				result.addError(appError);
+
+				return new ModelAndView("assets/issueBondedAsset");
+			}
+
+		}
 
 		bondedAssetBean.setFlowType(flowType);
 		model.addAttribute("bondedAssetBean", bondedAssetBean);

@@ -31,8 +31,7 @@
 									<table cellspacing="20px"
 										style="min-height: 50%; min-width: 50%;">
 										<tr>
-											<td class="boxHeading" align="left"><b>
-											 <c:if
+											<td class="boxHeading" align="left"><b> <c:if
 														test="${flowType == 'modifyAsset'}">
 														<label>Modify Asset</label>
 													</c:if> <c:if test="${flowType == 'deleteAsset'}">
@@ -55,8 +54,8 @@
 														<spring:message code="label.newAsset.assetBarCode.text" />
 													</sf:label></b></td>
 											<td><sf:label path="assetBarCode">${assetBean.assetBarCode}</sf:label>
-											<input id="assetBarCode" type="hidden" name="assetBarCode" value="${assetBean.assetBarCode}">
-											</td>
+												<input id="assetBarCode" type="hidden" name="assetBarCode"
+												value="${assetBean.assetBarCode}"></td>
 										</tr>
 										<tr>
 											<td align="left" valign="top"><b><sf:label
@@ -65,8 +64,8 @@
 															code="label.newAsset.selectTheAssetType.text" />
 													</sf:label></b></td>
 											<td><sf:label path="assetTypeId">${assetBean.assetTypeId}</sf:label>
-											<input id="assetTypeId" type="hidden" name="assetTypeId" value="${assetBean.assetTypeId}">
-											</td>
+												<input id="assetTypeId" type="hidden" name="assetTypeId"
+												value="${assetBean.assetTypeId}"></td>
 										</tr>
 										<c:if test="${flowType == 'modifyAsset'}">
 											<tr>
@@ -96,10 +95,9 @@
 														<sf:option value="ASSIGNED" label="ASSIGNED"></sf:option>
 														<sf:option value="AVAILABLE" label="AVAILABLE"></sf:option>
 														<sf:option value="REMOVED" label="REMOVED"></sf:option>
-													</sf:select> <br /> 
-													<sf:errors path="assetStatus" cssClass="error" /></td>
+													</sf:select> <br /> <sf:errors path="assetStatus" cssClass="error" /></td>
 											</tr>
-											
+
 										</c:if>
 										<c:if test="${flowType == 'deleteAsset'}">
 											<tr>
@@ -126,16 +124,18 @@
 										</c:if>
 
 									</table>
-									
+
 									<c:if test="${flowType == 'modifyAsset'}">
 										<input type="submit" name="modifyAsset" value="Modify Asset"
 											${isDisabled eq "true" ? 'disabled'  : '' } />
 									</c:if>
 									<c:if test="${flowType == 'deleteAsset'}">
 										<input type="submit" name="deleteAsset" value="Delete Asset"
-											${isDisabled eq "true" ? 'disabled'  : '' }  onclick="return confirm('Do you really want to delete this asset?');"/>
+											${isDisabled eq "true" ? 'disabled'  : '' }
+											onclick="return confirm('Do you really want to delete this asset?');" />
 									</c:if>
-									<input id="flowType" type="hidden" name="flowType" value="${assetBean.flowType}">
+									<input id="flowType" type="hidden" name="flowType"
+										value="${assetBean.flowType}">
 								</sf:form>
 							</fieldset>
 						</div>
