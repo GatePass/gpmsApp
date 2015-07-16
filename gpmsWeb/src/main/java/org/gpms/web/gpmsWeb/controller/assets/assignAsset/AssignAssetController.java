@@ -47,12 +47,16 @@ public class AssignAssetController {
 			@ModelAttribute("bondedAssetBean") BondedAssetBean bondedAssetBean,
 			Model model) {
 
+		String flowType = bondedAssetBean.getFlowType();
+
 		if (logger.isDebugEnabled()) {
 			logger.debug("bondedAssetBean " + bondedAssetBean);
 		}
 
+		model.addAttribute("returnFlow", false);
 		model.addAttribute("bondedAssetBean", bondedAssetBean);
 
+		bondedAssetBean.setFlowType(flowType);
 		return new ModelAndView("assets/issueBondedAsset");
 	}
 

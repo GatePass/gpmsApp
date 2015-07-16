@@ -94,7 +94,7 @@ public class ResubmitForApprovalController {
 					+ userAssetReturnProcessId + "\nassetId :" + assetId);
 		}
 
-		String returnFlow = null;
+		String returnFlow = "false";
 		if (userAssetReturnProcessId != null) {
 			returnFlow = "true";
 		}

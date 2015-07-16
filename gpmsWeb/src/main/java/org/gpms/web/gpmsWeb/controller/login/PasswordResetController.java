@@ -40,20 +40,27 @@ public class PasswordResetController {
 	@Autowired
 	UserMgmtBusinessSrv userMgmtBusinessSrv;
 
+	/**
+	 * 
+	 * @param request
+	 * @param passwordResetBean
+	 * @param model
+	 * @return
+	 */
 	@RequestMapping(value = "/passwordReset", method = RequestMethod.GET)
 	public ModelAndView passwordReset(HttpServletRequest request,
 			@ModelAttribute PasswordResetBean passwordResetBean, Model model) {
 
-		// if (logger.isDebugEnabled()) {
-		// logger.debug("request.getUserPrincipal() : "
-		// + request.getUserPrincipal());
-		// }
+		if (logger.isDebugEnabled()) {
+			logger.debug("request.getUserPrincipal() : "
+					+ request.getUserPrincipal());
+		}
 
-		String userId = "gpmsAdmUser@gmail.com";
+		String userId = null;
 
-		// if (request.getUserPrincipal() != null) {
-		// userId = request.getUserPrincipal().getName();
-		// }
+		if (request.getUserPrincipal() != null) {
+			userId = request.getUserPrincipal().getName();
+		}
 
 		UserModel userModel = userMgmtBusinessSrv.getUserByCorpEmail(userId);
 		request.getSession().setAttribute("userModel", userModel);
@@ -73,6 +80,14 @@ public class PasswordResetController {
 		return new ModelAndView("login/passwordReset");
 	}
 
+	/**
+	 * 
+	 * @param request
+	 * @param passwordResetBean
+	 * @param result
+	 * @param model
+	 * @return
+	 */
 	@RequestMapping(value = "/passwordReset", method = RequestMethod.POST)
 	public ModelAndView passwordReset(HttpServletRequest request,
 			@ModelAttribute @Valid PasswordResetBean passwordResetBean,
@@ -90,6 +105,12 @@ public class PasswordResetController {
 			logger.debug("userModel " + userModel);
 		}
 
+		String userId = null;
+
+		if (request.getUserPrincipal() != null) {
+			userId = request.getUserPrincipal().getName();
+		}
+
 		List<SecurityQuestionsModel> securityQuestionsModel = userMgmtBusinessSrv
 				.getAllSecurityQuestions();
 		model.addAttribute("securityQuestionsModel", securityQuestionsModel);
@@ -98,6 +119,15 @@ public class PasswordResetController {
 
 		if (result.hasErrors()) {
 			return new ModelAndView("login/passwordReset");
+		}
+
+		userModel = userMgmtBusinessSrv.getUserByCorpEmail(userId);
+
+		if (!passwordResetBean.getSecretQuesAnsId().equals(
+				userModel.getSecretQuesAnsId())) {
+			FieldError retrySecuFldErr = new FieldError("passwordResetBean",
+					"secretQuesAnsId", "Security answer provided doesnot match");
+			result.addError(retrySecuFldErr);
 		}
 
 		// TODO messages to be localized
@@ -113,7 +143,19 @@ public class PasswordResetController {
 			result.addError(reenterNewPasswordIdFldErr);
 		}
 
+		if (result.hasErrors()) {
+			return new ModelAndView("login/passwordReset");
+		}
+
 		PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+
+		if (passwordResetBean.getNewPasswordId() != null) {
+			String encodedPassword = passwordEncoder.encode(passwordResetBean
+					.getNewPasswordId());
+			userModel.setPassword(encodedPassword);
+		}
+
+		UserModel returnModel = userMgmtBusinessSrv.modifyUser(userModel);
 
 		model.addAttribute("securityQuestionsModel", securityQuestionsModel);
 		model.addAttribute("passwordResetBean", passwordResetBean);

@@ -35,6 +35,11 @@ public class UserMgmtBusinessSrv {
 	@Autowired
 	ActivitiUserMgmt activitiUserMgmt;
 
+	/**
+	 * 
+	 * @param userModel
+	 * @return
+	 */
 	@Transactional(propagation = Propagation.REQUIRED, isolation = Isolation.DEFAULT)
 	public UserModel createUser(UserModel userModel) {
 
@@ -65,6 +70,11 @@ public class UserMgmtBusinessSrv {
 		return userModel;
 	}
 
+	/**
+	 * 
+	 * @param userModel
+	 * @return
+	 */
 	public UserModel modifyUser(UserModel userModel) {
 
 		if (logger.isDebugEnabled()) {
@@ -89,6 +99,11 @@ public class UserMgmtBusinessSrv {
 		return userModel;
 	}
 
+	/**
+	 * 
+	 * @param corpEmail
+	 * @return
+	 */
 	public UserModel getUserByCorpEmail(String corpEmail) {
 
 		if (logger.isDebugEnabled()) {
@@ -114,6 +129,11 @@ public class UserMgmtBusinessSrv {
 		return userModel;
 	}
 
+	/**
+	 * 
+	 * @param userId
+	 * @return
+	 */
 	public UserModel getUserById(String userId) {
 
 		if (logger.isDebugEnabled()) {
@@ -139,6 +159,12 @@ public class UserMgmtBusinessSrv {
 		return userModel;
 	}
 
+	/**
+	 * 
+	 * @param userId
+	 * @param groupId
+	 */
+	@Transactional(propagation = Propagation.REQUIRED, isolation = Isolation.DEFAULT)
 	public void deleteUserById(String userId, String groupId) {
 
 		if (logger.isDebugEnabled()) {
@@ -163,6 +189,12 @@ public class UserMgmtBusinessSrv {
 		}
 	}
 
+	/**
+	 * 
+	 * @param corpEmail
+	 * @param groupId
+	 */
+	@Transactional(propagation = Propagation.REQUIRED, isolation = Isolation.DEFAULT)
 	public void deleteUserByCorpEmailId(String corpEmail, String groupId) {
 
 		if (logger.isDebugEnabled()) {
@@ -180,6 +212,11 @@ public class UserMgmtBusinessSrv {
 		}
 	}
 
+	/**
+	 * 
+	 * @param userModel
+	 * @return
+	 */
 	private UsersLoginEntity copyModelToEntity(UserModel userModel) {
 
 		UsersLoginEntity usersLoginEntity = new UsersLoginEntity();
@@ -199,6 +236,11 @@ public class UserMgmtBusinessSrv {
 
 	}
 
+	/**
+	 * 
+	 * @param usersLoginEntity
+	 * @return
+	 */
 	private UserModel copyEntityToModel(UsersLoginEntity usersLoginEntity) {
 
 		UserModel userModel = new UserModel();

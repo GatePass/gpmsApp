@@ -5,6 +5,7 @@ package org.gpms.web.gpmsWeb.controller.userMgmt;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -15,6 +16,7 @@ import org.gpms.web.gpmsBusinessSrv.userMgmt.SecurityQuestionsModel;
 import org.gpms.web.gpmsBusinessSrv.userMgmt.UserGroupModel;
 import org.gpms.web.gpmsBusinessSrv.userMgmt.UserMgmtBusinessSrv;
 import org.gpms.web.gpmsBusinessSrv.userMgmt.UserModel;
+import org.gpms.web.gpmsBusinessSrv.util.ApplicationConstants;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -42,6 +44,13 @@ public class UserController {
 	@Autowired
 	UserMgmtBusinessSrv userMgmtBusinessSrv;
 
+	/**
+	 * 
+	 * @param request
+	 * @param userBean
+	 * @param model
+	 * @return
+	 */
 	@RequestMapping(value = "/newUser", method = { RequestMethod.GET,
 			RequestMethod.POST })
 	public ModelAndView newUser(HttpServletRequest request,
@@ -55,14 +64,11 @@ public class UserController {
 			logger.debug("userBean\n" + userBean.toString());
 		}
 
-		boolean isitMgrRole = request.isUserInRole("gpmsISITMgrGroup");
-
-		System.out.println("isitMgrRole : " + isitMgrRole);
-
 		List<SecurityQuestionsModel> securityQuestionsModel = userMgmtBusinessSrv
 				.getAllSecurityQuestions();
 		List<UserGroupModel> userGroupModel = userMgmtBusinessSrv
 				.getUserGroup();
+		userGroupModel = getRoleBasedUserGroup(userGroupModel, request);
 
 		model.addAttribute("userGroupModel", userGroupModel);
 		model.addAttribute("securityQuestionsModel", securityQuestionsModel);
@@ -76,8 +82,17 @@ public class UserController {
 		return new ModelAndView("userMgmt/newUser");
 	}
 
+	/**
+	 * 
+	 * @param request
+	 * @param userBean
+	 * @param result
+	 * @param model
+	 * @return
+	 * @throws IOException
+	 */
 	@RequestMapping(value = "/newUser", method = RequestMethod.POST, params = "createUser")
-	public String createUser(
+	public String createUser(HttpServletRequest request,
 			@ModelAttribute("userBean") @Valid UserBean userBean,
 			BindingResult result, Model model) throws IOException {
 
@@ -89,6 +104,7 @@ public class UserController {
 				.getAllSecurityQuestions();
 		List<UserGroupModel> userGroupModel = userMgmtBusinessSrv
 				.getUserGroup();
+		userGroupModel = getRoleBasedUserGroup(userGroupModel, request);
 
 		model.addAttribute("userGroupModel", userGroupModel);
 		model.addAttribute("securityQuestionsModel", securityQuestionsModel);
@@ -148,9 +164,16 @@ public class UserController {
 		return "userMgmt/newUser";
 	}
 
+	/**
+	 * 
+	 * @param request
+	 * @param userBean
+	 * @param model
+	 * @return
+	 */
 	@RequestMapping(value = "/modifyDeleteUser", method = { RequestMethod.GET,
 			RequestMethod.POST })
-	public ModelAndView modifyDeleteUser(
+	public ModelAndView modifyDeleteUser(HttpServletRequest request,
 			@ModelAttribute("userBean") UserBean userBean, Model model) {
 
 		if (logger.isDebugEnabled()) {
@@ -163,6 +186,7 @@ public class UserController {
 				.getAllSecurityQuestions();
 		List<UserGroupModel> userGroupModel = userMgmtBusinessSrv
 				.getUserGroup();
+		userGroupModel = getRoleBasedUserGroup(userGroupModel, request);
 
 		if (logger.isDebugEnabled()) {
 			logger.debug("userBean\n" + userBean.toString());
@@ -182,8 +206,16 @@ public class UserController {
 		return new ModelAndView("userMgmt/modifyDeleteUser");
 	}
 
+	/**
+	 * 
+	 * @param request
+	 * @param userBean
+	 * @param result
+	 * @param model
+	 * @return
+	 */
 	@RequestMapping(value = "/modifyDeleteUser", method = RequestMethod.POST, params = "getUserData")
-	public ModelAndView getUserData(
+	public ModelAndView getUserData(HttpServletRequest request,
 			@ModelAttribute("userBean") UserBean userBean,
 			BindingResult result, Model model) {
 
@@ -195,6 +227,8 @@ public class UserController {
 				.getAllSecurityQuestions();
 		List<UserGroupModel> userGroupModel = userMgmtBusinessSrv
 				.getUserGroup();
+		userGroupModel = getRoleBasedUserGroup(userGroupModel, request);
+
 		model.addAttribute("userGroupModel", userGroupModel);
 		model.addAttribute("securityQuestionsModel", securityQuestionsModel);
 
@@ -259,8 +293,18 @@ public class UserController {
 		return new ModelAndView("userMgmt/modifyDeleteUser");
 	}
 
+	/**
+	 * 
+	 * @param request
+	 * @param userBean
+	 * @param result
+	 * @param model
+	 * @param redirectAttrs
+	 * @return
+	 * @throws IOException
+	 */
 	@RequestMapping(value = "/modifyDeleteUser", method = RequestMethod.POST, params = "modifyUser")
-	public String modifyAsset(
+	public String modifyAsset(HttpServletRequest request,
 			@ModelAttribute("userBean") @Valid UserBean userBean,
 			BindingResult result, Model model, RedirectAttributes redirectAttrs)
 			throws IOException {
@@ -279,6 +323,8 @@ public class UserController {
 				.getAllSecurityQuestions();
 		List<UserGroupModel> userGroupModel = userMgmtBusinessSrv
 				.getUserGroup();
+		userGroupModel = getRoleBasedUserGroup(userGroupModel, request);
+
 		model.addAttribute("userGroupModel", userGroupModel);
 		model.addAttribute("securityQuestionsModel", securityQuestionsModel);
 
@@ -332,6 +378,15 @@ public class UserController {
 		return "userMgmt/modifyDeleteUser";
 	}
 
+	/**
+	 * 
+	 * @param userBean
+	 * @param result
+	 * @param model
+	 * @param redirectAttrs
+	 * @return
+	 * @throws IOException
+	 */
 	@RequestMapping(value = "/modifyDeleteUser", method = RequestMethod.POST, params = "deleteUser")
 	public String deleteAsset(@ModelAttribute("userBean") UserBean userBean,
 			BindingResult result, Model model, RedirectAttributes redirectAttrs)
@@ -394,6 +449,11 @@ public class UserController {
 		return "userMgmt/modifyDeleteUser";
 	}
 
+	/**
+	 * 
+	 * @param userBean
+	 * @return
+	 */
 	private UserModel copyBeanToModel(UserBean userBean) {
 
 		UserModel userModel = new UserModel();
@@ -410,6 +470,11 @@ public class UserController {
 		return userModel;
 	}
 
+	/**
+	 * 
+	 * @param userModel
+	 * @return
+	 */
 	private UserBean copyModelToBean(UserModel userModel) {
 
 		UserBean userBean = new UserBean();
@@ -426,6 +491,40 @@ public class UserController {
 		userBean.setSecretQuesAnsId(userModel.getSecretQuesAnsId());
 
 		return userBean;
+	}
+
+	private List<UserGroupModel> getRoleBasedUserGroup(
+			List<UserGroupModel> userGroupModel, HttpServletRequest request) {
+
+		boolean isitMgrRole = request.isUserInRole("gpmsISITMgrGroup");
+		boolean isitAdmRole = request.isUserInRole("gpmsAdminGroup");
+		List<UserGroupModel> userGroupList = new ArrayList<UserGroupModel>();
+		Iterator<UserGroupModel> userGroupModelIter = userGroupModel.iterator();
+		if (isitMgrRole) {
+			while (userGroupModelIter.hasNext()) {
+				UserGroupModel singleUserGroupModel = userGroupModelIter.next();
+				if (singleUserGroupModel.getUserGroupId().equals(
+						ApplicationConstants.GROUP_ISIT_USER)) {
+					userGroupList.add(singleUserGroupModel);
+				} else if (singleUserGroupModel.getUserGroupId().equals(
+						ApplicationConstants.GROUP_EMPLOYEE)) {
+					userGroupList.add(singleUserGroupModel);
+				}
+			}
+		} else if (isitAdmRole) {
+			while (userGroupModelIter.hasNext()) {
+				UserGroupModel singleUserGroupModel = userGroupModelIter.next();
+				if (singleUserGroupModel.getUserGroupId().equals(
+						ApplicationConstants.GROUP_ADMIN)) {
+					continue;
+				} else {
+					userGroupList.add(singleUserGroupModel);
+				}
+
+			}
+		}
+
+		return userGroupList;
 	}
 
 }

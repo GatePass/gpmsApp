@@ -59,14 +59,15 @@
 										<security:authorize
 											access="hasAnyRole('ROLE_gpmsISITUserGroup', 'ROLE_gpmsISITMgrGroup')">
 											<br>
-											<security:authorize
-												access="hasAnyRole('ROLE_gpmsISITMgrGroup')">
+											
 												<tr>
 													<td class="boxHeading" align="left" colspan="2"><b>
 															<label><spring:message
 																	code="subHeader.assetsMgmt.text" /></label>
 													</b></td>
 												</tr>
+											<security:authorize
+												access="hasAnyRole('ROLE_gpmsISITMgrGroup')">	
 												<tr>
 													<td align="left" colspan="2"><label><spring:message
 																code="label.userAccessMgmt.createModifyAssetType.text" /></label>
@@ -105,8 +106,10 @@
 												<td align="left" colspan="2"><label><spring:message
 															code="label.userAccessMgmt.issueBondedItemActivity.text" /></label>
 												</td>
+												<security:authorize access="hasAnyRole('ROLE_gpmsISITMgrGroup')">
 												<td><input type="submit" name="approveRejectAsset"
 													value='<spring:message code="button.userAccessMgmt.approveReject.text"/>' /></td>
+												</security:authorize>	
 												<td><input type="submit" name="modifyBondedAsset"
 													value='<spring:message code="button.userAccessMgmt.modifyBondedAsset.text"/>' /></td>
 											</tr>

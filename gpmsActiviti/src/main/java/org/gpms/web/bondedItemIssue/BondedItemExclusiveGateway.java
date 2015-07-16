@@ -10,6 +10,9 @@ public class BondedItemExclusiveGateway implements JavaDelegate {
 
 	Boolean bondedItemApproved;
 
+	/**
+	 * 
+	 */
 	@Override
 	public void execute(DelegateExecution execution) throws Exception {
 
