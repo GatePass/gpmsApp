@@ -93,6 +93,7 @@
 												<td><input type="submit" name="deleteAsset"
 													value='<spring:message code="button.userAccessMgmt.deleteAsset.text"/>' /></td>
 											</tr>
+											<security:authorize access="hasAnyRole('ROLE_gpmsISITUserGroup')">
 											<tr>
 												<td align="left" colspan="2"><label><spring:message
 															code="label.userAccessMgmt.assignReturnBondedItem.text" /></label>
@@ -102,6 +103,7 @@
 												<td><input type="submit" name="bondedItemReturn"
 													value='<spring:message code="button.userAccessMgmt.returnAsset.text"/>' /></td>
 											</tr>
+											</security:authorize>
 											<tr>
 												<td align="left" colspan="2"><label><spring:message
 															code="label.userAccessMgmt.issueBondedItemActivity.text" /></label>

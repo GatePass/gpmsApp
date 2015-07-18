@@ -5,6 +5,7 @@ package org.gpms.web.common;
 
 import java.util.List;
 
+import org.activiti.engine.history.HistoricProcessInstance;
 import org.activiti.engine.runtime.Execution;
 import org.activiti.engine.task.Comment;
 import org.activiti.engine.task.Task;
@@ -26,6 +27,9 @@ public class BondedItemManagement {
 
 	@Autowired
 	protected TaskManagement taskManagement;
+
+	@Autowired
+	protected IdentityManagement identityManagement;
 
 	public void updateInfoOnTask(String processInstanceId, String comment,
 			String variableName, Object objectValue) {
@@ -99,6 +103,17 @@ public class BondedItemManagement {
 		Task task = taskManagement.getTaskByProcessInstAndDefKey(
 				taskDefinitionKey, processInstanceId);
 		return task;
+	}
+
+	public String getProcessStarterByProcessId(String processInstanceId) {
+
+		HistoricProcessInstance historicProcessInstance = processManagement
+				.getHistoricProcessInstanceById(processInstanceId);
+		return historicProcessInstance.getStartUserId();
+	}
+
+	public void setUserForProcessStarter(String authenticatedUserId) {
+		identityManagement.setUserForProcessStarter(authenticatedUserId);
 	}
 
 }

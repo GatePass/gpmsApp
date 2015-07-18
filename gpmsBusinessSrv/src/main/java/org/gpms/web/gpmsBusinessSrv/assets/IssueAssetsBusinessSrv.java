@@ -3,6 +3,9 @@
  */
 package org.gpms.web.gpmsBusinessSrv.assets;
 
+import javax.persistence.NoResultException;
+import javax.persistence.PersistenceException;
+
 import org.apache.log4j.Logger;
 import org.gpms.web.bondedItemIssue.BondedItemIssue;
 import org.gpms.web.domain.AssetsRepository;
@@ -17,6 +20,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import exceptions.ErrorCodeList;
+import exceptions.ExceptionMessageList;
 import exceptions.GPMSApplicationException;
 
 /**
@@ -42,74 +47,71 @@ public class IssueAssetsBusinessSrv {
 	AssetsRepository assetsRepository;
 
 	@Transactional
-	public void IssueBondedItems(AssetAssignModel assetAssignModel)
-			throws GPMSApplicationException {
+	public void IssueBondedItems(AssetAssignModel assetAssignModel,
+			String usersPersonalEmail) throws GPMSApplicationException {
 
 		/*
 		 * Update the gpms database with the record
 		 */
 		UserAssetEntity userAssetEntity = new UserAssetEntity();
 
-		UsersLoginEntity userLoginEntity = usersRepository
-				.getUserByCorpEmailId(assetAssignModel.getUserCorpEmail());
+		UsersLoginEntity userLoginEntity = null;
 
-		AssetsEntity assetsEntity = assetsRepository
-				.getAssetById(assetAssignModel.getAssetId());
+		AssetsEntity assetsEntity = null;
 
-		// try {
-		//
-		// UsersLoginEntity userLoginEntity = usersRepository
-		// .getUserByCorpEmailId(assetAssignModel.getUserCorpEmail());
-		//
-		// if (logger.isDebugEnabled()) {
-		// logger.debug("userLoginEntity :" + userLoginEntity);
-		// }
-		//
-		// } catch (PersistenceException pe) {
-		// if (pe instanceof NoResultException) {
-		// throw new GPMSApplicationException(
-		// ErrorCodeList.ERROR_NO_USER_FOUND,
-		// ExceptionMessageList.ERROR_NO_USER_FOUND_MSG);
-		// } else {
-		// throw new GPMSApplicationException(
-		// ErrorCodeList.ERROR_WITH_DATABASE,
-		// ExceptionMessageList.ERROR_WITH_DATABASE_MSG);
-		// }
-		//
-		// }
-		//
-		// AssetsEntity assetsEntity = null;
-		//
-		// try {
-		// assetsEntity = assetsRepository.getAssetById(assetAssignModel
-		// .getAssetId());
-		// if (logger.isDebugEnabled()) {
-		// logger.debug("assetsEntity :" + assetsEntity);
-		// }
-		//
-		// } catch (PersistenceException pe) {
-		// if (pe instanceof NoResultException) {
-		// throw new GPMSApplicationException(
-		// ErrorCodeList.ERROR_NO_USER_FOUND,
-		// ExceptionMessageList.ERROR_NO_ASSET_FOUND_MSG);
-		// } else {
-		// throw new GPMSApplicationException(
-		// ErrorCodeList.ERROR_WITH_DATABASE,
-		// ExceptionMessageList.ERROR_WITH_DATABASE_MSG);
-		// }
-		// }
-		//
-		// if (assetsEntity != null
-		// & !ApplicationConstants.ASSET_AVAILABLE_STATUS
-		// .equals(assetsEntity.getAssetStatus())) {
-		// throw new GPMSApplicationException(
-		// ErrorCodeList.ERROR_ASSET_IS_NOT_AVAILABLE,
-		// ExceptionMessageList.ERROR_ASSET_IS_NOT_AVAILABLE_MSG);
-		// }
+		try {
+
+			userLoginEntity = usersRepository
+					.getUserByCorpEmailId(assetAssignModel.getUserCorpEmail());
+
+			if (logger.isDebugEnabled()) {
+				logger.debug("userLoginEntity :" + userLoginEntity);
+			}
+
+		} catch (PersistenceException pe) {
+			if (pe instanceof NoResultException) {
+				throw new GPMSApplicationException(
+						ErrorCodeList.ERROR_NO_USER_FOUND,
+						ExceptionMessageList.ERROR_NO_USER_FOUND_MSG);
+			} else {
+				throw new GPMSApplicationException(
+						ErrorCodeList.ERROR_WITH_DATABASE,
+						ExceptionMessageList.ERROR_WITH_DATABASE_MSG);
+			}
+
+		}
+
+		try {
+			assetsEntity = assetsRepository.getAssetById(assetAssignModel
+					.getAssetId());
+			if (logger.isDebugEnabled()) {
+				logger.debug("assetsEntity :" + assetsEntity);
+			}
+
+		} catch (PersistenceException pe) {
+			if (pe instanceof NoResultException) {
+				throw new GPMSApplicationException(
+						ErrorCodeList.ERROR_NO_ASSET_FOUND,
+						ExceptionMessageList.ERROR_NO_ASSET_FOUND_MSG);
+			} else {
+				throw new GPMSApplicationException(
+						ErrorCodeList.ERROR_WITH_DATABASE,
+						ExceptionMessageList.ERROR_WITH_DATABASE_MSG);
+			}
+		}
 
 		String processInstanceId = null;
 		String userAssetId = null;
 		if (assetAssignModel.getUserAssetId() == null) {
+
+			if (assetsEntity != null
+					& !ApplicationConstants.ASSET_AVAILABLE_STATUS
+							.equals(assetsEntity.getAssetStatus())) {
+				throw new GPMSApplicationException(
+						ErrorCodeList.ERROR_ASSET_IS_NOT_AVAILABLE,
+						ExceptionMessageList.ERROR_ASSET_IS_NOT_AVAILABLE_MSG);
+			}
+
 			userAssetEntity = BondedAssetModelEntityConverter
 					.convertModelToEntity(assetAssignModel);
 			userAssetEntity.setUserAssetIssueProcessId("-999999999");
@@ -123,6 +125,7 @@ public class IssueAssetsBusinessSrv {
 				logger.debug("Start the process of assigning the asset and approval");
 			}
 
+			bondedItemIssue.setUserForProcessStarter(usersPersonalEmail);
 			processInstanceId = bondedItemIssue.startBondItemIssueProcess();
 
 			bondedItemIssue.performApprovalAssignment(
@@ -145,7 +148,7 @@ public class IssueAssetsBusinessSrv {
 			// Make necessary modification to records in activiti
 			String comment = "An asset is for Approval request with id :"
 					+ assetsEntity.getAssetId() + "of Type "
-					+ assetsEntity.getAssetType()
+					+ assetsEntity.getAssetTypesEntity().getAssetTypeName()
 					+ ". It is to be assigned to "
 					+ assetAssignModel.getUserCorpEmail();
 
@@ -155,7 +158,7 @@ public class IssueAssetsBusinessSrv {
 		} else {
 			userAssetEntity = userAssetsRepository
 					.getUserAssetById(assetAssignModel.getUserAssetId());
-			// userAssetsRepository.updateAssetInfoOfUser(userAssetEntity);
+			processInstanceId = assetAssignModel.getUserAssetIssueProcessId();
 
 			if (logger.isDebugEnabled()) {
 				logger.debug("userAssetEntity :" + userAssetEntity);
@@ -163,8 +166,6 @@ public class IssueAssetsBusinessSrv {
 			}
 
 			MailServiceParams mailServiceParams = new MailServiceParams();
-			mailServiceParams.setMailUserId("gpmsisituser3@gmail.com");
-			mailServiceParams.setMailPassword("gpmsisituser3777#$");
 			mailServiceParams.setMailToAddress("gpmsISITMgr@gmail.com");
 			mailServiceParams.setMailSubject(userAssetEntity.getAssetId()
 					+ " is Corrected for the user "
@@ -173,7 +174,6 @@ public class IssueAssetsBusinessSrv {
 					+ "<br><br> Regards, <br>gpmsisituser3@gmail.com";
 			mailServiceParams.setMailHtmlBody(mailHtmlBody);
 
-			processInstanceId = assetAssignModel.getUserAssetIssueProcessId();
 			bondedItemIssue.setVariableOnExecution(processInstanceId,
 					ApplicationConstants.CORRECTION_MAIL_TO_MANAGER_TASK,
 					mailServiceParams);
@@ -190,7 +190,7 @@ public class IssueAssetsBusinessSrv {
 			String comment = "An asset has been corrected and is for Approval request with id :"
 					+ assetsEntity.getAssetId()
 					+ "of Type "
-					+ assetsEntity.getAssetType()
+					+ assetsEntity.getAssetTypesEntity().getAssetTypeName()
 					+ ". It is to be assigned to "
 					+ assetAssignModel.getUserCorpEmail();
 

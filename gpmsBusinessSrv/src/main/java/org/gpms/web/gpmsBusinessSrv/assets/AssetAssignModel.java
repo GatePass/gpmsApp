@@ -1,5 +1,10 @@
 package org.gpms.web.gpmsBusinessSrv.assets;
 
+/**
+ * 
+ * @author narenda.kumar
+ * 
+ */
 public class AssetAssignModel {
 
 	private String userAssetId;

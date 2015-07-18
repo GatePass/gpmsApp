@@ -10,6 +10,8 @@ import org.apache.log4j.Logger;
 import org.gpms.web.gpmsBusinessSrv.assets.AssetAssignModel;
 import org.gpms.web.gpmsBusinessSrv.assets.IssueAssetsBusinessSrv;
 import org.gpms.web.gpmsBusinessSrv.assets.ReturnAssetsBusinessSrv;
+import org.gpms.web.gpmsBusinessSrv.userMgmt.UserModel;
+import org.gpms.web.gpmsWeb.common.GpmsValidators;
 import org.gpms.web.gpmsWeb.controller.assets.BondedAssetBean;
 import org.gpms.web.gpmsWeb.controller.assets.BondedAssetDataConverter;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -42,6 +44,14 @@ public class AssignAssetController {
 	@Autowired
 	ReturnAssetsBusinessSrv returnAssetsBusinessSrv;
 
+	/**
+	 * Load the initial screen when an asset is to be assigned to the user
+	 * 
+	 * @param request
+	 * @param bondedAssetBean
+	 * @param model
+	 * @return
+	 */
 	@RequestMapping(value = "/issueBondedAsset", method = { RequestMethod.GET })
 	public ModelAndView issueBondedAsset(HttpServletRequest request,
 			@ModelAttribute("bondedAssetBean") BondedAssetBean bondedAssetBean,
@@ -53,19 +63,36 @@ public class AssignAssetController {
 			logger.debug("bondedAssetBean " + bondedAssetBean);
 		}
 
-		model.addAttribute("returnFlow", false);
+		model.addAttribute("returnFlow", "false");
+		model.addAttribute("errorDisplay", "false");
 		model.addAttribute("bondedAssetBean", bondedAssetBean);
 
 		bondedAssetBean.setFlowType(flowType);
 		return new ModelAndView("assets/issueBondedAsset");
 	}
 
+	/**
+	 * Serves the request when the user wants the asset to be assigned. This
+	 * will initiate the new asset assigning process
+	 * 
+	 * @param request
+	 * @param bondedAssetBean
+	 * @param result
+	 * @param model
+	 * @return
+	 */
 	@RequestMapping(value = "/issueBondedAsset", method = { RequestMethod.POST }, params = "issueBondedAsset")
 	public ModelAndView issueBondedAsset(HttpServletRequest request,
 			@ModelAttribute @Valid BondedAssetBean bondedAssetBean,
 			BindingResult result, Model model) {
 
 		String flowType = bondedAssetBean.getFlowType();
+		model.addAttribute("returnFlow", "false");
+		model.addAttribute("errorDisplay", "true");
+
+		result = GpmsValidators.validateDateField(
+				bondedAssetBean.getUserAssetIssueDate(), "bondedAssetBean",
+				"userAssetIssueDate", result);
 
 		if (result.hasErrors()) {
 			return new ModelAndView("assets/issueBondedAsset");
@@ -85,12 +112,16 @@ public class AssignAssetController {
 			}
 
 			try {
-				issueAssetsBusinessSrv.IssueBondedItems(assetAssignModel);
+				UserModel loggedInUserModel = (UserModel) request.getSession()
+						.getAttribute("userLoggedModel");
+				String usersPersonalEmail = loggedInUserModel
+						.getUserPersonnalEmail();
+				issueAssetsBusinessSrv.IssueBondedItems(assetAssignModel,
+						usersPersonalEmail);
 			} catch (GPMSApplicationException appExp) {
 				FieldError appError = new FieldError("bondedAssetBean",
 						"errorMessage", appExp.getErrorMessage());
 				result.addError(appError);
-
 				return new ModelAndView("assets/issueBondedAsset");
 			}
 
@@ -98,16 +129,34 @@ public class AssignAssetController {
 
 		bondedAssetBean.setFlowType(flowType);
 		model.addAttribute("bondedAssetBean", bondedAssetBean);
-
+		model.addAttribute("errorDisplay", "false");
 		return new ModelAndView("assets/issueBondedAsset");
 	}
 
+	/**
+	 * Serves both the correction required, for assigning and returning of the
+	 * asset.
+	 * 
+	 * @param request
+	 * @param bondedAssetBean
+	 * @param result
+	 * @param model
+	 * @return
+	 */
 	@RequestMapping(value = "/issueBondedAsset", method = { RequestMethod.POST }, params = "returnBondedCorrection")
 	public ModelAndView returnBondedCorrection(HttpServletRequest request,
 			@ModelAttribute @Valid BondedAssetBean bondedAssetBean,
 			BindingResult result, Model model) {
 
 		String flowType = bondedAssetBean.getFlowType();
+		model.addAttribute("returnFlow", "true");
+
+		result = GpmsValidators.validateBlankField(
+				bondedAssetBean.getUserAssetId(), "bondedAssetBean",
+				"userAssetId", result);
+		result = GpmsValidators.validateDateField(
+				bondedAssetBean.getUserAssetReturnDate(), "bondedAssetBean",
+				"userAssetReturnDate", result);
 
 		if (result.hasErrors()) {
 			return new ModelAndView("assets/issueBondedAsset");
@@ -129,12 +178,17 @@ public class AssignAssetController {
 			}
 
 			try {
-				returnAssetsBusinessSrv.ReturnBondedItems(assetAssignModel);
+				UserModel loggedInUserModel = (UserModel) request.getSession()
+						.getAttribute("userLoggedModel");
+				String usersPersonalEmail = loggedInUserModel
+						.getUserPersonnalEmail();
+				returnAssetsBusinessSrv.ReturnBondedItems(assetAssignModel,
+						usersPersonalEmail);
 			} catch (GPMSApplicationException appExp) {
 				FieldError appError = new FieldError("bondedAssetBean",
 						"errorMessage", appExp.getErrorMessage());
 				result.addError(appError);
-
+				model.addAttribute("errorDisplay", "true");
 				return new ModelAndView("assets/issueBondedAsset");
 			}
 
@@ -142,7 +196,7 @@ public class AssignAssetController {
 
 		bondedAssetBean.setFlowType(flowType);
 		model.addAttribute("bondedAssetBean", bondedAssetBean);
-
+		model.addAttribute("errorDisplay", "false");
 		return new ModelAndView("assets/issueBondedAsset");
 	}
 

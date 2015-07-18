@@ -84,4 +84,8 @@ public class IdentityManagement {
 		identityService.deleteMembership(userId, groupId);
 	}
 
+	public void setUserForProcessStarter(String authenticatedUserId) {
+		identityService.setAuthenticatedUserId(authenticatedUserId);
+	}
+
 }

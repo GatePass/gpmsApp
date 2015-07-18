@@ -304,7 +304,7 @@ public class UserController {
 	 * @throws IOException
 	 */
 	@RequestMapping(value = "/modifyDeleteUser", method = RequestMethod.POST, params = "modifyUser")
-	public String modifyAsset(HttpServletRequest request,
+	public String modifyUser(HttpServletRequest request,
 			@ModelAttribute("userBean") @Valid UserBean userBean,
 			BindingResult result, Model model, RedirectAttributes redirectAttrs)
 			throws IOException {
@@ -388,7 +388,7 @@ public class UserController {
 	 * @throws IOException
 	 */
 	@RequestMapping(value = "/modifyDeleteUser", method = RequestMethod.POST, params = "deleteUser")
-	public String deleteAsset(@ModelAttribute("userBean") UserBean userBean,
+	public String deleteUser(@ModelAttribute("userBean") UserBean userBean,
 			BindingResult result, Model model, RedirectAttributes redirectAttrs)
 			throws IOException {
 

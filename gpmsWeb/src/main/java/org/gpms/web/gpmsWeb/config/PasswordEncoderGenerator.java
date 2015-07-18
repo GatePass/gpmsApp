@@ -11,6 +11,10 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
  */
 public class PasswordEncoderGenerator {
 
+	/**
+	 * 
+	 * @param args
+	 */
 	public static void main(String[] args) {
 
 		int i = 0;

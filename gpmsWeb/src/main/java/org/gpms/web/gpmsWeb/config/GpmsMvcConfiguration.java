@@ -3,6 +3,7 @@ package org.gpms.web.gpmsWeb.config;
 import java.util.Locale;
 import java.util.Properties;
 
+import org.apache.log4j.Logger;
 import org.springframework.context.MessageSource;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -18,10 +19,22 @@ import org.springframework.web.servlet.i18n.LocaleChangeInterceptor;
 import org.springframework.web.servlet.i18n.SessionLocaleResolver;
 import org.springframework.web.servlet.view.InternalResourceViewResolver;
 
+/**
+ * 
+ * @author narenda.kumar
+ * 
+ */
 @Configuration
 @EnableWebMvc
 public class GpmsMvcConfiguration extends WebMvcConfigurerAdapter {
 
+	private static final Logger logger = Logger
+			.getLogger(GpmsMvcConfiguration.class);
+
+	/**
+	 * 
+	 * @return
+	 */
 	@Bean
 	public ViewResolver getViewResolver() {
 		InternalResourceViewResolver resolver = new InternalResourceViewResolver();
@@ -30,6 +43,9 @@ public class GpmsMvcConfiguration extends WebMvcConfigurerAdapter {
 		return resolver;
 	}
 
+	/**
+	 * 
+	 */
 	@Override
 	public void addResourceHandlers(ResourceHandlerRegistry registry) {
 		registry.addResourceHandler("/resources/**").addResourceLocations(
@@ -38,52 +54,75 @@ public class GpmsMvcConfiguration extends WebMvcConfigurerAdapter {
 				"/images/");
 	}
 
+	/**
+	 * 
+	 * @return
+	 */
 	@Bean
 	public MessageSource messageSource() {
 		ResourceBundleMessageSource result = new ResourceBundleMessageSource();
-
 		String[] basenames = { "messages" };
-
 		result.setBasenames(basenames);
-		return result;
 
+		if (logger.isDebugEnabled()) {
+			logger.debug("  basenames " + basenames);
+		}
+
+		return result;
 	}
 
+	/**
+	 * 
+	 * @return
+	 */
 	@Bean
 	public LocaleChangeInterceptor localeChangeInterceptor() {
 		LocaleChangeInterceptor result = new LocaleChangeInterceptor();
 		result.setParamName("lang");
-		System.out.println("result.getParamName() " + result.getParamName());
+		if (logger.isDebugEnabled()) {
+			logger.debug("  Language param Name " + result.getParamName());
+		}
+
 		return result;
 
 	}
 
+	/**
+	 * 
+	 * @return
+	 */
 	@Bean
 	public LocaleResolver localeResolver() {
 		SessionLocaleResolver result = new SessionLocaleResolver();
 		result.setDefaultLocale(Locale.ENGLISH);
-		System.out.println("result. " + result);
+		if (logger.isDebugEnabled()) {
+			logger.debug("  SessionLocaleResolver " + result);
+		}
 		return result;
 	}
 
+	/**
+	 * 
+	 */
 	@Override
 	public void addInterceptors(InterceptorRegistry registry) {
-		System.out.println("In add Interceptor");
 		registry.addInterceptor(localeChangeInterceptor());
 	}
 
+	/**
+	 * 
+	 * @return
+	 */
 	@Bean(name = "simpleMappingExceptionResolver")
 	public SimpleMappingExceptionResolver createSimpleMappingExceptionResolver() {
 		SimpleMappingExceptionResolver r = new SimpleMappingExceptionResolver();
 
 		Properties mappings = new Properties();
-		mappings.setProperty("DatabaseException", "databaseError");
-		mappings.setProperty("InvalidCreditCardException", "creditCardError");
 
-		r.setExceptionMappings(mappings); // None by default
-		r.setDefaultErrorView("error"); // No default
-		r.setExceptionAttribute("exception"); // Default is "exception"
-		r.setWarnLogCategory("example.MvcLogger"); // No default
+		r.setExceptionMappings(mappings);
+		r.setDefaultErrorView("error");
+		r.setExceptionAttribute("exception");
+		r.setWarnLogCategory("example.MvcLogger");
 		return r;
 	}
 }

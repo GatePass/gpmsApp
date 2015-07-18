@@ -9,6 +9,8 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 
 /**
  * @author narenda.kumar
@@ -25,9 +27,6 @@ public class AssetsEntity {
 	@Column(name = "ASSET_BAR_CODE")
 	private String assetBarCode;
 
-	@Column(name = "ASSET_TYPE")
-	private String assetType;
-
 	@Column(name = "ASSET_PURCHASE_DATE")
 	private Date assetPurchaseDate;
 
@@ -36,6 +35,13 @@ public class AssetsEntity {
 
 	@Column(name = "ASSET_STATUS", columnDefinition = "DEFAULT 'AVAILABLE'")
 	private String assetStatus;
+
+	@Column(name = "ASSET_TYPE")
+	private String assetTypeId;
+
+	@ManyToOne
+	@JoinColumn(name = "ASSET_TYPE", insertable = false, updatable = false)
+	private AssetTypesEntity assetTypesEntity;
 
 	/**
 	 * @return the assetId
@@ -65,21 +71,6 @@ public class AssetsEntity {
 	 */
 	public void setAssetBarCode(String assetBarCode) {
 		this.assetBarCode = assetBarCode;
-	}
-
-	/**
-	 * @return the assetType
-	 */
-	public String getAssetType() {
-		return assetType;
-	}
-
-	/**
-	 * @param assetType
-	 *            the assetType to set
-	 */
-	public void setAssetType(String assetType) {
-		this.assetType = assetType;
 	}
 
 	/**
@@ -125,6 +116,36 @@ public class AssetsEntity {
 	 */
 	public void setAssetStatus(String assetStatus) {
 		this.assetStatus = assetStatus;
+	}
+
+	/**
+	 * @return the assetTypeId
+	 */
+	public String getAssetTypeId() {
+		return assetTypeId;
+	}
+
+	/**
+	 * @param assetTypeId
+	 *            the assetTypeId to set
+	 */
+	public void setAssetTypeId(String assetTypeId) {
+		this.assetTypeId = assetTypeId;
+	}
+
+	/**
+	 * @return the assetTypesEntity
+	 */
+	public AssetTypesEntity getAssetTypesEntity() {
+		return assetTypesEntity;
+	}
+
+	/**
+	 * @param assetTypesEntity
+	 *            the assetTypesEntity to set
+	 */
+	public void setAssetTypesEntity(AssetTypesEntity assetTypesEntity) {
+		this.assetTypesEntity = assetTypesEntity;
 	}
 
 }

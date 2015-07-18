@@ -46,8 +46,6 @@ public class BondedItemIssue extends BondedItemManagement {
 
 		processInstanceId = processInstance.getId();
 
-		System.out.println("processInstanceId : " + processInstanceId);
-
 		return processInstanceId;
 
 	}

@@ -1,6 +1,8 @@
 package org.gpms.web.test;
 
+import org.gpms.web.domain.AssetsRepository;
 import org.gpms.web.domain.UsersRepository;
+import org.gpms.web.entities.assets.AssetsEntity;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -20,12 +22,18 @@ public class TestDbConnection extends AbstractJUnit4SpringContextTests {
 	@Autowired
 	UsersRepository usersRepository;
 
+	@Autowired
+	AssetsRepository assetsRepository;
+
 	/**
 	 * @throws java.lang.Exception
 	 */
 	@Before
 	public void setUp() throws Exception {
 		System.out.println(">>>>>>>>>>........... " + applicationContext);
+		AssetsEntity assetEntity = assetsRepository.getAssetById("10000");
+		System.out.println(">>>>>>>>>>> "
+				+ assetEntity.getAssetTypesEntity().getAssetTypeName());
 	}
 
 	/**

@@ -31,4 +31,10 @@ public interface ApplicationConstants {
 	String ISIT_MGR_APPROVAL_TASK = "ISITMgrApprovalTask";
 	String BONDED_ITEM_CORRECTION = "bondedItemCorrection";
 
+	String FLOW_TYPE_ISSUE = "ISSUE";
+	String FLOW_TYPE_RETURN = "RETURN";
+
+	String ASSET_APPROVED = "Approve";
+	String ASSET_REJECTED = "Reject";
+
 }

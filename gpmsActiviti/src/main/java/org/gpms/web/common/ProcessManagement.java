@@ -3,10 +3,12 @@
  */
 package org.gpms.web.common;
 
+import org.activiti.engine.HistoryService;
 import org.activiti.engine.IdentityService;
 import org.activiti.engine.RepositoryService;
 import org.activiti.engine.RuntimeService;
 import org.activiti.engine.TaskService;
+import org.activiti.engine.history.HistoricProcessInstance;
 import org.activiti.engine.repository.ProcessDefinition;
 import org.activiti.engine.runtime.Execution;
 import org.activiti.engine.runtime.ProcessInstance;
@@ -32,6 +34,9 @@ public class ProcessManagement {
 	@Autowired
 	public TaskService taskService;
 
+	@Autowired
+	public HistoryService historyService;
+
 	public ProcessInstance startProcessInstanceByProcessDef(
 			ProcessDefinition processDefinition) {
 
@@ -56,5 +61,13 @@ public class ProcessManagement {
 
 		runtimeService.setVariable(execution.getId(), variableName, variable);
 
+	}
+
+	public HistoricProcessInstance getHistoricProcessInstanceById(
+			String processInstanceId) {
+		HistoricProcessInstance historicProcessInstance = historyService
+				.createHistoricProcessInstanceQuery()
+				.processInstanceId(processInstanceId).singleResult();
+		return historicProcessInstance;
 	}
 }

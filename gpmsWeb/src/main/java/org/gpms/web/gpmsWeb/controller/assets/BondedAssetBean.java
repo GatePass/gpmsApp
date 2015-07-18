@@ -28,11 +28,8 @@ public class BondedAssetBean implements Serializable {
 	@NotEmpty(message = "Asset Id to be assigned cannot be be Empty")
 	private String assetId;
 
-	// @NotEmpty(message = "Asset Issue Date cannot be empty for issuing asset")
 	private String userAssetIssueDate;
 
-	// @NotEmpty(message =
-	// "Asset Return Date cannot be empty for returning asset")
 	private String userAssetReturnDate;
 
 	private String userAssetIssueProcessId;
@@ -46,6 +43,8 @@ public class BondedAssetBean implements Serializable {
 	private String assetAssignedComment;
 
 	private String errorMessage;
+
+	private String assetComments;
 
 	/**
 	 * @return the flowType
@@ -227,6 +226,21 @@ public class BondedAssetBean implements Serializable {
 		this.errorMessage = errorMessage;
 	}
 
+	/**
+	 * @return the assetComments
+	 */
+	public String getAssetComments() {
+		return assetComments;
+	}
+
+	/**
+	 * @param assetComments
+	 *            the assetComments to set
+	 */
+	public void setAssetComments(String assetComments) {
+		this.assetComments = assetComments;
+	}
+
 	public String toString() {
 		return "\nflowType " + flowType + "\nuserAssetId " + userAssetId
 				+ "\nuserCorpEmail " + userCorpEmail + "\nassetId " + assetId
@@ -236,7 +250,7 @@ public class BondedAssetBean implements Serializable {
 				+ "\nuserAssetReturnProcessId " + userAssetReturnProcessId
 				+ "\ncreateDate " + createDate + "\nmodifiedDate "
 				+ modifiedDate + "\nassetAssignedComment "
-				+ assetAssignedComment;
+				+ assetAssignedComment + "\nassetComments " + assetComments;
 	}
 
 }

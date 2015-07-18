@@ -32,6 +32,9 @@ public class GpmsMvcSecurityConfig extends WebSecurityConfigurerAdapter {
 	@Resource
 	DataSource gpmsDataSource;
 
+	/**
+	 * 
+	 */
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
 
@@ -59,6 +62,11 @@ public class GpmsMvcSecurityConfig extends WebSecurityConfigurerAdapter {
 
 	}
 
+	/**
+	 * 
+	 * @param auth
+	 * @throws Exception
+	 */
 	@Autowired
 	public void configureGlobal(AuthenticationManagerBuilder auth)
 			throws Exception {
@@ -83,6 +91,10 @@ public class GpmsMvcSecurityConfig extends WebSecurityConfigurerAdapter {
 
 	}
 
+	/**
+	 * 
+	 * @return
+	 */
 	@Bean
 	public PasswordEncoder passwordEncoder() {
 		PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();

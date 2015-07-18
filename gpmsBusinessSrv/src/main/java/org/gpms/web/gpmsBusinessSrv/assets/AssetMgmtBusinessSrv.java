@@ -87,7 +87,7 @@ public class AssetMgmtBusinessSrv {
 
 		assetsEntity.setAssetId(assetModel.getAssetId());
 		assetsEntity.setAssetBarCode(assetModel.getAssetBarCode());
-		assetsEntity.setAssetType(assetModel.getAssetTypeId());
+		assetsEntity.setAssetTypeId(assetModel.getAssetTypeId());
 		if (assetModel.getAssetPurchaseDate() != null
 				&& assetModel.getAssetPurchaseDate() != "") {
 			assetsEntity.setAssetPurchaseDate(DateUtil
@@ -108,7 +108,10 @@ public class AssetMgmtBusinessSrv {
 
 		assetModel.setAssetId(assetsEntity.getAssetId());
 		assetModel.setAssetBarCode(assetsEntity.getAssetBarCode());
-		assetModel.setAssetTypeId(assetsEntity.getAssetType());
+		assetModel.setAssetTypeId(assetsEntity.getAssetTypesEntity()
+				.getAssetTypeId());
+		assetModel.setAssetTypeName(assetsEntity.getAssetTypesEntity()
+				.getAssetTypeName());
 		if (assetModel.getAssetPurchaseDate() != null
 				&& assetModel.getAssetPurchaseDate() != "") {
 			assetModel.setAssetPurchaseDate(assetsEntity.getAssetPurchaseDate()

@@ -43,8 +43,7 @@ public class AssetsRepository {
 		return assetIdCreated;
 	}
 
-	public AssetsEntity getAssetById(String assetId)
-			throws PersistenceException {
+	public AssetsEntity getAssetById(String assetId) {
 		AssetsEntity assetsEntity = entityManager.find(AssetsEntity.class,
 				assetId);
 		return assetsEntity;
@@ -67,8 +66,7 @@ public class AssetsRepository {
 		return assetTypeIdCreated;
 	}
 
-	public AssetTypesEntity getAssetTypeById(String assetId)
-			throws PersistenceException {
+	public AssetTypesEntity getAssetTypeById(String assetId) {
 
 		AssetTypesEntity assetTypesEntity = entityManager.find(
 				AssetTypesEntity.class, assetId);
@@ -82,10 +80,7 @@ public class AssetsRepository {
 		entityManager.remove(assetTypesEntity);
 	}
 
-	public List<AssetTypesEntity> getAllAssetTypesEntity()
-			throws PersistenceException {
-
-		logger.debug("getAllAssetType");
+	public List<AssetTypesEntity> getAllAssetTypesEntity() {
 
 		List<AssetTypesEntity> assetTypesEntityLst = (List<AssetTypesEntity>) entityManager
 				.createQuery(

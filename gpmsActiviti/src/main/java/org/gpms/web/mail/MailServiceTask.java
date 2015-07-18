@@ -20,6 +20,9 @@ import org.springframework.stereotype.Component;
 @Component
 public class MailServiceTask implements JavaDelegate {
 
+	private static String GPMS_MAIL_ADDRESS = "gatepassapp1@gmail.com";
+	private static String GPMS_MAIL_PASSWORD = "gatepass1234";
+
 	private static final Logger logger = Logger
 			.getLogger(MailServiceTask.class);
 
@@ -54,6 +57,9 @@ public class MailServiceTask implements JavaDelegate {
 				.getRuntimeService()
 				.getVariable(executionMain.getId(),
 						execution.getCurrentActivityId());
+
+		mailServiceParams.setMailUserId(GPMS_MAIL_ADDRESS);
+		mailServiceParams.setMailPassword(GPMS_MAIL_PASSWORD);
 
 		if (logger.isDebugEnabled()) {
 			logger.debug("mailServiceParams " + mailServiceParams);

@@ -10,8 +10,10 @@ import org.apache.log4j.Logger;
 import org.gpms.web.common.BondedItemManagement;
 import org.gpms.web.domain.AssetsRepository;
 import org.gpms.web.domain.UserAssetsRepository;
+import org.gpms.web.domain.UsersRepository;
 import org.gpms.web.entities.assets.AssetsEntity;
 import org.gpms.web.entities.assets.UserAssetEntity;
+import org.gpms.web.entities.users.UsersLoginEntity;
 import org.gpms.web.gpmsBusinessSrv.util.ApplicationConstants;
 import org.gpms.web.mail.MailServiceParams;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,9 +31,18 @@ public class ApproveRejectAssetBusinessSrv {
 	@Autowired
 	private AssetsRepository assetsRepository;
 
+	@Autowired
+	private UsersRepository usersRepository;
+
 	private static final Logger logger = Logger
 			.getLogger(ApproveRejectAssetBusinessSrv.class);
 
+	/**
+	 * 
+	 * @param assetAssignModel
+	 * @param processId
+	 * @param flowType
+	 */
 	public void approveAsset(AssetAssignModel assetAssignModel,
 			String processId, String flowType) {
 
@@ -43,18 +54,30 @@ public class ApproveRejectAssetBusinessSrv {
 
 		UserAssetEntity userAssetEntity = userAssetsRepository
 				.getUserAssetById(assetAssignModel.getUserAssetId());
+		UsersLoginEntity userLoginEntityofEmp = usersRepository
+				.getUserByCorpEmailId(userAssetEntity.getUserCorpEmail());
+		AssetsEntity assetsEntity = assetsRepository
+				.getAssetById(userAssetEntity.getAssetId());
 
 		// Mail to ISIT User
 
-		MailServiceParams mailServiceParams = new MailServiceParams();
-		mailServiceParams.setMailUserId("gpmsISITMgr@gmail.com");
-		mailServiceParams.setMailPassword("gpmsISITMgr777#$");
-		mailServiceParams.setMailToAddress("gpmsisituser3@gmail.com");
-		mailServiceParams.setMailSubject(userAssetEntity.getAssetId()
-				+ " is approved for the user "
-				+ userAssetEntity.getUserCorpEmail());
-		String mailHtmlBody = "Test email from gpmsISITMgr@gmail.com to gpmsisituser3@gmail.com"
+		String mailSubject = assetsEntity.getAssetId() + "of asset type "
+				+ assetsEntity.getAssetTypesEntity().getAssetTypeName()
+				+ " is APPROVED for the user "
+				+ userAssetEntity.getUserCorpEmail();
+
+		String mailHtmlBody = "The asset with " + assetsEntity.getAssetId()
+				+ " of asset type "
+				+ assetsEntity.getAssetTypesEntity().getAssetTypeName()
+				+ " is APPROVED for the user "
+				+ userAssetEntity.getUserCorpEmail()
 				+ "<br><br> Regards, <br>gpmsISITMgr@gmail.com";
+
+		String processStarterMailId = bondedItemManagement
+				.getProcessStarterByProcessId(processInstanceId);
+		MailServiceParams mailServiceParams = new MailServiceParams();
+		mailServiceParams.setMailToAddress(processStarterMailId);
+		mailServiceParams.setMailSubject(mailSubject);
 		mailServiceParams.setMailHtmlBody(mailHtmlBody);
 
 		bondedItemManagement.setVariableOnExecution(processInstanceId,
@@ -66,16 +89,9 @@ public class ApproveRejectAssetBusinessSrv {
 		}
 
 		// Mail to Security
-
 		mailServiceParams = new MailServiceParams();
-		mailServiceParams.setMailUserId("gpmsISITMgr@gmail.com");
-		mailServiceParams.setMailPassword("gpmsISITMgr777#$");
 		mailServiceParams.setMailToAddress("gpmsSecu@gmail.com");
-		mailServiceParams.setMailSubject(userAssetEntity.getAssetId()
-				+ " is approved for the user "
-				+ userAssetEntity.getUserCorpEmail());
-		mailHtmlBody = "Test email from gpmsISITMgr@gmail.com to gpmsSecu@gmail.com"
-				+ "<br><br> Regards, <br>gpmsISITMgr@gmail.com";
+		mailServiceParams.setMailSubject(mailSubject);
 		mailServiceParams.setMailHtmlBody(mailHtmlBody);
 
 		bondedItemManagement.setVariableOnExecution(processInstanceId,
@@ -89,15 +105,9 @@ public class ApproveRejectAssetBusinessSrv {
 		// Mail to Employee
 
 		mailServiceParams = new MailServiceParams();
-		mailServiceParams.setMailUserId("gpmsISITMgr@gmail.com");
-		mailServiceParams.setMailPassword("gpmsISITMgr777#$");
-		mailServiceParams.setMailToAddress("gpmsisituser3@gmail.com");
-		mailServiceParams.setMailSubject(userAssetEntity.getAssetId()
-				+ " is approved for the user "
-				+ userAssetEntity.getUserCorpEmail());
-		mailHtmlBody = "Test email from gpmsISITMgr@gmail.com to "
-				+ userAssetEntity.getUserCorpEmail()
-				+ "<br><br> Regards, <br>gpmsISITMgr@gmail.com";
+		mailServiceParams.setMailToAddress(userLoginEntityofEmp
+				.getUserPersonnalEmail());
+		mailServiceParams.setMailSubject(mailSubject);
 		mailServiceParams.setMailHtmlBody(mailHtmlBody);
 
 		bondedItemManagement.setVariableOnExecution(processInstanceId,
@@ -108,9 +118,7 @@ public class ApproveRejectAssetBusinessSrv {
 			logger.debug("Set Variable : APPROVE_MAIL_TO_EMPLOYEE_TASK");
 		}
 
-		String comment = userAssetEntity.getAssetId()
-				+ " is approved for the user "
-				+ userAssetEntity.getUserCorpEmail();
+		String comment = mailSubject;
 
 		bondedItemManagement.setVariableOnTask(processInstanceId, "isApproved",
 				true);
@@ -118,9 +126,7 @@ public class ApproveRejectAssetBusinessSrv {
 				null);
 		bondedItemManagement.completeTask(processInstanceId);
 
-		AssetsEntity assetsEntity = assetsRepository
-				.getAssetById(userAssetEntity.getAssetId());
-		if ("ISSUE".equals(flowType)) {
+		if (ApplicationConstants.FLOW_TYPE_ISSUE.equals(flowType)) {
 			assetsEntity
 					.setAssetStatus(ApplicationConstants.ASSET_ASSIGNED_STATUS);
 		} else {
@@ -136,6 +142,12 @@ public class ApproveRejectAssetBusinessSrv {
 
 	}
 
+	/**
+	 * 
+	 * @param assetAssignModel
+	 * @param processId
+	 * @param flowType
+	 */
 	public void rejectAsset(AssetAssignModel assetAssignModel,
 			String processId, String flowType) {
 
@@ -147,17 +159,27 @@ public class ApproveRejectAssetBusinessSrv {
 
 		UserAssetEntity userAssetEntity = userAssetsRepository
 				.getUserAssetById(assetAssignModel.getUserAssetId());
+		AssetsEntity assetsEntity = assetsRepository
+				.getAssetById(userAssetEntity.getAssetId());
+
+		String mailSubject = assetsEntity.getAssetId() + "of asset type "
+				+ assetsEntity.getAssetTypesEntity().getAssetTypeName()
+				+ " is REJECTED for the user "
+				+ userAssetEntity.getUserCorpEmail();
+
+		String mailHtmlBody = "The asset with " + assetsEntity.getAssetId()
+				+ " of asset type "
+				+ assetsEntity.getAssetTypesEntity().getAssetTypeName()
+				+ " is REJECTED for the user "
+				+ userAssetEntity.getUserCorpEmail()
+				+ "<br><br> Regards, <br>gpmsISITMgr@gmail.com";
 
 		// Mail to ISIT User
+		String processStarterMailId = bondedItemManagement
+				.getProcessStarterByProcessId(processInstanceId);
 		MailServiceParams mailServiceParams = new MailServiceParams();
-		mailServiceParams.setMailUserId("gpmsISITMgr@gmail.com");
-		mailServiceParams.setMailPassword("gpmsISITMgr777#$");
-		mailServiceParams.setMailToAddress("gpmsisituser3@gmail.com");
-		mailServiceParams.setMailSubject(assetAssignModel.getAssetId()
-				+ " is rejected for the user "
-				+ assetAssignModel.getUserCorpEmail());
-		String mailHtmlBody = "Test email from gpmsISITMgr@gmail.com to gpmsisituser3@gmail.com"
-				+ "<br><br> Regards, <br>gpmsISITMgr@gmail.com";
+		mailServiceParams.setMailToAddress(processStarterMailId);
+		mailServiceParams.setMailSubject(mailSubject);
 		mailServiceParams.setMailHtmlBody(mailHtmlBody);
 
 		bondedItemManagement.setVariableOnExecution(processInstanceId,
@@ -173,17 +195,13 @@ public class ApproveRejectAssetBusinessSrv {
 
 		bondedItemManagement.completeTask(processInstanceId);
 
-		String comment = userAssetEntity.getAssetId()
-				+ " is rejected for the user "
-				+ userAssetEntity.getUserCorpEmail();
+		String comment = mailSubject;
 
 		bondedItemManagement.updateInfoOnTask(processInstanceId, comment,
 				"userAssetEntity", userAssetEntity);
 
-		bondedItemManagement
-				.performApprovalAssignment(processInstanceId,
-						ApplicationConstants.GROUP_ISIT_USER,
-						"gpmsisituser3@gmail.com");
+		bondedItemManagement.performApprovalAssignment(processInstanceId,
+				ApplicationConstants.GROUP_ISIT_USER, processStarterMailId);
 
 		if (logger.isDebugEnabled()) {
 			logger.debug("Approval has rejected the task for asset to be issued");
@@ -191,6 +209,11 @@ public class ApproveRejectAssetBusinessSrv {
 
 	}
 
+	/**
+	 * 
+	 * @param userId
+	 * @return
+	 */
 	public List<AssetAssignModel> getAllTasksForAction(String userId) {
 
 		List<Task> taskList = bondedItemManagement.getAllTasksForAction(userId);
@@ -213,18 +236,19 @@ public class ApproveRejectAssetBusinessSrv {
 			List<Comment> comment = bondedItemManagement
 					.getCommentsByTaskId(singleTask.getId());
 
-			assetAssignModel = BondedAssetModelEntityConverter
-					.convertEntityToModel(userAssetEntity);
+			if (userAssetEntity != null) {
+				assetAssignModel = BondedAssetModelEntityConverter
+						.convertEntityToModel(userAssetEntity);
 
-			Iterator<Comment> commentIter = comment.iterator();
+				Iterator<Comment> commentIter = comment.iterator();
 
-			while (commentIter.hasNext()) {
-				Comment singleComment = commentIter.next();
-				assetAssignModel.setAssetAssignComments(singleComment
-						.getFullMessage());
+				while (commentIter.hasNext()) {
+					Comment singleComment = commentIter.next();
+					assetAssignModel.setAssetAssignComments(singleComment
+							.getFullMessage());
+				}
+				assetAssignModelLst.add(assetAssignModel);
 			}
-
-			assetAssignModelLst.add(assetAssignModel);
 		}
 
 		if (logger.isDebugEnabled()) {
@@ -234,6 +258,11 @@ public class ApproveRejectAssetBusinessSrv {
 		return assetAssignModelLst;
 	}
 
+	/**
+	 * 
+	 * @param userAssetId
+	 * @return
+	 */
 	public AssetAssignModel getUserAssetById(String userAssetId) {
 
 		UserAssetEntity userAssetEntity = userAssetsRepository

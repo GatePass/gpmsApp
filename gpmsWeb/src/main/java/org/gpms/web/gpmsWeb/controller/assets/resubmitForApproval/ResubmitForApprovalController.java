@@ -7,9 +7,12 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.apache.log4j.Logger;
 import org.gpms.web.gpmsBusinessSrv.assets.ApproveRejectAssetBusinessSrv;
 import org.gpms.web.gpmsBusinessSrv.assets.AssetAssignModel;
+import org.gpms.web.gpmsBusinessSrv.userMgmt.UserModel;
 import org.gpms.web.gpmsWeb.controller.assets.BondedAssetBean;
 import org.gpms.web.gpmsWeb.controller.assets.BondedAssetDataConverter;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -36,19 +39,26 @@ public class ResubmitForApprovalController {
 	@Autowired
 	ApproveRejectAssetBusinessSrv approveRejectAssetBusinessSrv;
 
+	/**
+	 * Loads the initial list of action items for the logged in user to perform
+	 * 
+	 * @param bondedAssetBean
+	 * @param model
+	 * @return
+	 */
 	@RequestMapping(value = "/modifyBondedAsset", method = RequestMethod.GET)
-	public ModelAndView modifyBondedAsset(
+	public ModelAndView modifyBondedAsset(HttpServletRequest request,
 			@ModelAttribute BondedAssetBean bondedAssetBean, Model model) {
 
 		if (logger.isDebugEnabled()) {
 			logger.debug(bondedAssetBean.toString());
 		}
 
-		// TODO this has to be dynamic and can be enhanced based on the
-		// selection criteria
-		String userId = "gpmsisituser3@gmail.com";
+		UserModel loggedInUserModel = (UserModel) request.getSession()
+				.getAttribute("userLoggedModel");
+		String usersPersonalEmail = loggedInUserModel.getUserPersonnalEmail();
 
-		List<BondedAssetBean> bondedAssetBeanLst = getAllTasksForAction(userId);
+		List<BondedAssetBean> bondedAssetBeanLst = getAllTasksForAction(usersPersonalEmail);
 
 		if (logger.isDebugEnabled()) {
 			logger.debug("Size of the Bean List : " + bondedAssetBeanLst.size());
@@ -59,6 +69,19 @@ public class ResubmitForApprovalController {
 		return new ModelAndView("assets/modifyBondedAsset");
 	}
 
+	/**
+	 * Performs the action when "Correction" button is clicked on the ReSubmit
+	 * for Approval page
+	 * 
+	 * @param userAssetId
+	 * @param userAssetIssueProcessId
+	 * @param userAssetReturnProcessId
+	 * @param assetId
+	 * @param correctionParam
+	 * @param bondedAssetBean
+	 * @param model
+	 * @return
+	 */
 	@RequestMapping(value = "/modifyBondedAsset", method = RequestMethod.POST)
 	public ModelAndView modifyBondedAsset(@RequestParam String userAssetId,
 			@RequestParam String userAssetIssueProcessId,
@@ -124,6 +147,11 @@ public class ResubmitForApprovalController {
 		return new ModelAndView("assets/issueBondedAsset");
 	}
 
+	/**
+	 * 
+	 * @param userId
+	 * @return
+	 */
 	private List<BondedAssetBean> getAllTasksForAction(String userId) {
 
 		List<AssetAssignModel> assetAssignModelLst = approveRejectAssetBusinessSrv

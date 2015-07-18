@@ -56,8 +56,7 @@ public class UsersRepository {
 		deleteUser(usersLoginEntity);
 	}
 
-	public UsersLoginEntity getUserById(String userId)
-			throws PersistenceException {
+	public UsersLoginEntity getUserById(String userId) {
 
 		UsersLoginEntity usersLoginEntity = entityManager.find(
 				UsersLoginEntity.class, userId);
@@ -66,8 +65,7 @@ public class UsersRepository {
 
 	}
 
-	public UsersLoginEntity getUserByCorpEmailId(String userEmailId)
-			throws PersistenceException {
+	public UsersLoginEntity getUserByCorpEmailId(String userEmailId) {
 
 		UsersLoginEntity usersLoginEntity = (UsersLoginEntity) entityManager
 				.createQuery(
@@ -78,7 +76,8 @@ public class UsersRepository {
 		return usersLoginEntity;
 	}
 
-	public UsersLoginEntity updatePassword(UsersLoginEntity usersLoginEntity) {
+	public UsersLoginEntity updatePassword(UsersLoginEntity usersLoginEntity)
+			throws PersistenceException {
 
 		UsersLoginEntity usersLoginEntityUpdated = entityManager
 				.merge(usersLoginEntity);

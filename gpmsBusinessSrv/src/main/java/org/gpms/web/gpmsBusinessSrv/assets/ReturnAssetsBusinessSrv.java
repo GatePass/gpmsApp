@@ -44,9 +44,14 @@ public class ReturnAssetsBusinessSrv {
 	@Autowired
 	AssetsRepository assetsRepository;
 
+	/**
+	 * 
+	 * @param assetAssignModel
+	 * @throws GPMSApplicationException
+	 */
 	@Transactional
-	public void ReturnBondedItems(AssetAssignModel assetAssignModel)
-			throws GPMSApplicationException {
+	public void ReturnBondedItems(AssetAssignModel assetAssignModel,
+			String usersPersonalEmail) throws GPMSApplicationException {
 
 		if (logger.isDebugEnabled()) {
 			logger.debug("assetAssignModel :" + assetAssignModel);
@@ -79,7 +84,7 @@ public class ReturnAssetsBusinessSrv {
 
 		if (assetsEntity == null) {
 			throw new GPMSApplicationException(
-					ErrorCodeList.ERROR_NO_USER_FOUND,
+					ErrorCodeList.ERROR_NO_ASSET_FOUND,
 					ExceptionMessageList.ERROR_NO_ASSET_FOUND_MSG);
 		}
 
@@ -105,6 +110,7 @@ public class ReturnAssetsBusinessSrv {
 						ExceptionMessageList.ERROR_ASSET_IS_ALREADY_ASSIGNED_MSG);
 			}
 
+			returnBondedItem.setUserForProcessStarter(usersPersonalEmail);
 			String processInstanceId = returnBondedItem
 					.startReturnBondedItemProcess();
 
@@ -129,7 +135,7 @@ public class ReturnAssetsBusinessSrv {
 			// Make necessary modification to records in activiti
 			String comment = "An asset is for Approval request with id :"
 					+ assetsEntity.getAssetId() + "of Type "
-					+ assetsEntity.getAssetType()
+					+ assetsEntity.getAssetTypesEntity().getAssetTypeName()
 					+ ". It is to been returned back by "
 					+ assetAssignModel.getUserCorpEmail();
 
@@ -137,6 +143,10 @@ public class ReturnAssetsBusinessSrv {
 					"UserAssetEntity", userAssetEntity);
 
 		} else {
+
+			String returnProcessInstanceId;
+			returnProcessInstanceId = userAssetEntity
+					.getUserAssetReturnProcessId();
 
 			if (assetsEntity != null
 					& !ApplicationConstants.ASSET_IN_PROCESS_STATUS
@@ -146,20 +156,27 @@ public class ReturnAssetsBusinessSrv {
 						ExceptionMessageList.ERROR_ASSET_IS_ALREADY_ASSIGNED_MSG);
 			}
 
+			String processStarterMailId = returnBondedItem
+					.getProcessStarterByProcessId(returnProcessInstanceId);
+
+			String mailSubject = assetsEntity.getAssetId() + "of asset type "
+					+ assetsEntity.getAssetTypesEntity().getAssetTypeName()
+					+ " is CORRECTED for the user "
+					+ userAssetEntity.getUserCorpEmail();
+
+			String mailHtmlBody = "The asset with " + assetsEntity.getAssetId()
+					+ " of asset type "
+					+ assetsEntity.getAssetTypesEntity().getAssetTypeName()
+					+ " is CORRECTED for the user "
+					+ userAssetEntity.getUserCorpEmail()
+					+ "<br><br> Regards, <br>" + processStarterMailId;
+
 			MailServiceParams mailServiceParams = new MailServiceParams();
-			mailServiceParams.setMailUserId("gpmsisituser3@gmail.com");
-			mailServiceParams.setMailPassword("gpmsisituser3777#$");
 			mailServiceParams.setMailToAddress("gpmsISITMgr@gmail.com");
-			mailServiceParams.setMailSubject(userAssetEntity.getAssetId()
-					+ " is Corrected for the user "
-					+ userAssetEntity.getUserCorpEmail());
-			String mailHtmlBody = "Test email from gpmsisituser3@gmail.com to gpmsISITMgr@gmail.com"
-					+ "<br><br> Regards, <br>gpmsisituser3@gmail.com";
+			mailServiceParams.setMailSubject(mailSubject);
 			mailServiceParams.setMailHtmlBody(mailHtmlBody);
 
-			String processInstanceId;
-			processInstanceId = userAssetEntity.getUserAssetReturnProcessId();
-			returnBondedItem.setVariableOnExecution(processInstanceId,
+			returnBondedItem.setVariableOnExecution(returnProcessInstanceId,
 					ApplicationConstants.CORRECTION_MAIL_TO_MANAGER_TASK,
 					mailServiceParams);
 
@@ -172,24 +189,32 @@ public class ReturnAssetsBusinessSrv {
 					"gpmsISITMgr@gmail.com");
 
 			// Make necessary modification to records in activiti
-			String comment = "An asset has been corrected and is for Approval request with id :"
-					+ assetsEntity.getAssetId()
-					+ "of Type "
-					+ assetsEntity.getAssetType()
-					+ ". It is to be assigned to "
-					+ userAssetEntity.getUserCorpEmail();
+			String comment = mailSubject;
 
-			returnBondedItem.updateInfoOnTask(processInstanceId, comment,
+			returnBondedItem.updateInfoOnTask(returnProcessInstanceId, comment,
 					"UserAssetEntity", userAssetEntity);
 
 		}
 
 	}
 
-	public AssetAssignModel getUserAssetById(String userAssetId) {
+	/**
+	 * 
+	 * @param userAssetId
+	 * @return
+	 * @throws GPMSApplicationException
+	 */
+	public AssetAssignModel getUserAssetById(String userAssetId)
+			throws GPMSApplicationException {
 
 		UserAssetEntity userAssetEntity = userAssetsRepository
 				.getUserAssetById(userAssetId);
+
+		if (userAssetEntity == null) {
+			throw new GPMSApplicationException(
+					ErrorCodeList.ERROR_ASSET_IS_NOT_AVAILABLE,
+					ExceptionMessageList.ERROR_ASSET_IS_NOT_AVAILABLE_MSG);
+		}
 
 		AssetAssignModel assetAssignModel = BondedAssetModelEntityConverter
 				.convertEntityToModel(userAssetEntity);

@@ -7,11 +7,14 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.apache.log4j.Logger;
 import org.gpms.web.gpmsBusinessSrv.assets.ApproveRejectAssetBusinessSrv;
 import org.gpms.web.gpmsBusinessSrv.assets.AssetAssignModel;
 import org.gpms.web.gpmsBusinessSrv.assets.AssetMgmtBusinessSrv;
 import org.gpms.web.gpmsBusinessSrv.assets.AssetModel;
+import org.gpms.web.gpmsBusinessSrv.util.ApplicationConstants;
 import org.gpms.web.gpmsWeb.controller.assets.BondedAssetBean;
 import org.gpms.web.gpmsWeb.controller.assets.BondedAssetDataConverter;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -42,7 +45,7 @@ public class ApproveRejectAssetController {
 	AssetMgmtBusinessSrv assetMgmtBusinessSrv;
 
 	@RequestMapping(value = "/approveRejectAsset", method = RequestMethod.GET)
-	public ModelAndView approveRejectAssetList(
+	public ModelAndView approveRejectAssetList(HttpServletRequest request,
 			@ModelAttribute BondedAssetBean bondedAssetBean, Model model) {
 
 		if (logger.isDebugEnabled()) {
@@ -66,6 +69,7 @@ public class ApproveRejectAssetController {
 
 	@RequestMapping(value = "/approveRejectAsset", method = RequestMethod.POST)
 	public ModelAndView approveRejectAsset(
+			HttpServletRequest request,
 			@RequestParam String userAssetId,
 			@RequestParam String userAssetIssueProcessId,
 			@RequestParam String userAssetReturnProcessId,
@@ -111,31 +115,36 @@ public class ApproveRejectAssetController {
 		String processId = null;
 		String flowType = null;
 		if (assetModel != null) {
-			if ("AVAILABLE".equals(assetModel.getAssetStatus())) {
+			if (ApplicationConstants.ASSET_AVAILABLE_STATUS.equals(assetModel
+					.getAssetStatus())) {
 				processId = userAssetIssueProcessId;
-				flowType = "ISSUE";
-			} else if ("ASSIGNED".equals(assetModel.getAssetStatus())) {
+				flowType = ApplicationConstants.FLOW_TYPE_ISSUE;
+			} else if (ApplicationConstants.ASSET_ASSIGNED_STATUS
+					.equals(assetModel.getAssetStatus())) {
 				if (userAssetReturnProcessId != null) {
 					processId = userAssetReturnProcessId;
-					flowType = "RETURN";
+					flowType = ApplicationConstants.FLOW_TYPE_RETURN;
 				}
-			} else if ("INPROCESS".equals(assetModel.getAssetStatus())) {
+			} else if (ApplicationConstants.ASSET_IN_PROCESS_STATUS
+					.equals(assetModel.getAssetStatus())) {
 				if (userAssetIssueProcessId != null
 						&& userAssetReturnProcessId == null) {
 					processId = userAssetIssueProcessId;
-					flowType = "ISSUE";
+					flowType = ApplicationConstants.FLOW_TYPE_ISSUE;
 				}
 				if (userAssetReturnProcessId != null) {
 					processId = userAssetReturnProcessId;
-					flowType = "RETURN";
+					flowType = ApplicationConstants.FLOW_TYPE_RETURN;
 				}
 			}
 		}
 
-		if (approveOrReject.equalsIgnoreCase("Approve")) {
+		if (approveOrReject
+				.equalsIgnoreCase(ApplicationConstants.ASSET_APPROVED)) {
 			approveRejectAssetBusinessSrv.approveAsset(assetAssignModel,
 					processId, flowType);
-		} else if (approveOrReject.equalsIgnoreCase("Reject")) {
+		} else if (approveOrReject
+				.equalsIgnoreCase(ApplicationConstants.ASSET_REJECTED)) {
 			approveRejectAssetBusinessSrv.rejectAsset(assetAssignModel,
 					processId, flowType);
 		}

@@ -46,6 +46,7 @@
 													</c:if>
 											</b></td>
 										</tr>
+										<c:if test="${errorDisplay == 'true' }">
 										<tr>
 											<td align="left" valign="top"><b><sf:label
 														path="errorMessage" cssClass="error">
@@ -53,7 +54,7 @@
 													</sf:label></b></td>
 											<td><sf:errors path="errorMessage" cssClass="error" /></td>
 										</tr>
-
+										</c:if>
 
 										<tr>
 											<td align="left" valign="top"><b><sf:label
@@ -141,6 +142,15 @@
 											</c:if>
 
 										</tr>
+										<tr>
+											<td align="left" valign="top"><b><sf:label
+														path="assetComments">
+														Comments
+													</sf:label></b></td>
+											<td><sf:textarea path="assetComments"
+													disabled="${isDisabled}" /><br /></td>
+										</tr>
+										
 									</table>
 									<c:if
 										test="${bondedAssetBean.flowType == 'bondedItemAssign' || bondedAssetBean.flowType == 'itemCorrection'}">
