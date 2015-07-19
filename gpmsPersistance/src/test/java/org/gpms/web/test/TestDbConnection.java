@@ -1,8 +1,11 @@
 package org.gpms.web.test;
 
+import java.util.List;
+
 import org.gpms.web.domain.AssetsRepository;
+import org.gpms.web.domain.UserAssetsRepository;
 import org.gpms.web.domain.UsersRepository;
-import org.gpms.web.entities.assets.AssetsEntity;
+import org.gpms.web.entities.assets.UserAssetEntity;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -23,6 +26,9 @@ public class TestDbConnection extends AbstractJUnit4SpringContextTests {
 	UsersRepository usersRepository;
 
 	@Autowired
+	UserAssetsRepository userAssetsRepository;
+
+	@Autowired
 	AssetsRepository assetsRepository;
 
 	/**
@@ -30,10 +36,9 @@ public class TestDbConnection extends AbstractJUnit4SpringContextTests {
 	 */
 	@Before
 	public void setUp() throws Exception {
-		System.out.println(">>>>>>>>>>........... " + applicationContext);
-		AssetsEntity assetEntity = assetsRepository.getAssetById("10000");
-		System.out.println(">>>>>>>>>>> "
-				+ assetEntity.getAssetTypesEntity().getAssetTypeName());
+		List<UserAssetEntity> list = userAssetsRepository
+				.getUserAssetByCorpEmail("gpmsEmployee3@cgi.com");
+		System.out.println(list.size());
 	}
 
 	/**

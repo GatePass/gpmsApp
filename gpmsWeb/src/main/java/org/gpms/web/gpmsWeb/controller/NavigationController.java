@@ -268,4 +268,31 @@ public class NavigationController {
 		return "redirect:modifyBondedAsset";
 	}
 
+	/**
+	 * 
+	 * @param request
+	 * @return
+	 * @throws IOException
+	 */
+	@RequestMapping(value = "/navigation", params = "employeeReportView")
+	public String employeeGatePasses(HttpServletRequest request,
+			RedirectAttributes redirectAttrs) throws IOException {
+		redirectAttrs.addAttribute("employeeReportView", "employeeReportView");
+		return "redirect:employeeGatePassReport";
+	}
+
+	/**
+	 * 
+	 * @param request
+	 * @return
+	 * @throws IOException
+	 */
+	@RequestMapping(value = "/navigation", params = "managementReportView")
+	public String managementReportView(HttpServletRequest request,
+			RedirectAttributes redirectAttrs) throws IOException {
+		redirectAttrs.addAttribute("managementReportView",
+				"managementReportView");
+		return "redirect:employeeGatePassReport";
+	}
+
 }

@@ -125,6 +125,21 @@
 															code="subHeader.reporting.text" /></label>
 											</b></td>
 										</tr>
+										<tr>
+												<td align="left" colspan="2"><label>Employee Reports</label>
+												</td>
+												<td><input type="submit" name="employeeReportView"
+													value='Employee Gate passes' /></td>
+										</tr>
+										<security:authorize
+											access="hasAnyRole('ROLE_gpmsISITUserGroup', 'ROLE_gpmsISITMgrGroup','ROLE_gpmsSecurityGroup')">	
+										<tr>
+												<td align="left" colspan="2"><label>Management Reports</label>
+												</td>
+												<td><input type="submit" name="managementReportView"
+													value='Management Report' /></td>	
+										</tr>
+										</security:authorize>		
 									</table>
 								</sf:form>
 

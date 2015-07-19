@@ -3,6 +3,8 @@
  */
 package org.gpms.web.domain;
 
+import java.util.List;
+
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.transaction.Transactional;
@@ -40,8 +42,14 @@ public class UserAssetsRepository {
 		return userAssetEntity;
 	}
 
-	public void revomeAssetFromUser() {
+	public List<UserAssetEntity> getUserAssetByCorpEmail(String corpEmailId) {
 
+		List<UserAssetEntity> userAssetEntityLst = (List<UserAssetEntity>) entityManager
+				.createQuery(
+						"SELECT userAssets FROM GPMS_USER_ASSET userAssets "
+								+ "where userAssets.userCorpEmail = :userEmailId")
+				.setParameter("userEmailId", corpEmailId).getResultList();
+		return userAssetEntityLst;
 	}
 
 }
