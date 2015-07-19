@@ -12,10 +12,10 @@
 <body>
 	<div id="wrapper">
 
-		<div id="header">
+		<div id="header" align="center">
 			<table width="100%">
 				<tr>
-					<td><%@include file="../common/gpmsHeader.jsp"%></td>
+					<td><%@include file="loginHeader.jsp"%></td>
 				</tr>
 			</table>
 		</div>
@@ -40,7 +40,7 @@
 											<td align="left"><b><sf:label path="loginId">
 														<spring:message code="label.resetPassword.loginId.text" />
 													</sf:label></b></td>
-											<td><sf:input path="loginId" disabled="${isDisabled}" /><br />
+											<td><sf:input path="loginId"/><br />
 												<sf:errors path="loginId" cssClass="error" /></td>
 										</tr>
 										<tr>
@@ -57,7 +57,7 @@
 														<sf:option
 															value="${securityQuestionsModel.securityQuestionId}">${securityQuestionsModel.securityQuestion}</sf:option>
 													</c:forEach>
-												</sf:select> <br /> <sf:errors path="questionId" cssClass="error" /></td>
+												</sf:select> <br /></td>
 										</tr>
 										<tr>
 											<td align="left"><b><sf:label path="secretQuesAnsId">

@@ -3,9 +3,9 @@
  */
 package org.gpms.web.gpmsBusinessSrv.util;
 
-import java.sql.Date;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.Date;
 
 /**
  * @author narenda.kumar
@@ -14,9 +14,9 @@ import java.text.SimpleDateFormat;
 public class DateUtil {
 
 	static SimpleDateFormat formatter = new SimpleDateFormat(
-			"dd/MM/YYYY hh:mm:ss");
+			"dd/MM/yyyy hh:mm:ss");
 
-	static SimpleDateFormat formatter2 = new SimpleDateFormat("dd/MM/YYYY");
+	static SimpleDateFormat formatter2 = new SimpleDateFormat("dd/MM/yyyy");
 
 	public static Date getSQLDate(String dateToConvert) {
 
@@ -42,6 +42,16 @@ public class DateUtil {
 			pe.printStackTrace();
 		}
 		return dateDB;
+	}
+
+	public static String getDateFormattedString(Date dateToFormat) {
+
+		String returnFormattedDate = null;
+
+		returnFormattedDate = formatter2.format(dateToFormat);
+
+		return returnFormattedDate;
+
 	}
 
 }

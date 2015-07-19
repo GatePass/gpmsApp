@@ -8,6 +8,8 @@ import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
+import javax.validation.Validation;
+import javax.validation.Validator;
 
 import org.apache.log4j.Logger;
 import org.gpms.web.gpmsBusinessSrv.userMgmt.SecurityQuestionsModel;
@@ -24,7 +26,6 @@ import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.servlet.ModelAndView;
 
 /**
@@ -32,7 +33,6 @@ import org.springframework.web.servlet.ModelAndView;
  * 
  */
 @Controller
-@SessionAttributes("passwordResetBean")
 public class PasswordResetController {
 
 	private static final Logger logger = Logger.getLogger(UserController.class);
@@ -50,25 +50,6 @@ public class PasswordResetController {
 	@RequestMapping(value = "/passwordReset", method = RequestMethod.GET)
 	public ModelAndView passwordReset(HttpServletRequest request,
 			@ModelAttribute PasswordResetBean passwordResetBean, Model model) {
-
-		if (logger.isDebugEnabled()) {
-			logger.debug("request.getUserPrincipal() : "
-					+ request.getUserPrincipal());
-		}
-
-		String userId = null;
-
-		if (request.getUserPrincipal() != null) {
-			userId = request.getUserPrincipal().getName();
-		}
-
-		UserModel userModel = userMgmtBusinessSrv.getUserByCorpEmail(userId);
-		request.getSession().setAttribute("userModel", userModel);
-
-		passwordResetBean.setLoginId(userModel.getUserCorpEmail());
-		ArrayList<String> arrayList = new ArrayList<String>();
-		arrayList.add(userModel.getQuestionId());
-		passwordResetBean.setQuestionId(arrayList);
 
 		List<SecurityQuestionsModel> securityQuestionsModel = userMgmtBusinessSrv
 				.getAllSecurityQuestions();
@@ -93,35 +74,31 @@ public class PasswordResetController {
 			@ModelAttribute @Valid PasswordResetBean passwordResetBean,
 			BindingResult result, Model model) {
 
-		if (logger.isDebugEnabled()) {
-			logger.debug("request "
-					+ request.getSession().getAttribute("userModel"));
-		}
+		Validator validator = Validation.buildDefaultValidatorFactory()
+				.getValidator();
 
-		UserModel userModel = (UserModel) request.getSession().getAttribute(
-				"userModel");
-
-		if (logger.isDebugEnabled()) {
-			logger.debug("userModel " + userModel);
-		}
-
-		String userId = null;
-
-		if (request.getUserPrincipal() != null) {
-			userId = request.getUserPrincipal().getName();
-		}
-
+		String userId = passwordResetBean.getLoginId();
+		model.addAttribute("isDisabled", "true");
+		UserModel userModel = null;
 		List<SecurityQuestionsModel> securityQuestionsModel = userMgmtBusinessSrv
 				.getAllSecurityQuestions();
 		model.addAttribute("securityQuestionsModel", securityQuestionsModel);
 
-		model.addAttribute("isDisabled", "true");
+		if (userId == null || "".equals(userId)) {
+			FieldError userIdFldErr = new FieldError("passwordResetBean",
+					"loginId", "Login Id cannot be empty");
+			result.addError(userIdFldErr);
+		} else {
+			userModel = userMgmtBusinessSrv.getUserByCorpEmail(userId);
+
+			ArrayList<String> arrayList = new ArrayList<String>();
+			arrayList.add(userModel.getQuestionId());
+			passwordResetBean.setQuestionId(arrayList);
+		}
 
 		if (result.hasErrors()) {
 			return new ModelAndView("login/passwordReset");
 		}
-
-		userModel = userMgmtBusinessSrv.getUserByCorpEmail(userId);
 
 		if (!passwordResetBean.getSecretQuesAnsId().equals(
 				userModel.getSecretQuesAnsId())) {

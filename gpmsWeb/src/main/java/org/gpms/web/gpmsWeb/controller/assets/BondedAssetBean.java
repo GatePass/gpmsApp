@@ -28,8 +28,10 @@ public class BondedAssetBean implements Serializable {
 	@NotEmpty(message = "Asset Id to be assigned cannot be be Empty")
 	private String assetId;
 
+	// @Future(message = "Issue date cannot be a Future date")
 	private String userAssetIssueDate;
 
+	// @Future(message = "Return date cannot be a Future date")
 	private String userAssetReturnDate;
 
 	private String userAssetIssueProcessId;

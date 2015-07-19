@@ -3,8 +3,9 @@
  */
 package org.gpms.web.gpmsBusinessSrv.assets;
 
+import java.sql.Date;
+
 import org.gpms.web.entities.assets.UserAssetEntity;
-import org.gpms.web.gpmsBusinessSrv.util.DateUtil;
 
 /**
  * @author narenda.kumar
@@ -21,24 +22,19 @@ public class BondedAssetModelEntityConverter {
 		assetAssignModel.setUserCorpEmail(userAssetEntity.getUserCorpEmail());
 		assetAssignModel.setAssetId(userAssetEntity.getAssetId());
 		assetAssignModel.setUserAssetIssueDate(userAssetEntity
-				.getUserAssetIssueDate().toString());
-		assetAssignModel.setCreateDate(userAssetEntity.getCreateDate()
-				.toString());
+				.getUserAssetIssueDate());
+		assetAssignModel.setCreateDate(userAssetEntity.getCreateDate());
 		assetAssignModel.setUserAssetIssueProcessId(userAssetEntity
 				.getUserAssetIssueProcessId());
 		assetAssignModel.setUserAssetReturnProcessId(userAssetEntity
 				.getUserAssetReturnProcessId());
 		if (userAssetEntity.getModifiedDate() != null) {
-			assetAssignModel.setModifiedDate(userAssetEntity.getModifiedDate()
-					.toString());
-		} else {
-			assetAssignModel.setModifiedDate(null);
+			assetAssignModel.setModifiedDate(userAssetEntity.getModifiedDate());
 		}
+
 		if (userAssetEntity.getUserAssetReturnDate() != null) {
 			assetAssignModel.setUserAssetReturnDate(userAssetEntity
-					.getUserAssetReturnDate().toString());
-		} else {
-			assetAssignModel.setUserAssetReturnDate(null);
+					.getUserAssetReturnDate());
 		}
 
 		return assetAssignModel;
@@ -53,36 +49,30 @@ public class BondedAssetModelEntityConverter {
 		userAssetEntity.setUserAssetId(assetAssignModel.getUserAssetId());
 		userAssetEntity.setUserCorpEmail(assetAssignModel.getUserCorpEmail());
 		userAssetEntity.setAssetId(assetAssignModel.getAssetId());
-		userAssetEntity.setUserAssetIssueDate(DateUtil
-				.getSQLDateForTimeStamp(assetAssignModel
-						.getUserAssetIssueDate()));
-		userAssetEntity.setCreateDate(DateUtil
-				.getSQLDateForTimeStamp(assetAssignModel.getCreateDate()));
-		userAssetEntity.setModifiedDate(DateUtil
-				.getSQLDateForTimeStamp(assetAssignModel.getModifiedDate()));
+
+		if (assetAssignModel.getCreateDate() != null) {
+			userAssetEntity.setCreateDate(new Date(assetAssignModel
+					.getCreateDate().getTime()));
+		}
+		if (assetAssignModel.getModifiedDate() != null) {
+			userAssetEntity.setModifiedDate(new Date(assetAssignModel
+					.getModifiedDate().getTime()));
+		}
+
+		if (assetAssignModel.getUserAssetIssueDate() != null) {
+			userAssetEntity.setUserAssetIssueDate(new Date(assetAssignModel
+					.getUserAssetIssueDate().getTime()));
+		}
+
+		if (assetAssignModel.getUserAssetReturnDate() != null) {
+			userAssetEntity.setUserAssetReturnDate(new Date(assetAssignModel
+					.getUserAssetReturnDate().getTime()));
+		}
 		userAssetEntity.setUserAssetIssueProcessId(assetAssignModel
 				.getUserAssetIssueProcessId());
 		userAssetEntity.setUserAssetReturnProcessId(assetAssignModel
 				.getUserAssetReturnProcessId());
-		userAssetEntity.setModifiedDate(DateUtil.getSQLDate(assetAssignModel
-				.getModifiedDate()));
-		if (assetAssignModel.getUserAssetReturnDate() != null) {
-			userAssetEntity.setUserAssetReturnDate(DateUtil
-					.getSQLDateForTimeStamp(assetAssignModel
-							.getUserAssetReturnDate()));
-		} else {
-			userAssetEntity.setUserAssetReturnDate(null);
-		}
-
-		// // TODO Remove
-		//
-		// userAssetEntity.setUserAssetIssueDate(new Date());
-		// userAssetEntity.setCreateDate(new Date());
-		// userAssetEntity.setModifiedDate(new Date());
-		// userAssetEntity.setUserAssetReturnDate(new Date());
 
 		return userAssetEntity;
-
 	}
-
 }

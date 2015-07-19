@@ -11,7 +11,6 @@ import org.apache.log4j.Logger;
 import org.gpms.web.gpmsBusinessSrv.userMgmt.UserMgmtBusinessSrv;
 import org.gpms.web.gpmsBusinessSrv.userMgmt.UserModel;
 import org.gpms.web.gpmsWeb.controller.assets.BondedAssetBean;
-import org.gpms.web.gpmsWeb.controller.login.PasswordResetBean;
 import org.gpms.web.gpmsWeb.controller.userMgmt.UserBean;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -37,7 +36,7 @@ public class NavigationController {
 	 * @return
 	 * @throws IOException
 	 */
-	@RequestMapping(value = "/navigation")
+	@RequestMapping(value = { "/", "/navigation" })
 	public ModelAndView navigation(HttpServletRequest request)
 			throws IOException {
 		if (logger.isDebugEnabled()) {
@@ -267,25 +266,6 @@ public class NavigationController {
 		bondedAssetBean.setFlowType("itemCorrection");
 		request.getSession().setAttribute("bondedAssetBean", bondedAssetBean);
 		return "redirect:modifyBondedAsset";
-	}
-
-	/**
-	 * 
-	 * @param request
-	 * @return
-	 * @throws IOException
-	 */
-	@RequestMapping(value = "/navigation", params = "passwordReset")
-	public String passwordReset(HttpServletRequest request) throws IOException {
-		PasswordResetBean passwordResetBean = new PasswordResetBean();
-
-		if (logger.isDebugEnabled()) {
-			logger.debug("Request to render passwordReset flow from navigation page");
-		}
-
-		request.getSession().setAttribute("passwordResetBean",
-				passwordResetBean);
-		return "redirect:passwordReset";
 	}
 
 }

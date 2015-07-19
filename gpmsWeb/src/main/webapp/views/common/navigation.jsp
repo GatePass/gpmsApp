@@ -111,9 +111,11 @@
 												<security:authorize access="hasAnyRole('ROLE_gpmsISITMgrGroup')">
 												<td><input type="submit" name="approveRejectAsset"
 													value='<spring:message code="button.userAccessMgmt.approveReject.text"/>' /></td>
-												</security:authorize>	
+												</security:authorize>
+												<security:authorize access="hasAnyRole('ROLE_gpmsISITUserGroup')">	
 												<td><input type="submit" name="modifyBondedAsset"
 													value='<spring:message code="button.userAccessMgmt.modifyBondedAsset.text"/>' /></td>
+												</security:authorize>	
 											</tr>
 											<br>
 										</security:authorize>
@@ -122,12 +124,6 @@
 													<label><spring:message
 															code="subHeader.reporting.text" /></label>
 											</b></td>
-										</tr>
-										<tr>
-											<td align="left" colspan="2"><label>Reset
-													Password</label>
-											<td><input type="submit" name="passwordReset"
-												value='<spring:message code="button.loginPage.resetPassword.text"/>' /></td>
 										</tr>
 									</table>
 								</sf:form>

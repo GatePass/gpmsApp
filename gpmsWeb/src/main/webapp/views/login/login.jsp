@@ -90,8 +90,19 @@
 									<input type="submit" name="submitL"
 										value='<spring:message code="button.loginPage.submit.text"/>' />
 								</sf:form>
-
+								<table>
+								<tr><td>
+								<c:url value="/passwordReset" var="passwordResetUrl" />
+								<td>
+									<form action="${passwordResetUrl}" method="get" id="passwordResetUrlForm">
+										<input type="submit"
+												value='<spring:message code="button.loginPage.resetPassword.text"/>' />	
+									</form>
+								</td>
+								</tr>
+							</table>
 							</fieldset>
+					
 						</div>
 					</td>
 				</tr>

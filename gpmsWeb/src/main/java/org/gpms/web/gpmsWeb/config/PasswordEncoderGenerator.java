@@ -19,7 +19,7 @@ public class PasswordEncoderGenerator {
 
 		int i = 0;
 		while (i < 10) {
-			String password = "gpmsSecu777#$";
+			String password = "gpmssecu777#$";
 			BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
 			String hashedPassword = passwordEncoder.encode(password);
 

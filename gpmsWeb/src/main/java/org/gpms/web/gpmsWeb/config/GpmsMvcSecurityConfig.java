@@ -45,6 +45,9 @@ public class GpmsMvcSecurityConfig extends WebSecurityConfigurerAdapter {
 		http.anonymous().and().authorizeRequests().antMatchers("/resources/**")
 				.permitAll();
 
+		http.anonymous().and().authorizeRequests()
+				.antMatchers("/passwordReset").permitAll();
+
 		http.anonymous().and().authorizeRequests().antMatchers("/login*")
 				.permitAll();
 

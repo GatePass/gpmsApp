@@ -1,5 +1,7 @@
 package org.gpms.web.gpmsBusinessSrv.assets;
 
+import java.util.Date;
+
 /**
  * 
  * @author narenda.kumar
@@ -13,17 +15,17 @@ public class AssetAssignModel {
 
 	private String assetId;
 
-	private String userAssetIssueDate;
+	private Date userAssetIssueDate;
 
-	private String userAssetReturnDate;
+	private Date userAssetReturnDate;
 
 	private String userAssetIssueProcessId;
 
 	private String userAssetReturnProcessId;
 
-	private String createDate;
+	private Date createDate;
 
-	private String modifiedDate;
+	private Date modifiedDate;
 
 	private String assetAssignComments;
 
@@ -103,66 +105,6 @@ public class AssetAssignModel {
 	}
 
 	/**
-	 * @return the userAssetIssueDate
-	 */
-	public String getUserAssetIssueDate() {
-		return userAssetIssueDate;
-	}
-
-	/**
-	 * @param userAssetIssueDate
-	 *            the userAssetIssueDate to set
-	 */
-	public void setUserAssetIssueDate(String userAssetIssueDate) {
-		this.userAssetIssueDate = userAssetIssueDate;
-	}
-
-	/**
-	 * @return the userAssetReturnDate
-	 */
-	public String getUserAssetReturnDate() {
-		return userAssetReturnDate;
-	}
-
-	/**
-	 * @param userAssetReturnDate
-	 *            the userAssetReturnDate to set
-	 */
-	public void setUserAssetReturnDate(String userAssetReturnDate) {
-		this.userAssetReturnDate = userAssetReturnDate;
-	}
-
-	/**
-	 * @return the createDate
-	 */
-	public String getCreateDate() {
-		return createDate;
-	}
-
-	/**
-	 * @param createDate
-	 *            the createDate to set
-	 */
-	public void setCreateDate(String createDate) {
-		this.createDate = createDate;
-	}
-
-	/**
-	 * @return the modifiedDate
-	 */
-	public String getModifiedDate() {
-		return modifiedDate;
-	}
-
-	/**
-	 * @param modifiedDate
-	 *            the modifiedDate to set
-	 */
-	public void setModifiedDate(String modifiedDate) {
-		this.modifiedDate = modifiedDate;
-	}
-
-	/**
 	 * @return the assetAssignComments
 	 */
 	public String getAssetAssignComments() {
@@ -175,6 +117,66 @@ public class AssetAssignModel {
 	 */
 	public void setAssetAssignComments(String assetAssignComments) {
 		this.assetAssignComments = assetAssignComments;
+	}
+
+	/**
+	 * @return the userAssetIssueDate
+	 */
+	public Date getUserAssetIssueDate() {
+		return userAssetIssueDate;
+	}
+
+	/**
+	 * @param userAssetIssueDate
+	 *            the userAssetIssueDate to set
+	 */
+	public void setUserAssetIssueDate(Date userAssetIssueDate) {
+		this.userAssetIssueDate = userAssetIssueDate;
+	}
+
+	/**
+	 * @return the userAssetReturnDate
+	 */
+	public Date getUserAssetReturnDate() {
+		return userAssetReturnDate;
+	}
+
+	/**
+	 * @param userAssetReturnDate
+	 *            the userAssetReturnDate to set
+	 */
+	public void setUserAssetReturnDate(Date userAssetReturnDate) {
+		this.userAssetReturnDate = userAssetReturnDate;
+	}
+
+	/**
+	 * @return the createDate
+	 */
+	public Date getCreateDate() {
+		return createDate;
+	}
+
+	/**
+	 * @param createDate
+	 *            the createDate to set
+	 */
+	public void setCreateDate(Date createDate) {
+		this.createDate = createDate;
+	}
+
+	/**
+	 * @return the modifiedDate
+	 */
+	public Date getModifiedDate() {
+		return modifiedDate;
+	}
+
+	/**
+	 * @param modifiedDate
+	 *            the modifiedDate to set
+	 */
+	public void setModifiedDate(Date modifiedDate) {
+		this.modifiedDate = modifiedDate;
 	}
 
 	public String toString() {

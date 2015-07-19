@@ -3,6 +3,8 @@
  */
 package org.gpms.web.gpmsBusinessSrv.assets;
 
+import java.sql.Date;
+
 import org.apache.log4j.Logger;
 import org.gpms.web.domain.AssetsRepository;
 import org.gpms.web.domain.UserAssetsRepository;
@@ -11,7 +13,6 @@ import org.gpms.web.entities.assets.AssetsEntity;
 import org.gpms.web.entities.assets.UserAssetEntity;
 import org.gpms.web.entities.users.UsersLoginEntity;
 import org.gpms.web.gpmsBusinessSrv.util.ApplicationConstants;
-import org.gpms.web.gpmsBusinessSrv.util.DateUtil;
 import org.gpms.web.mail.MailServiceParams;
 import org.gpms.web.returnBondedItem.ReturnBondedItem;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -122,8 +123,8 @@ public class ReturnAssetsBusinessSrv {
 
 			userAssetEntity = userAssetsRepository
 					.getUserAssetById(userAssetId);
-			userAssetEntity.setUserAssetReturnDate(DateUtil
-					.getSQLDate(assetAssignModel.getUserAssetReturnDate()));
+			userAssetEntity.setUserAssetReturnDate(new Date(assetAssignModel
+					.getUserAssetReturnDate().getTime()));
 			userAssetEntity.setUserAssetReturnProcessId(processInstanceId);
 			userAssetId = userAssetsRepository
 					.updateAssetInfoOfUser(userAssetEntity);

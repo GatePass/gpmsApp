@@ -22,7 +22,6 @@ public class PasswordResetBean implements Serializable {
 	@Size(min = 6, message = "Wrong Email Id Entered")
 	private String loginId;
 
-	@NotEmpty(message = "Select a question for Security reason")
 	private List<String> questionId;
 
 	@NotEmpty(message = "Secret answer for the selected question cannot be Empty")
