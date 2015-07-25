@@ -18,6 +18,11 @@ public class DateUtil {
 
 	static SimpleDateFormat formatter2 = new SimpleDateFormat("dd/MM/yyyy");
 
+	/**
+	 * 
+	 * @param dateToConvert
+	 * @return
+	 */
 	public static Date getSQLDate(String dateToConvert) {
 
 		java.sql.Date dateDB = null;
@@ -31,6 +36,11 @@ public class DateUtil {
 		return dateDB;
 	}
 
+	/**
+	 * 
+	 * @param dateToConvert
+	 * @return
+	 */
 	public static Date getSQLDateForTimeStamp(String dateToConvert) {
 
 		java.sql.Date dateDB = null;
@@ -44,6 +54,11 @@ public class DateUtil {
 		return dateDB;
 	}
 
+	/**
+	 * 
+	 * @param dateToFormat
+	 * @return
+	 */
 	public static String getDateFormattedString(Date dateToFormat) {
 
 		String returnFormattedDate = null;

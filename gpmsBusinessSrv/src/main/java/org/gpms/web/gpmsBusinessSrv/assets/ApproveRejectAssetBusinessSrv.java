@@ -18,6 +18,7 @@ import org.gpms.web.gpmsBusinessSrv.util.ApplicationConstants;
 import org.gpms.web.mail.MailServiceParams;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 public class ApproveRejectAssetBusinessSrv {
@@ -43,6 +44,7 @@ public class ApproveRejectAssetBusinessSrv {
 	 * @param processId
 	 * @param flowType
 	 */
+	@Transactional
 	public void approveAsset(AssetAssignModel assetAssignModel,
 			String processId, String flowType) {
 
@@ -148,6 +150,7 @@ public class ApproveRejectAssetBusinessSrv {
 	 * @param processId
 	 * @param flowType
 	 */
+	@Transactional
 	public void rejectAsset(AssetAssignModel assetAssignModel,
 			String processId, String flowType) {
 

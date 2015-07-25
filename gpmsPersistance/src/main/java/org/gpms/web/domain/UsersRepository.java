@@ -26,6 +26,12 @@ public class UsersRepository {
 	@PersistenceContext(unitName = "gpmsPersistenceUnit")
 	EntityManager entityManager;
 
+	/**
+	 * 
+	 * @param usersLoginEntity
+	 * @return
+	 * @throws PersistenceException
+	 */
 	public String createUser(UsersLoginEntity usersLoginEntity)
 			throws PersistenceException {
 		entityManager.persist(usersLoginEntity);
@@ -33,6 +39,12 @@ public class UsersRepository {
 		return userIdCreated;
 	}
 
+	/**
+	 * 
+	 * @param usersLoginEntity
+	 * @return
+	 * @throws PersistenceException
+	 */
 	public String modifyUser(UsersLoginEntity usersLoginEntity)
 			throws PersistenceException {
 		entityManager.merge(usersLoginEntity);
@@ -40,22 +52,42 @@ public class UsersRepository {
 		return userIdCreated;
 	}
 
+	/**
+	 * 
+	 * @param usersLoginEntity
+	 * @throws PersistenceException
+	 */
 	public void deleteUser(UsersLoginEntity usersLoginEntity)
 			throws PersistenceException {
 		entityManager.remove(usersLoginEntity);
 	}
 
+	/**
+	 * 
+	 * @param userId
+	 * @throws PersistenceException
+	 */
 	public void deleteUserById(String userId) throws PersistenceException {
 		UsersLoginEntity usersLoginEntity = getUserById(userId);
 		deleteUser(usersLoginEntity);
 	}
 
+	/**
+	 * 
+	 * @param userEmailId
+	 * @throws PersistenceException
+	 */
 	public void deleteUserByCorpEmailId(String userEmailId)
 			throws PersistenceException {
 		UsersLoginEntity usersLoginEntity = getUserByCorpEmailId(userEmailId);
 		deleteUser(usersLoginEntity);
 	}
 
+	/**
+	 * 
+	 * @param userId
+	 * @return
+	 */
 	public UsersLoginEntity getUserById(String userId) {
 
 		UsersLoginEntity usersLoginEntity = entityManager.find(
@@ -65,6 +97,11 @@ public class UsersRepository {
 
 	}
 
+	/**
+	 * 
+	 * @param userEmailId
+	 * @return
+	 */
 	public UsersLoginEntity getUserByCorpEmailId(String userEmailId) {
 
 		UsersLoginEntity usersLoginEntity = (UsersLoginEntity) entityManager
@@ -76,6 +113,12 @@ public class UsersRepository {
 		return usersLoginEntity;
 	}
 
+	/**
+	 * 
+	 * @param usersLoginEntity
+	 * @return
+	 * @throws PersistenceException
+	 */
 	public UsersLoginEntity updatePassword(UsersLoginEntity usersLoginEntity)
 			throws PersistenceException {
 
@@ -85,6 +128,10 @@ public class UsersRepository {
 		return usersLoginEntityUpdated;
 	}
 
+	/**
+	 * 
+	 * @return
+	 */
 	public List<SecurityQuestionEntity> getAllSecurityQuestionEntity() {
 
 		List<SecurityQuestionEntity> securityQuestionEntityLst = (List<SecurityQuestionEntity>) entityManager
@@ -96,6 +143,10 @@ public class UsersRepository {
 
 	}
 
+	/**
+	 * 
+	 * @return
+	 */
 	public List<UserGroupsEntity> getAllUserGroupsEntity() {
 
 		List<UserGroupsEntity> userGroupsEntityLst = (List<UserGroupsEntity>) entityManager

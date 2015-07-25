@@ -6,10 +6,6 @@ package org.gpms.web.gpmsWeb.common;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-/**
- * @author narenda.kumar
- * 
- */
 public class DateValidator {
 
 	private Pattern pattern;
@@ -21,6 +17,11 @@ public class DateValidator {
 		pattern = Pattern.compile(DATE_PATTERN);
 	}
 
+	/**
+	 * 
+	 * @param date
+	 * @return
+	 */
 	public boolean validate(final String date) {
 
 		matcher = pattern.matcher(date);

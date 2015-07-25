@@ -47,8 +47,7 @@
 														path="assetBarCode">
 														<spring:message code="label.newAsset.assetBarCode.text" />
 													</sf:label></b></td>
-											<td><sf:input path="assetBarCode"
-													disabled="${isDisabled}" /><br /> <sf:errors
+											<td><sf:input path="assetBarCode" disabled="${isDisabled}"/><br /> <sf:errors
 													path="assetBarCode" cssClass="error" /></td>
 										</tr>
 										<tr>
@@ -57,8 +56,7 @@
 														<spring:message
 															code="label.newAsset.selectTheAssetType.text" />
 													</sf:label></b></td>
-											<td><sf:select path="assetTypeId" multiple="false"
-													disabled="${isDisabled}">
+											<td><sf:select path="assetTypeId" multiple="false" disabled="${isDisabled}">
 													<sf:option value="" label=""></sf:option>
 													<c:forEach items="${assetTypeModelLst}"
 														var="assetTypeModelLst">
@@ -72,8 +70,7 @@
 														<spring:message
 															code="label.newAsset.assetPurchaseDate.text" />
 													</sf:label></b></td>
-											<td><sf:input path="assetPurchaseDate"
-													disabled="${isDisabled}" /><br /> <sf:errors
+											<td><sf:input path="assetPurchaseDate" disabled="${isDisabled}"/><br /> <sf:errors
 													path="assetPurchaseDate" cssClass="error" /></td>
 										</tr>
 										<tr>
@@ -83,16 +80,14 @@
 															code="label.newAsset.assetRemovalDate.text" />
 													</sf:label></b></td>
 											<td><sf:input path="assetRemovalDate"
-													disabled="${isDisabled}" /><br /> <sf:errors
+													disabled="${isPreDisabled}" /><br /> <sf:errors
 													path="assetRemovalDate" cssClass="error" /></td>
 										</tr>
 										<tr>
 											<td align="left" valign="top"><b><sf:label
 														path="assetStatus">Asset Status</sf:label></b></td>
-											<td><sf:select path="assetStatus" multiple="false">
-													<sf:option value="ASSIGNED" label="ASSIGNED"></sf:option>
+											<td><sf:select path="assetStatus" multiple="false" disabled="${isPreDisabled}">
 													<sf:option value="AVAILABLE" label="AVAILABLE"></sf:option>
-													<sf:option value="REMOVED" label="REMOVED"></sf:option>
 												</sf:select> <br /> <sf:errors path="assetStatus" cssClass="error" /></td>
 										</tr>
 

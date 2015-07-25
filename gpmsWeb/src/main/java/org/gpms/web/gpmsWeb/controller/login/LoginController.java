@@ -9,7 +9,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.apache.log4j.Logger;
-import org.gpms.web.gpmsBusinessSrv.login.LoginBusinessSrv;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AnonymousAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -33,9 +32,6 @@ public class LoginController {
 
 	private static final Logger logger = Logger
 			.getLogger(LoginController.class);
-
-	@Autowired
-	LoginBusinessSrv loginBusinessSrv;
 
 	@Autowired
 	LocaleResolver localeResolver;

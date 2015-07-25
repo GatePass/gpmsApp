@@ -3,8 +3,6 @@
  */
 package org.gpms.web.gpmsWeb.controller.assets;
 
-import javax.validation.constraints.Null;
-
 import org.hibernate.validator.constraints.NotEmpty;
 
 /**
@@ -23,7 +21,6 @@ public class AssetBean {
 	private String assetTypeId;
 
 	@NotEmpty(message = "Asset Purchase Date cannot be be Empty")
-	@Null(message = "Asset Purchase Date cannot be be Empty")
 	private String assetPurchaseDate;
 
 	private String assetRemovalDate;

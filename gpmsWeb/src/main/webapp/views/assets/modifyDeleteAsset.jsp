@@ -12,8 +12,8 @@
 <body>
 	<div id="wrapper">
 
-		<div id="header" align="center">
-			<table>
+		<div id="header">
+			<table width="100%">
 				<tr>
 					<td><%@include file="../common/gpmsHeader.jsp"%></td>
 				</tr>
@@ -44,7 +44,15 @@
 														path="assetId">
 														<spring:message code="label.newAsset.assetId.text" />
 													</sf:label></b></td>
-											<td align="left"><sf:input path="assetId" /></td>
+											<td align="left">
+												<table>
+													<tr>
+														<td><sf:input path="assetId" /></td>
+													</tr>
+													<tr>	
+														<td><sf:errors path="assetId" cssClass="error" /></td>
+													</tr>
+												</table>
 											<td><input type="submit" name="getAssetData"
 												value="Get Data" /></td>
 										</tr>

@@ -14,6 +14,11 @@ import org.gpms.web.gpmsBusinessSrv.util.DateUtil;
  */
 public class BondedAssetDataConverter {
 
+	/**
+	 * 
+	 * @param assetAssignModel
+	 * @return
+	 */
 	public static BondedAssetBean convertModelToBean(
 			AssetAssignModel assetAssignModel) {
 
@@ -44,6 +49,11 @@ public class BondedAssetDataConverter {
 
 	}
 
+	/**
+	 * 
+	 * @param bondedAssetBean
+	 * @return
+	 */
 	public static AssetAssignModel convertBeanToModel(
 			BondedAssetBean bondedAssetBean) {
 

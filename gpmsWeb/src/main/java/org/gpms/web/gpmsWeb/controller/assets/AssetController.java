@@ -17,6 +17,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
+import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -36,6 +37,12 @@ public class AssetController {
 	@Autowired
 	AssetMgmtBusinessSrv assetMgmtBusinessSrv;
 
+	/**
+	 * 
+	 * @param assetBean
+	 * @param model
+	 * @return
+	 */
 	@RequestMapping(value = "/newAsset", method = RequestMethod.GET)
 	public ModelAndView newAsset(@ModelAttribute AssetBean assetBean,
 			Model model) {
@@ -45,10 +52,18 @@ public class AssetController {
 
 		model.addAttribute("assetTypeModelLst", assetTypeModelLst);
 		model.addAttribute("assetBean", assetBean);
-
+		model.addAttribute("isPreDisabled", "true");
 		return new ModelAndView("assets/newAsset");
 	}
 
+	/**
+	 * 
+	 * @param assetBean
+	 * @param result
+	 * @param model
+	 * @return
+	 * @throws IOException
+	 */
 	@RequestMapping(value = "/newAsset", method = RequestMethod.POST, params = "createAsset")
 	public String createAsset(@ModelAttribute @Valid AssetBean assetBean,
 			BindingResult result, Model model) throws IOException {
@@ -57,6 +72,13 @@ public class AssetController {
 
 		List<AssetTypeModel> assetTypeModelLst = assetMgmtBusinessSrv
 				.getAllAssetType();
+		model.addAttribute("assetTypeModelLst", assetTypeModelLst);
+		model.addAttribute("assetBean", assetBean);
+		model.addAttribute("isPreDisabled", "true");
+
+		if (result.hasErrors()) {
+			return "assets/newAsset";
+		}
 
 		AssetModel returnModel = null;
 
@@ -75,12 +97,17 @@ public class AssetController {
 			model.addAttribute("isDisabled", "true");
 		}
 
-		model.addAttribute("assetTypeModelLst", assetTypeModelLst);
 		model.addAttribute("assetBean", assetBean);
 
 		return "assets/newAsset";
 	}
 
+	/**
+	 * 
+	 * @param assetBean
+	 * @param model
+	 * @return
+	 */
 	@RequestMapping(value = "/modifyDeleteAsset", method = RequestMethod.GET)
 	public ModelAndView modifyDeleteAsset(@ModelAttribute AssetBean assetBean,
 			Model model) {
@@ -93,11 +120,30 @@ public class AssetController {
 		return new ModelAndView("assets/modifyDeleteAsset");
 	}
 
+	/**
+	 * 
+	 * @param assetBean
+	 * @param model
+	 * @return
+	 */
 	@RequestMapping(value = "/modifyDeleteAsset", method = RequestMethod.POST, params = "getAssetData")
 	public ModelAndView getAssetData(@ModelAttribute AssetBean assetBean,
-			Model model) {
+			BindingResult result, Model model) {
 
+		FieldError assetIdFldErr = new FieldError("assetBean", "assetId",
+				"Enter Asset Id to fetch data");
 		String flowType = assetBean.getFlowType();
+
+		if (assetBean != null && assetBean.getAssetId().equals("")) {
+			result.addError(assetIdFldErr);
+		}
+
+		model.addAttribute("isDisabled", "true");
+		model.addAttribute("flowType", flowType);
+
+		if (result.hasErrors()) {
+			return new ModelAndView("assets/modifyDeleteAsset");
+		}
 
 		if (assetBean != null && assetBean.getAssetId() != null) {
 			AssetModel assetModel = assetMgmtBusinessSrv.getAssetById(assetBean
@@ -108,12 +154,19 @@ public class AssetController {
 		}
 
 		model.addAttribute("assetBean", assetBean);
-		model.addAttribute("flowType", flowType);
 		model.addAttribute("isDisabled", "false");
-
 		return new ModelAndView("assets/modifyDeleteAsset");
 	}
 
+	/**
+	 * 
+	 * @param assetBean
+	 * @param result
+	 * @param model
+	 * @param redirectAttrs
+	 * @return
+	 * @throws IOException
+	 */
 	@RequestMapping(value = "/modifyDeleteAsset", method = RequestMethod.POST, params = "modifyAsset")
 	public String modifyAsset(@ModelAttribute @Valid AssetBean assetBean,
 			BindingResult result, Model model, RedirectAttributes redirectAttrs)
@@ -139,12 +192,20 @@ public class AssetController {
 		model.addAttribute("assetTypeModelLst", assetTypeModelLst);
 		model.addAttribute("assetBean", assetBean);
 
-		model.addAttribute("isDisabled", "false");
 		model.addAttribute("flowType", "modifyAsset");
 		redirectAttrs.addFlashAttribute("flowType", "modifyAsset");
 		return "redirect:modifyDeleteAsset";
 	}
 
+	/**
+	 * 
+	 * @param assetBean
+	 * @param result
+	 * @param model
+	 * @param redirectAttrs
+	 * @return
+	 * @throws IOException
+	 */
 	@RequestMapping(value = "/modifyDeleteAsset", method = RequestMethod.POST, params = "deleteAsset")
 	public String deleteAsset(@ModelAttribute @Valid AssetBean assetBean,
 			BindingResult result, Model model, RedirectAttributes redirectAttrs)
@@ -156,11 +217,16 @@ public class AssetController {
 		}
 
 		model.addAttribute("flowType", "deleteAsset");
-		model.addAttribute("isDisabled", "false");
+		model.addAttribute("isDisabled", "true");
 		redirectAttrs.addFlashAttribute("flowType", "deleteAsset");
 		return "redirect:modifyDeleteAsset";
 	}
 
+	/**
+	 * 
+	 * @param assetBean
+	 * @return
+	 */
 	private AssetModel copyBeanToModel(AssetBean assetBean) {
 
 		AssetModel assetModel = new AssetModel();
@@ -173,6 +239,11 @@ public class AssetController {
 		return assetModel;
 	}
 
+	/**
+	 * 
+	 * @param assetModel
+	 * @return
+	 */
 	private AssetBean copyModelToBean(AssetModel assetModel) {
 
 		AssetBean assetBean = new AssetBean();
@@ -186,6 +257,13 @@ public class AssetController {
 	}
 
 	// ********************************AssetType*************************************************
+	/**
+	 * 
+	 * @param assetTypeBean
+	 * @param result
+	 * @param model
+	 * @return
+	 */
 	@RequestMapping(value = "/newAssetType", method = RequestMethod.GET)
 	public ModelAndView newAssetType(
 			@ModelAttribute AssetTypeBean assetTypeBean, BindingResult result,
@@ -196,6 +274,14 @@ public class AssetController {
 		return new ModelAndView("assets/newAssetType");
 	}
 
+	/**
+	 * 
+	 * @param assetTypeBean
+	 * @param result
+	 * @param model
+	 * @return
+	 * @throws IOException
+	 */
 	@RequestMapping(value = "/newAssetType", method = RequestMethod.POST, params = "createAssetType")
 	public String createAssetType(
 			@ModelAttribute @Valid AssetTypeBean assetTypeBean,

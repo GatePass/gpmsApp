@@ -33,6 +33,13 @@ public class ReportsController {
 	@Autowired
 	ReportsBusinessSrv reportsBusinessSrv;
 
+	/**
+	 * 
+	 * @param request
+	 * @param reportBean
+	 * @param model
+	 * @return
+	 */
 	@RequestMapping(value = "/employeeGatePassReport", method = {
 			RequestMethod.GET, RequestMethod.POST }, params = "employeeReportView")
 	public ModelAndView employeeReport(HttpServletRequest request,
@@ -54,6 +61,13 @@ public class ReportsController {
 
 	}
 
+	/**
+	 * 
+	 * @param request
+	 * @param reportBean
+	 * @param model
+	 * @return
+	 */
 	@RequestMapping(value = "/employeeGatePassReport", method = {
 			RequestMethod.GET, RequestMethod.POST }, params = "managementReportView")
 	public ModelAndView managementReportView(HttpServletRequest request,
@@ -68,6 +82,14 @@ public class ReportsController {
 
 	}
 
+	/**
+	 * 
+	 * @param request
+	 * @param reportBean
+	 * @param result
+	 * @param model
+	 * @return
+	 */
 	@RequestMapping(value = "/employeeGatePassReport", method = { RequestMethod.POST }, params = "getEmployeeData")
 	public ModelAndView getEmployeeData(HttpServletRequest request,
 			@ModelAttribute("reportBean") ReportBean reportBean,

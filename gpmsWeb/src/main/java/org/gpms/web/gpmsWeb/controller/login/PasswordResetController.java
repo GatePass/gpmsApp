@@ -3,6 +3,7 @@
  */
 package org.gpms.web.gpmsWeb.controller.login;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -138,6 +139,17 @@ public class PasswordResetController {
 		model.addAttribute("passwordResetBean", passwordResetBean);
 
 		return new ModelAndView("login/passwordReset");
+	}
+
+	/**
+	 * 
+	 * @param request
+	 * @return
+	 * @throws IOException
+	 */
+	@RequestMapping(value = "/passwordReset", params = "loginPage")
+	public String loginPage(HttpServletRequest request) throws IOException {
+		return "redirect:login";
 	}
 
 }

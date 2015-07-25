@@ -25,6 +25,9 @@ public class MailService {
 
 	static Properties mailServerProperties;
 
+	/**
+	 * 
+	 */
 	static {
 		try {
 			createMailConfig();
@@ -34,6 +37,11 @@ public class MailService {
 
 	}
 
+	/**
+	 * 
+	 * @throws AddressException
+	 * @throws MessagingException
+	 */
 	private static void createMailConfig() throws AddressException,
 			MessagingException {
 		mailServerProperties = System.getProperties();
@@ -45,6 +53,12 @@ public class MailService {
 		mailServerProperties.put("mail.smtp.port", "465");
 	}
 
+	/**
+	 * 
+	 * @param userId
+	 * @param password
+	 * @return
+	 */
 	public Session getMailSession(final String userId, final String password) {
 
 		Session mailSession;
@@ -68,6 +82,13 @@ public class MailService {
 
 	}
 
+	/**
+	 * 
+	 * @param mailSession
+	 * @param mailServiceParams
+	 * @return
+	 * @throws MessagingException
+	 */
 	public MimeMessage generateMessage(Session mailSession,
 			MailServiceParams mailServiceParams) throws MessagingException {
 
@@ -86,6 +107,13 @@ public class MailService {
 
 	}
 
+	/**
+	 * 
+	 * @param mailSession
+	 * @param mailServiceParams
+	 * @param generateMailMessage
+	 * @throws MessagingException
+	 */
 	public void sendMessage(Session mailSession,
 			MailServiceParams mailServiceParams, MimeMessage generateMailMessage)
 			throws MessagingException {
@@ -97,7 +125,6 @@ public class MailService {
 		transport.sendMessage(generateMailMessage,
 				generateMailMessage.getAllRecipients());
 		transport.close();
-
 	}
 
 }

@@ -174,7 +174,7 @@ public class ReturnBondedAssetController {
 
 		bondedAssetBean.setFlowType(flowType);
 		model.addAttribute("bondedAssetBean", bondedAssetBean);
-
+		model.addAttribute("isDisabled", "true");
 		return new ModelAndView("assets/issueBondedAsset");
 	}
 

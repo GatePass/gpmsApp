@@ -128,6 +128,7 @@ public class AssignAssetController {
 		}
 
 		bondedAssetBean.setFlowType(flowType);
+		model.addAttribute("isDisabled", "true");
 		model.addAttribute("bondedAssetBean", bondedAssetBean);
 		model.addAttribute("errorDisplay", "false");
 		return new ModelAndView("assets/issueBondedAsset");
@@ -195,6 +196,7 @@ public class AssignAssetController {
 		}
 
 		bondedAssetBean.setFlowType(flowType);
+		model.addAttribute("isDisabled", "true");
 		model.addAttribute("bondedAssetBean", bondedAssetBean);
 		model.addAttribute("errorDisplay", "false");
 		return new ModelAndView("assets/issueBondedAsset");

@@ -33,6 +33,12 @@ public class IdentityManagement {
 	@Autowired
 	public TaskService taskService;
 
+	/**
+	 * 
+	 * @param groupId
+	 * @param groupName
+	 * @param groupType
+	 */
 	public void createGroup(String groupId, String groupName, String groupType) {
 
 		Group group = identityService.newGroup(groupId);
@@ -42,6 +48,11 @@ public class IdentityManagement {
 
 	}
 
+	/**
+	 * 
+	 * @param groupId
+	 * @return
+	 */
 	public Group getGroup(String groupId) {
 		GroupQuery groupQuery = identityService.createGroupQuery().groupId(
 				groupId);
@@ -49,10 +60,22 @@ public class IdentityManagement {
 		return group;
 	}
 
+	/**
+	 * 
+	 * @param groupId
+	 */
 	public void deleteGroup(String groupId) {
 		identityService.deleteGroup(groupId);
 	}
 
+	/**
+	 * 
+	 * @param userId
+	 * @param firstName
+	 * @param lastName
+	 * @param email
+	 * @param password
+	 */
 	public void createUser(String userId, String firstName, String lastName,
 			String email, String password) {
 
@@ -65,6 +88,11 @@ public class IdentityManagement {
 
 	}
 
+	/**
+	 * 
+	 * @param userId
+	 * @return
+	 */
 	public User getUser(String userId) {
 		UserQuery userQuery = identityService.createUserQuery().userId(userId);
 		User user = userQuery.singleResult();
@@ -72,18 +100,36 @@ public class IdentityManagement {
 
 	}
 
+	/**
+	 * 
+	 * @param userId
+	 */
 	public void deleteUser(String userId) {
 		identityService.deleteUser(userId);
 	}
 
+	/**
+	 * 
+	 * @param userId
+	 * @param groupId
+	 */
 	public void assignUserToGroup(String userId, String groupId) {
 		identityService.createMembership(userId, groupId);
 	}
 
+	/**
+	 * 
+	 * @param userId
+	 * @param groupId
+	 */
 	public void removeUserFromGroup(String userId, String groupId) {
 		identityService.deleteMembership(userId, groupId);
 	}
 
+	/**
+	 * 
+	 * @param authenticatedUserId
+	 */
 	public void setUserForProcessStarter(String authenticatedUserId) {
 		identityService.setAuthenticatedUserId(authenticatedUserId);
 	}

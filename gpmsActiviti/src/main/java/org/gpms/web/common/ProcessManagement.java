@@ -37,6 +37,11 @@ public class ProcessManagement {
 	@Autowired
 	public HistoryService historyService;
 
+	/**
+	 * 
+	 * @param processDefinition
+	 * @return
+	 */
 	public ProcessInstance startProcessInstanceByProcessDef(
 			ProcessDefinition processDefinition) {
 
@@ -46,6 +51,11 @@ public class ProcessManagement {
 		return processInstance;
 	}
 
+	/**
+	 * 
+	 * @param processId
+	 * @return
+	 */
 	public Execution getExecutionFromProcessId(String processId) {
 
 		Execution execution = runtimeService.createExecutionQuery()
@@ -54,6 +64,12 @@ public class ProcessManagement {
 		return execution;
 	}
 
+	/**
+	 * 
+	 * @param processInstanceId
+	 * @param variableName
+	 * @param variable
+	 */
 	public void setVariableOnExecution(String processInstanceId,
 			String variableName, Object variable) {
 
@@ -63,6 +79,11 @@ public class ProcessManagement {
 
 	}
 
+	/**
+	 * 
+	 * @param processInstanceId
+	 * @return
+	 */
 	public HistoricProcessInstance getHistoricProcessInstanceById(
 			String processInstanceId) {
 		HistoricProcessInstance historicProcessInstance = historyService

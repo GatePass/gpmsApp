@@ -29,6 +29,9 @@ public class MailServiceTask implements JavaDelegate {
 	@Autowired
 	MailService mailService = new MailService();
 
+	/**
+	 * 
+	 */
 	@Override
 	public void execute(DelegateExecution execution) throws Exception {
 

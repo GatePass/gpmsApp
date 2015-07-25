@@ -29,6 +29,12 @@ public class AssetsRepository {
 	@PersistenceContext(unitName = "gpmsPersistenceUnit")
 	EntityManager entityManager;
 
+	/**
+	 * 
+	 * @param assetsEntity
+	 * @return
+	 * @throws PersistenceException
+	 */
 	public String createAsset(AssetsEntity assetsEntity)
 			throws PersistenceException {
 		entityManager.persist(assetsEntity);
@@ -36,6 +42,12 @@ public class AssetsRepository {
 		return assetIdCreated;
 	}
 
+	/**
+	 * 
+	 * @param assetsEntity
+	 * @return
+	 * @throws PersistenceException
+	 */
 	public String modifyAsset(AssetsEntity assetsEntity)
 			throws PersistenceException {
 		entityManager.merge(assetsEntity);
@@ -43,22 +55,43 @@ public class AssetsRepository {
 		return assetIdCreated;
 	}
 
+	/**
+	 * 
+	 * @param assetId
+	 * @return
+	 */
 	public AssetsEntity getAssetById(String assetId) {
 		AssetsEntity assetsEntity = entityManager.find(AssetsEntity.class,
 				assetId);
 		return assetsEntity;
 	}
 
+	/**
+	 * 
+	 * @param assetsEntity
+	 * @throws PersistenceException
+	 */
 	public void deleteAsset(AssetsEntity assetsEntity)
 			throws PersistenceException {
 		entityManager.remove(assetsEntity);
 	}
 
+	/**
+	 * 
+	 * @param assetId
+	 * @throws PersistenceException
+	 */
 	public void deleteAssetById(String assetId) throws PersistenceException {
 		AssetsEntity assetsEntity = getAssetById(assetId);
 		entityManager.remove(assetsEntity);
 	}
 
+	/**
+	 * 
+	 * @param assetTypesEntity
+	 * @return
+	 * @throws PersistenceException
+	 */
 	public String createAssetType(AssetTypesEntity assetTypesEntity)
 			throws PersistenceException {
 		entityManager.persist(assetTypesEntity);
@@ -66,6 +99,11 @@ public class AssetsRepository {
 		return assetTypeIdCreated;
 	}
 
+	/**
+	 * 
+	 * @param assetId
+	 * @return
+	 */
 	public AssetTypesEntity getAssetTypeById(String assetId) {
 
 		AssetTypesEntity assetTypesEntity = entityManager.find(
@@ -75,11 +113,20 @@ public class AssetsRepository {
 
 	}
 
+	/**
+	 * 
+	 * @param assetTypesEntity
+	 * @throws PersistenceException
+	 */
 	public void deleteAssetType(AssetTypesEntity assetTypesEntity)
 			throws PersistenceException {
 		entityManager.remove(assetTypesEntity);
 	}
 
+	/**
+	 * 
+	 * @return
+	 */
 	public List<AssetTypesEntity> getAllAssetTypesEntity() {
 
 		List<AssetTypesEntity> assetTypesEntityLst = (List<AssetTypesEntity>) entityManager
@@ -88,7 +135,6 @@ public class AssetsRepository {
 				.getResultList();
 
 		return assetTypesEntityLst;
-
 	}
 
 }

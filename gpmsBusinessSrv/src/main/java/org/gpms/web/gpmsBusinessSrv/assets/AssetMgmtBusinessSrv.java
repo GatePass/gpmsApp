@@ -29,6 +29,11 @@ public class AssetMgmtBusinessSrv {
 	@Autowired
 	private AssetsRepository assetsRepository;
 
+	/**
+	 * 
+	 * @param assetModel
+	 * @return
+	 */
 	public AssetModel createAsset(AssetModel assetModel) {
 
 		String assetId = null;
@@ -45,6 +50,11 @@ public class AssetMgmtBusinessSrv {
 		return assetModel;
 	}
 
+	/**
+	 * 
+	 * @param assetModel
+	 * @return
+	 */
 	public AssetModel modifyAsset(AssetModel assetModel) {
 
 		String assetId = null;
@@ -61,6 +71,11 @@ public class AssetMgmtBusinessSrv {
 		return assetModel;
 	}
 
+	/**
+	 * 
+	 * @param assetId
+	 * @return
+	 */
 	public AssetModel getAssetById(String assetId) {
 
 		AssetsEntity assetsEntity = null;
@@ -78,10 +93,19 @@ public class AssetMgmtBusinessSrv {
 		return assetModel;
 	}
 
+	/**
+	 * 
+	 * @param assetId
+	 */
 	public void deleteAssetById(String assetId) {
 		assetsRepository.deleteAssetById(assetId);
 	}
 
+	/**
+	 * 
+	 * @param assetModel
+	 * @return
+	 */
 	private AssetsEntity copyModelToEntity(AssetModel assetModel) {
 		AssetsEntity assetsEntity = new AssetsEntity();
 
@@ -103,6 +127,11 @@ public class AssetMgmtBusinessSrv {
 		return assetsEntity;
 	}
 
+	/**
+	 * 
+	 * @param assetsEntity
+	 * @return
+	 */
 	private AssetModel copyEntityToModel(AssetsEntity assetsEntity) {
 		AssetModel assetModel = new AssetModel();
 
@@ -129,6 +158,11 @@ public class AssetMgmtBusinessSrv {
 
 	// **************************AssetType*********************************************
 
+	/**
+	 * 
+	 * @param assetTypeModel
+	 * @return
+	 */
 	public AssetTypeModel createAssetType(AssetTypeModel assetTypeModel) {
 
 		AssetTypesEntity assetTypesEntity = new AssetTypesEntity();
@@ -144,9 +178,11 @@ public class AssetMgmtBusinessSrv {
 		return assetTypeModel;
 	}
 
+	/**
+	 * 
+	 * @return
+	 */
 	public List<AssetTypeModel> getAllAssetType() {
-
-		logger.debug("getAllAssetType");
 
 		List<AssetTypesEntity> AssetTypesList = assetsRepository
 				.getAllAssetTypesEntity();

@@ -87,6 +87,8 @@
 									</table>
 									<input type="submit"
 										value='<spring:message code="button.resetPassword.submit.text"/>' />
+									<input type="submit"  name="loginPage"
+										value='Back to Login Page' />	
 								</sf:form>
 							</fieldset>
 						</div>

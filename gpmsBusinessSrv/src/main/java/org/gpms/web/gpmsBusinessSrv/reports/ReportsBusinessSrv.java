@@ -38,6 +38,11 @@ public class ReportsBusinessSrv {
 	@Autowired
 	BondedItemManagement bondedItemManagement;
 
+	/**
+	 * 
+	 * @param usersPersonalEmail
+	 * @return
+	 */
 	public List<ReportModel> getEmployeeGatePass(String usersPersonalEmail) {
 
 		List<UserAssetEntity> userAssetEntityLst = userAssetsRepository

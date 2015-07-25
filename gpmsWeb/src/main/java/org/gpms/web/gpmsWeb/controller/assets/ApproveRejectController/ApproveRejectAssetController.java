@@ -44,6 +44,13 @@ public class ApproveRejectAssetController {
 	@Autowired
 	AssetMgmtBusinessSrv assetMgmtBusinessSrv;
 
+	/**
+	 * 
+	 * @param request
+	 * @param bondedAssetBean
+	 * @param model
+	 * @return
+	 */
 	@RequestMapping(value = "/approveRejectAsset", method = RequestMethod.GET)
 	public ModelAndView approveRejectAssetList(HttpServletRequest request,
 			@ModelAttribute BondedAssetBean bondedAssetBean, Model model) {
@@ -67,6 +74,18 @@ public class ApproveRejectAssetController {
 		return new ModelAndView("assets/approveRejectAsset");
 	}
 
+	/**
+	 * 
+	 * @param request
+	 * @param userAssetId
+	 * @param userAssetIssueProcessId
+	 * @param userAssetReturnProcessId
+	 * @param assetId
+	 * @param approveOrReject
+	 * @param bondedAssetBean
+	 * @param model
+	 * @return
+	 */
 	@RequestMapping(value = "/approveRejectAsset", method = RequestMethod.POST)
 	public ModelAndView approveRejectAsset(
 			HttpServletRequest request,
@@ -164,6 +183,11 @@ public class ApproveRejectAssetController {
 		return new ModelAndView("assets/approveRejectAsset");
 	}
 
+	/**
+	 * 
+	 * @param userId
+	 * @return
+	 */
 	private List<BondedAssetBean> getAllTasksForAction(String userId) {
 
 		List<AssetAssignModel> assetAssignModelLst = approveRejectAssetBusinessSrv

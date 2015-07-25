@@ -262,6 +262,10 @@ public class UserMgmtBusinessSrv {
 
 	// ************** getting static data
 
+	/**
+	 * 
+	 * @return
+	 */
 	public List<SecurityQuestionsModel> getAllSecurityQuestions() {
 
 		if (logger.isDebugEnabled()) {
@@ -295,6 +299,10 @@ public class UserMgmtBusinessSrv {
 		return securityQuestionsModelList;
 	}
 
+	/**
+	 * 
+	 * @return
+	 */
 	public List<UserGroupModel> getUserGroup() {
 
 		if (logger.isDebugEnabled()) {

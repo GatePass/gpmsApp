@@ -27,7 +27,6 @@ import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
@@ -36,7 +35,6 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
  * 
  */
 @Controller
-@SessionAttributes("userBean")
 public class UserController {
 
 	private static final Logger logger = Logger.getLogger(UserController.class);
@@ -493,6 +491,12 @@ public class UserController {
 		return userBean;
 	}
 
+	/**
+	 * 
+	 * @param userGroupModel
+	 * @param request
+	 * @return
+	 */
 	private List<UserGroupModel> getRoleBasedUserGroup(
 			List<UserGroupModel> userGroupModel, HttpServletRequest request) {
 
