@@ -82,8 +82,7 @@
 															<spring:message
 																code="label.newAsset.assetPurchaseDate.text" />
 														</sf:label></b></td>
-												<td><sf:input path="assetPurchaseDate"
-														disabled="${isDisabled}" /><br /> <sf:errors
+												<td><sf:input path="assetPurchaseDate"/><br /> <sf:errors
 														path="assetPurchaseDate" cssClass="error" /></td>
 											</tr>
 											<tr>
@@ -92,8 +91,7 @@
 															<spring:message
 																code="label.newAsset.assetRemovalDate.text" />
 														</sf:label></b></td>
-												<td><sf:input path="assetRemovalDate"
-														disabled="${isDisabled}" /><br /> <sf:errors
+												<td><sf:input path="assetRemovalDate"/><br /> <sf:errors
 														path="assetRemovalDate" cssClass="error" /></td>
 											</tr>
 											<tr>

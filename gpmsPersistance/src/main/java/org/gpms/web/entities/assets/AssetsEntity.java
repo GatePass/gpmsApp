@@ -3,7 +3,7 @@
  */
 package org.gpms.web.entities.assets;
 
-import java.util.Date;
+import java.sql.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -146,6 +146,13 @@ public class AssetsEntity {
 	 */
 	public void setAssetTypesEntity(AssetTypesEntity assetTypesEntity) {
 		this.assetTypesEntity = assetTypesEntity;
+	}
+
+	public String toString() {
+		return "\nassetId " + assetId + "\nassetBarCode " + assetBarCode
+				+ "\nassetTypeId " + assetTypeId + "\nassetPurchaseDate "
+				+ assetPurchaseDate + "\nassetRemovalDate " + assetRemovalDate
+				+ "\nassetStatus " + assetStatus;
 	}
 
 }

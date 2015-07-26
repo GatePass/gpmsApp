@@ -3,6 +3,8 @@
  */
 package org.gpms.web.gpmsBusinessSrv.assets;
 
+import java.sql.Date;
+
 import javax.persistence.NoResultException;
 import javax.persistence.PersistenceException;
 
@@ -152,6 +154,9 @@ public class IssueAssetsBusinessSrv {
 					+ ". It is to be assigned to "
 					+ assetAssignModel.getUserCorpEmail();
 
+			comment = comment + "<br><br>\nAdditional Comments : "
+					+ assetAssignModel.getAssetComments();
+
 			bondedItemIssue.updateInfoOnTask(processInstanceId, comment,
 					"UserAssetEntity", userAssetEntity);
 
@@ -159,6 +164,22 @@ public class IssueAssetsBusinessSrv {
 			userAssetEntity = userAssetsRepository
 					.getUserAssetById(assetAssignModel.getUserAssetId());
 			processInstanceId = assetAssignModel.getUserAssetIssueProcessId();
+
+			if (assetAssignModel.getUserAssetIssueDate() != null) {
+				userAssetEntity.setUserAssetIssueDate(new Date(assetAssignModel
+						.getUserAssetIssueDate().getTime()));
+			}
+			userAssetId = userAssetsRepository
+					.updateAssetInfoOfUser(userAssetEntity);
+
+			if (assetsEntity != null) {
+				if (!ApplicationConstants.ASSET_IN_PROCESS_STATUS
+						.equals(assetsEntity.getAssetStatus())) {
+					throw new GPMSApplicationException(
+							ErrorCodeList.ERROR_ASSET_IS_NOT_ASSIGNED,
+							ExceptionMessageList.ERROR_ASSET_IS_NOT_ASSIGNED_MSG);
+				}
+			}
 
 			if (logger.isDebugEnabled()) {
 				logger.debug("userAssetEntity :" + userAssetEntity);
@@ -193,6 +214,9 @@ public class IssueAssetsBusinessSrv {
 					+ assetsEntity.getAssetTypesEntity().getAssetTypeName()
 					+ ". It is to be assigned to "
 					+ assetAssignModel.getUserCorpEmail();
+
+			comment = comment + "<br><br>\nAdditional Comments : "
+					+ assetAssignModel.getAssetComments();
 
 			bondedItemIssue.updateInfoOnTask(processInstanceId, comment,
 					"UserAssetEntity", userAssetEntity);

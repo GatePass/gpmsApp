@@ -132,4 +132,12 @@ public class AssetBean {
 		this.assetStatus = assetStatus;
 	}
 
+	public String toString() {
+		return "\nflowType " + flowType + "\nassetId " + assetId
+				+ "\nassetBarCode " + assetBarCode + "\nassetTypeId "
+				+ assetTypeId + "\nassetPurchaseDate " + assetPurchaseDate
+				+ "\nassetRemovalDate " + assetRemovalDate + "\nassetStatus "
+				+ assetStatus;
+	}
+
 }

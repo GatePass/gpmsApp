@@ -178,7 +178,7 @@ public class ApproveRejectAssetController {
 			logger.debug("Size of the Bean List : " + bondedAssetBeanLst.size());
 		}
 
-		model.addAttribute("bondedAssetBeanLst", bondedAssetBeanLst);
+		model.addAttribute("BondedAssetBeanLst", bondedAssetBeanLst);
 
 		return new ModelAndView("assets/approveRejectAsset");
 	}

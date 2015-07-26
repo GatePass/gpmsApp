@@ -83,7 +83,7 @@
 											<c:if
 												test="${bondedAssetBean.flowType == 'bondedItemAssign' || bondedAssetBean.flowType == 'itemCorrection'}">
 												<td><sf:input path="userCorpEmail"
-														disabled="${isDisabled}" /><br /> <sf:errors
+														disabled="${isDisabled || bondedAssetBean.flowType == 'itemCorrection'}" /><br /> <sf:errors
 														path="userCorpEmail" cssClass="error" /></td>
 											</c:if>
 											<c:if
@@ -98,7 +98,7 @@
 													</sf:label></b></td>
 											<c:if
 												test="${bondedAssetBean.flowType == 'bondedItemAssign' || bondedAssetBean.flowType == 'itemCorrection'}">
-												<td><sf:input path="assetId" disabled="${isDisabled}" /><br />
+												<td><sf:input path="assetId" disabled="${isDisabled || bondedAssetBean.flowType == 'itemCorrection'}" /><br />
 													<sf:errors path="assetId" cssClass="error" /></td>
 											</c:if>
 											<c:if
@@ -113,7 +113,17 @@
 															code="label.issueBondedItem.userAssetIssueDate.text" />
 													</sf:label></b></td>
 											<c:if
-												test="${bondedAssetBean.flowType == 'bondedItemAssign' || bondedAssetBean.flowType == 'itemCorrection'}">
+												test="${bondedAssetBean.flowType == 'bondedItemAssign'}">
+												<td><sf:input path="userAssetIssueDate"
+														disabled="${isDisabled}" /><br /> <sf:errors
+														path="userAssetIssueDate" cssClass="error" /></td>
+											</c:if>
+											<c:if
+												test="${bondedAssetBean.flowType == 'itemCorrection'  && returnFlow == 'true'}">
+												<td><sf:label path="userAssetIssueDate">${bondedAssetBean.userAssetIssueDate}</sf:label></td>
+											</c:if>
+											<c:if
+												test="${bondedAssetBean.flowType == 'itemCorrection' && returnFlow == 'false'}">
 												<td><sf:input path="userAssetIssueDate"
 														disabled="${isDisabled}" /><br /> <sf:errors
 														path="userAssetIssueDate" cssClass="error" /></td>
@@ -131,7 +141,17 @@
 															code="label.issueBondedItem.userAssetReturnDate.text" />
 													</sf:label></b></td>
 											<c:if
-												test="${bondedAssetBean.flowType == 'bondedItemAssign' || bondedAssetBean.flowType == 'itemCorrection'}">
+												test="${bondedAssetBean.flowType == 'bondedItemAssign'}">
+												<td><sf:label path="userAssetReturnDate">${bondedAssetBean.userAssetReturnDate}</sf:label></td>
+											</c:if>
+											<c:if
+												test="${bondedAssetBean.flowType == 'itemCorrection'  && returnFlow == 'true'}">
+												<td><sf:input path="userAssetReturnDate"
+														disabled="${isDisabled}" /><br /> <sf:errors
+														path="userAssetReturnDate" cssClass="error" /></td>
+											</c:if>
+											<c:if
+												test="${bondedAssetBean.flowType == 'itemCorrection' && returnFlow == 'false'}">
 												<td><sf:label path="userAssetReturnDate">${bondedAssetBean.userAssetReturnDate}</sf:label></td>
 											</c:if>
 											<c:if

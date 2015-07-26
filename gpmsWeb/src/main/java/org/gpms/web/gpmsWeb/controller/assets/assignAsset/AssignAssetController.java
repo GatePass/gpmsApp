@@ -88,7 +88,6 @@ public class AssignAssetController {
 
 		String flowType = bondedAssetBean.getFlowType();
 		model.addAttribute("returnFlow", "false");
-		model.addAttribute("errorDisplay", "true");
 
 		result = GpmsValidators.validateDateField(
 				bondedAssetBean.getUserAssetIssueDate(), "bondedAssetBean",
@@ -97,6 +96,8 @@ public class AssignAssetController {
 		if (result.hasErrors()) {
 			return new ModelAndView("assets/issueBondedAsset");
 		}
+
+		model.addAttribute("errorDisplay", "true");
 
 		if (logger.isDebugEnabled()) {
 			logger.debug("bondedAssetBean " + bondedAssetBean);
@@ -121,6 +122,11 @@ public class AssignAssetController {
 			} catch (GPMSApplicationException appExp) {
 				FieldError appError = new FieldError("bondedAssetBean",
 						"errorMessage", appExp.getErrorMessage());
+				result.addError(appError);
+				return new ModelAndView("assets/issueBondedAsset");
+			} catch (Exception appExp) {
+				FieldError appError = new FieldError("bondedAssetBean",
+						"errorMessage", "System error");
 				result.addError(appError);
 				return new ModelAndView("assets/issueBondedAsset");
 			}

@@ -10,6 +10,7 @@ import org.apache.log4j.Logger;
 import org.gpms.web.gpmsBusinessSrv.assets.AssetAssignModel;
 import org.gpms.web.gpmsBusinessSrv.assets.ReturnAssetsBusinessSrv;
 import org.gpms.web.gpmsBusinessSrv.userMgmt.UserModel;
+import org.gpms.web.gpmsWeb.common.GpmsValidators;
 import org.gpms.web.gpmsWeb.controller.assets.BondedAssetBean;
 import org.gpms.web.gpmsWeb.controller.assets.BondedAssetDataConverter;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -140,6 +141,14 @@ public class ReturnBondedAssetController {
 
 		String flowType = bondedAssetBean.getFlowType();
 
+		result = GpmsValidators.validateDateField(
+				bondedAssetBean.getUserAssetReturnDate(), "bondedAssetBean",
+				"userAssetReturnDate", result);
+
+		if (result.hasErrors()) {
+			return new ModelAndView("assets/issueBondedAsset");
+		}
+
 		if (bondedAssetBean != null) {
 
 			String userAssetId = bondedAssetBean.getUserAssetId();
@@ -162,7 +171,7 @@ public class ReturnBondedAssetController {
 					returnAssetsBusinessSrv.ReturnBondedItems(assetAssignModel,
 							usersPersonalEmail);
 				} catch (GPMSApplicationException appExp) {
-
+					model.addAttribute("errorDisplay", "true");
 					FieldError appError = new FieldError("bondedAssetBean",
 							"errorMessage", appExp.getErrorMessage());
 					result.addError(appError);

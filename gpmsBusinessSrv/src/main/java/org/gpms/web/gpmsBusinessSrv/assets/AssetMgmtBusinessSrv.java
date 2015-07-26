@@ -3,6 +3,7 @@
  */
 package org.gpms.web.gpmsBusinessSrv.assets;
 
+import java.sql.Date;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
@@ -11,7 +12,6 @@ import org.apache.log4j.Logger;
 import org.gpms.web.domain.AssetsRepository;
 import org.gpms.web.entities.assets.AssetTypesEntity;
 import org.gpms.web.entities.assets.AssetsEntity;
-import org.gpms.web.gpmsBusinessSrv.util.DateUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -112,15 +112,14 @@ public class AssetMgmtBusinessSrv {
 		assetsEntity.setAssetId(assetModel.getAssetId());
 		assetsEntity.setAssetBarCode(assetModel.getAssetBarCode());
 		assetsEntity.setAssetTypeId(assetModel.getAssetTypeId());
-		if (assetModel.getAssetPurchaseDate() != null
-				&& assetModel.getAssetPurchaseDate() != "") {
-			assetsEntity.setAssetPurchaseDate(DateUtil
-					.getSQLDateForTimeStamp(assetModel.getAssetPurchaseDate()));
+
+		if (assetModel.getAssetPurchaseDate() != null) {
+			assetsEntity.setAssetPurchaseDate(new Date(assetModel
+					.getAssetPurchaseDate().getTime()));
 		}
-		if (assetModel.getAssetRemovalDate() != null
-				&& assetModel.getAssetRemovalDate() != "") {
-			assetsEntity.setAssetRemovalDate(DateUtil
-					.getSQLDateForTimeStamp(assetModel.getAssetRemovalDate()));
+		if (assetModel.getAssetRemovalDate() != null) {
+			assetsEntity.setAssetRemovalDate(new Date(assetModel
+					.getAssetRemovalDate().getTime()));
 		}
 		assetsEntity.setAssetStatus(assetModel.getAssetStatus());
 
@@ -141,15 +140,13 @@ public class AssetMgmtBusinessSrv {
 				.getAssetTypeId());
 		assetModel.setAssetTypeName(assetsEntity.getAssetTypesEntity()
 				.getAssetTypeName());
-		if (assetModel.getAssetPurchaseDate() != null
-				&& assetModel.getAssetPurchaseDate() != "") {
-			assetModel.setAssetPurchaseDate(assetsEntity.getAssetPurchaseDate()
-					.toString());
+
+		if (assetsEntity.getAssetPurchaseDate() != null) {
+			assetModel
+					.setAssetPurchaseDate(assetsEntity.getAssetPurchaseDate());
 		}
-		if (assetModel.getAssetRemovalDate() != null
-				&& assetModel.getAssetRemovalDate() != "") {
-			assetModel.setAssetRemovalDate(assetsEntity.getAssetRemovalDate()
-					.toString());
+		if (assetsEntity.getAssetRemovalDate() != null) {
+			assetModel.setAssetRemovalDate(assetsEntity.getAssetRemovalDate());
 		}
 		assetModel.setAssetStatus(assetsEntity.getAssetStatus());
 

@@ -3,6 +3,8 @@
  */
 package org.gpms.web.gpmsBusinessSrv.assets;
 
+import java.util.Date;
+
 /**
  * @author narenda.kumar
  * 
@@ -17,9 +19,9 @@ public class AssetModel {
 
 	private String assetTypeName;
 
-	private String assetPurchaseDate;
+	private Date assetPurchaseDate;
 
-	private String assetRemovalDate;
+	private Date assetRemovalDate;
 
 	private String assetStatus;
 
@@ -71,7 +73,7 @@ public class AssetModel {
 	/**
 	 * @return the assetPurchaseDate
 	 */
-	public String getAssetPurchaseDate() {
+	public Date getAssetPurchaseDate() {
 		return assetPurchaseDate;
 	}
 
@@ -79,14 +81,14 @@ public class AssetModel {
 	 * @param assetPurchaseDate
 	 *            the assetPurchaseDate to set
 	 */
-	public void setAssetPurchaseDate(String assetPurchaseDate) {
+	public void setAssetPurchaseDate(Date assetPurchaseDate) {
 		this.assetPurchaseDate = assetPurchaseDate;
 	}
 
 	/**
 	 * @return the assetRemovalDate
 	 */
-	public String getAssetRemovalDate() {
+	public Date getAssetRemovalDate() {
 		return assetRemovalDate;
 	}
 
@@ -94,7 +96,7 @@ public class AssetModel {
 	 * @param assetRemovalDate
 	 *            the assetRemovalDate to set
 	 */
-	public void setAssetRemovalDate(String assetRemovalDate) {
+	public void setAssetRemovalDate(Date assetRemovalDate) {
 		this.assetRemovalDate = assetRemovalDate;
 	}
 
@@ -126,6 +128,13 @@ public class AssetModel {
 	 */
 	public void setAssetTypeName(String assetTypeName) {
 		this.assetTypeName = assetTypeName;
+	}
+
+	public String toString() {
+		return "\nassetId " + assetId + "\nassetBarCode " + assetBarCode
+				+ "\nassetTypeId " + assetTypeId + "\nassetPurchaseDate "
+				+ assetPurchaseDate + "\nassetRemovalDate " + assetRemovalDate
+				+ "\nassetStatus " + assetStatus;
 	}
 
 }

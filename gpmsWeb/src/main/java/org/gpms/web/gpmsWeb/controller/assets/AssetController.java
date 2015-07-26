@@ -4,6 +4,7 @@
 package org.gpms.web.gpmsWeb.controller.assets;
 
 import java.io.IOException;
+import java.util.Date;
 import java.util.List;
 
 import javax.validation.Valid;
@@ -13,6 +14,8 @@ import org.gpms.web.gpmsBusinessSrv.assets.AssetMgmtBusinessSrv;
 import org.gpms.web.gpmsBusinessSrv.assets.AssetModel;
 import org.gpms.web.gpmsBusinessSrv.assets.AssetTypeModel;
 import org.gpms.web.gpmsBusinessSrv.util.ApplicationConstants;
+import org.gpms.web.gpmsBusinessSrv.util.DateUtil;
+import org.gpms.web.gpmsWeb.common.GpmsValidators;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -138,7 +141,6 @@ public class AssetController {
 			result.addError(assetIdFldErr);
 		}
 
-		model.addAttribute("isDisabled", "true");
 		model.addAttribute("flowType", flowType);
 
 		if (result.hasErrors()) {
@@ -148,13 +150,22 @@ public class AssetController {
 		if (assetBean != null && assetBean.getAssetId() != null) {
 			AssetModel assetModel = assetMgmtBusinessSrv.getAssetById(assetBean
 					.getAssetId());
+
+			if (logger.isDebugEnabled()) {
+				logger.debug("assetModel " + assetModel);
+			}
+
 			if (assetModel != null) {
 				assetBean = copyModelToBean(assetModel);
 			}
 		}
 
-		model.addAttribute("assetBean", assetBean);
+		if (logger.isDebugEnabled()) {
+			logger.debug("assetBean " + assetBean);
+		}
+
 		model.addAttribute("isDisabled", "false");
+		model.addAttribute("assetBean", assetBean);
 		return new ModelAndView("assets/modifyDeleteAsset");
 	}
 
@@ -175,14 +186,42 @@ public class AssetController {
 		List<AssetTypeModel> assetTypeModelLst = assetMgmtBusinessSrv
 				.getAllAssetType();
 
+		result = GpmsValidators.validateDateField(
+				assetBean.getAssetPurchaseDate(), "assetBean",
+				"assetPurchaseDate", result);
+
+		// if (assetBean != null
+		// & (ApplicationConstants.ASSET_ASSIGNED_STATUS.equals(assetBean
+		// .getAssetStatus()) || ApplicationConstants.ASSET_IN_PROCESS_STATUS
+		// .equals(assetBean.getAssetStatus()))) {
+		// FieldError dateFldErr = new FieldError(
+		// "assetBean",
+		// "assetStatus",
+		// "The asset is in status (assigned or In-Process) & its status cannot be changed");
+		// result.addError(dateFldErr);
+		// }
+
+		if (result.hasErrors()) {
+			return "assets/modifyDeleteAsset";
+		}
+
 		AssetModel returnModel = null;
 
 		if (assetBean != null) {
 			AssetModel assetModel = copyBeanToModel(assetBean);
+
+			if (logger.isDebugEnabled()) {
+				logger.debug("assetModel " + assetModel);
+			}
+
 			if (assetModel != null) {
 				returnModel = assetMgmtBusinessSrv.modifyAsset(assetModel);
 			}
 			assetBean = copyModelToBean(returnModel);
+		}
+
+		if (logger.isDebugEnabled()) {
+			logger.debug("assetBean " + assetBean);
 		}
 
 		if (returnModel != null && returnModel.getAssetId() != null) {
@@ -194,7 +233,7 @@ public class AssetController {
 
 		model.addAttribute("flowType", "modifyAsset");
 		redirectAttrs.addFlashAttribute("flowType", "modifyAsset");
-		return "redirect:modifyDeleteAsset";
+		return "assets/modifyDeleteAsset";
 	}
 
 	/**
@@ -211,7 +250,24 @@ public class AssetController {
 			BindingResult result, Model model, RedirectAttributes redirectAttrs)
 			throws IOException {
 
+		// if (assetBean != null
+		// & (!ApplicationConstants.ASSET_REMOVED_STATUS.equals(assetBean
+		// .getAssetStatus()))) {
+		// FieldError dateFldErr = new FieldError("assetBean", "assetStatus",
+		// "The asset is in status (Removed) & its status cannot be deleted");
+		// result.addError(dateFldErr);
+		// }
+
+		// if (result.hasErrors()) {
+		// return "assets/modifyDeleteAsset";
+		// }
+
 		if (assetBean != null && assetBean.getAssetId() != null) {
+
+			if (logger.isDebugEnabled()) {
+				logger.debug("assetBean " + assetBean);
+			}
+
 			String assetId = assetBean.getAssetId();
 			assetMgmtBusinessSrv.deleteAssetById(assetId);
 		}
@@ -219,7 +275,7 @@ public class AssetController {
 		model.addAttribute("flowType", "deleteAsset");
 		model.addAttribute("isDisabled", "true");
 		redirectAttrs.addFlashAttribute("flowType", "deleteAsset");
-		return "redirect:modifyDeleteAsset";
+		return "assets/modifyDeleteAsset";
 	}
 
 	/**
@@ -233,8 +289,16 @@ public class AssetController {
 		assetModel.setAssetId(assetBean.getAssetId());
 		assetModel.setAssetBarCode(assetBean.getAssetBarCode());
 		assetModel.setAssetTypeId(assetBean.getAssetTypeId());
-		assetModel.setAssetPurchaseDate(assetBean.getAssetPurchaseDate());
-		assetModel.setAssetRemovalDate(assetBean.getAssetRemovalDate());
+		if (assetBean.getAssetPurchaseDate() != null) {
+			Date purchaseDate = DateUtil.getSQLDateForTimeStamp(assetBean
+					.getAssetPurchaseDate());
+			assetModel.setAssetPurchaseDate(purchaseDate);
+		}
+		if (assetBean.getAssetRemovalDate() != null) {
+			Date removalDate = DateUtil.getSQLDateForTimeStamp(assetBean
+					.getAssetRemovalDate());
+			assetModel.setAssetRemovalDate(removalDate);
+		}
 		assetModel.setAssetStatus(assetBean.getAssetStatus());
 		return assetModel;
 	}
@@ -250,8 +314,16 @@ public class AssetController {
 		assetBean.setAssetId(assetModel.getAssetId());
 		assetBean.setAssetBarCode(assetModel.getAssetBarCode());
 		assetBean.setAssetTypeId(assetModel.getAssetTypeId());
-		assetBean.setAssetPurchaseDate(assetModel.getAssetPurchaseDate());
-		assetBean.setAssetRemovalDate(assetModel.getAssetRemovalDate());
+
+		if (assetModel.getAssetPurchaseDate() != null) {
+			assetBean.setAssetPurchaseDate(DateUtil
+					.getDateFormattedString(assetModel.getAssetPurchaseDate()));
+		}
+
+		if (assetModel.getAssetRemovalDate() != null) {
+			assetBean.setAssetRemovalDate(DateUtil
+					.getDateFormattedString(assetModel.getAssetRemovalDate()));
+		}
 		assetBean.setAssetStatus(assetModel.getAssetStatus());
 		return assetBean;
 	}

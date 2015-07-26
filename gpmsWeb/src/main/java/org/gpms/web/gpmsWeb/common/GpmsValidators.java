@@ -35,7 +35,7 @@ public class GpmsValidators {
 				}
 			} else {
 				FieldError dateFldErr = new FieldError(beanName, beanField,
-						"Please enter the issue date. It cannot be blank");
+						"Please enter the valid date. It cannot be blank");
 				result.addError(dateFldErr);
 			}
 		}

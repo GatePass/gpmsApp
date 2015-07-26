@@ -27,16 +27,18 @@ public class BondedAssetDataConverter {
 		bondedAsset.setUserAssetId(assetAssignModel.getUserAssetId());
 		bondedAsset.setUserCorpEmail(assetAssignModel.getUserCorpEmail());
 		bondedAsset.setAssetId(assetAssignModel.getAssetId());
-		bondedAsset.setUserAssetIssueDate(assetAssignModel
-				.getUserAssetIssueDate().toString());
-		bondedAsset.setCreateDate(DateUtil
-				.getDateFormattedString(assetAssignModel.getCreateDate()));
 		bondedAsset.setAssetAssignedComment(assetAssignModel
 				.getAssetAssignComments());
 		bondedAsset.setUserAssetIssueProcessId(assetAssignModel
 				.getUserAssetIssueProcessId());
 		bondedAsset.setUserAssetReturnProcessId(assetAssignModel
 				.getUserAssetReturnProcessId());
+
+		bondedAsset.setUserAssetIssueDate(DateUtil
+				.getDateFormattedString(assetAssignModel
+						.getUserAssetIssueDate()));
+		bondedAsset.setCreateDate(DateUtil
+				.getDateFormattedString(assetAssignModel.getCreateDate()));
 		bondedAsset.setModifiedDate(DateUtil
 				.getDateFormattedString(assetAssignModel.getModifiedDate()));
 		if (assetAssignModel.getUserAssetReturnDate() != null) {
@@ -44,6 +46,7 @@ public class BondedAssetDataConverter {
 					.getDateFormattedString(assetAssignModel
 							.getUserAssetReturnDate()));
 		}
+		bondedAsset.setAssetComments(assetAssignModel.getAssetComments());
 
 		return bondedAsset;
 
@@ -88,6 +91,7 @@ public class BondedAssetDataConverter {
 				.getUserAssetIssueProcessId());
 		assetAssignModel.setUserAssetReturnProcessId(bondedAssetBean
 				.getUserAssetReturnProcessId());
+		assetAssignModel.setAssetComments(bondedAssetBean.getAssetComments());
 
 		return assetAssignModel;
 

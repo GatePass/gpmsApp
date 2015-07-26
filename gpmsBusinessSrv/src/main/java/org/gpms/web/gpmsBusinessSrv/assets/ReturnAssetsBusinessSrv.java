@@ -107,8 +107,8 @@ public class ReturnAssetsBusinessSrv {
 					& !ApplicationConstants.ASSET_ASSIGNED_STATUS
 							.equals(assetsEntity.getAssetStatus())) {
 				throw new GPMSApplicationException(
-						ErrorCodeList.ERROR_ASSET_IS_ALREADY_ASSIGNED,
-						ExceptionMessageList.ERROR_ASSET_IS_ALREADY_ASSIGNED_MSG);
+						ErrorCodeList.ERROR_ASSET_IS_NOT_ASSIGNED,
+						ExceptionMessageList.ERROR_ASSET_IS_NOT_ASSIGNED_MSG);
 			}
 
 			returnBondedItem.setUserForProcessStarter(usersPersonalEmail);
@@ -121,8 +121,8 @@ public class ReturnAssetsBusinessSrv {
 
 			// Make necessary modification to records in gpms
 
-			userAssetEntity = userAssetsRepository
-					.getUserAssetById(userAssetId);
+			// userAssetEntity = userAssetsRepository
+			// .getUserAssetById(userAssetId);
 			userAssetEntity.setUserAssetReturnDate(new Date(assetAssignModel
 					.getUserAssetReturnDate().getTime()));
 			userAssetEntity.setUserAssetReturnProcessId(processInstanceId);
@@ -140,6 +140,9 @@ public class ReturnAssetsBusinessSrv {
 					+ ". It is to been returned back by "
 					+ assetAssignModel.getUserCorpEmail();
 
+			comment = comment + "<br><br>\nAdditional Comments : "
+					+ assetAssignModel.getAssetComments();
+
 			returnBondedItem.updateInfoOnTask(processInstanceId, comment,
 					"UserAssetEntity", userAssetEntity);
 
@@ -149,13 +152,21 @@ public class ReturnAssetsBusinessSrv {
 			returnProcessInstanceId = userAssetEntity
 					.getUserAssetReturnProcessId();
 
-			if (assetsEntity != null
-					& !ApplicationConstants.ASSET_IN_PROCESS_STATUS
-							.equals(assetsEntity.getAssetStatus())) {
-				throw new GPMSApplicationException(
-						ErrorCodeList.ERROR_ASSET_IS_ALREADY_ASSIGNED,
-						ExceptionMessageList.ERROR_ASSET_IS_ALREADY_ASSIGNED_MSG);
+			if (assetsEntity != null) {
+				if (!ApplicationConstants.ASSET_IN_PROCESS_STATUS
+						.equals(assetsEntity.getAssetStatus())) {
+					throw new GPMSApplicationException(
+							ErrorCodeList.ERROR_ASSET_IS_NOT_ASSIGNED,
+							ExceptionMessageList.ERROR_ASSET_IS_NOT_ASSIGNED_MSG);
+				}
 			}
+
+			// userAssetEntity = userAssetsRepository
+			// .getUserAssetById(userAssetId);
+			userAssetEntity.setUserAssetReturnDate(new Date(assetAssignModel
+					.getUserAssetReturnDate().getTime()));
+			userAssetId = userAssetsRepository
+					.updateAssetInfoOfUser(userAssetEntity);
 
 			String processStarterMailId = returnBondedItem
 					.getProcessStarterByProcessId(returnProcessInstanceId);
@@ -191,6 +202,9 @@ public class ReturnAssetsBusinessSrv {
 
 			// Make necessary modification to records in activiti
 			String comment = mailSubject;
+
+			comment = comment + "<br><br>\nAdditional Comments : "
+					+ assetAssignModel.getAssetComments();
 
 			returnBondedItem.updateInfoOnTask(returnProcessInstanceId, comment,
 					"UserAssetEntity", userAssetEntity);

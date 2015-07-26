@@ -7,11 +7,15 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
+import org.apache.log4j.Logger;
+
 /**
  * @author narenda.kumar
  * 
  */
 public class DateUtil {
+
+	private static final Logger logger = Logger.getLogger(DateUtil.class);
 
 	static SimpleDateFormat formatter = new SimpleDateFormat(
 			"dd/MM/yyyy hh:mm:ss");
@@ -25,6 +29,10 @@ public class DateUtil {
 	 */
 	public static Date getSQLDate(String dateToConvert) {
 
+		if (logger.isDebugEnabled()) {
+			logger.debug("dateToConvert : " + dateToConvert);
+		}
+
 		java.sql.Date dateDB = null;
 
 		try {
@@ -33,6 +41,11 @@ public class DateUtil {
 		} catch (ParseException pe) {
 			pe.printStackTrace();
 		}
+
+		if (logger.isDebugEnabled()) {
+			logger.debug("dateDB : " + dateDB);
+		}
+
 		return dateDB;
 	}
 
@@ -43,6 +56,10 @@ public class DateUtil {
 	 */
 	public static Date getSQLDateForTimeStamp(String dateToConvert) {
 
+		if (logger.isDebugEnabled()) {
+			logger.debug("dateToConvert : " + dateToConvert);
+		}
+
 		java.sql.Date dateDB = null;
 
 		try {
@@ -51,6 +68,11 @@ public class DateUtil {
 		} catch (ParseException pe) {
 			pe.printStackTrace();
 		}
+
+		if (logger.isDebugEnabled()) {
+			logger.debug("dateDB : " + dateDB);
+		}
+
 		return dateDB;
 	}
 
@@ -61,9 +83,17 @@ public class DateUtil {
 	 */
 	public static String getDateFormattedString(Date dateToFormat) {
 
+		if (logger.isDebugEnabled()) {
+			logger.debug("dateToFormat : " + dateToFormat);
+		}
+
 		String returnFormattedDate = null;
 
 		returnFormattedDate = formatter2.format(dateToFormat);
+
+		if (logger.isDebugEnabled()) {
+			logger.debug("returnFormattedDate : " + returnFormattedDate);
+		}
 
 		return returnFormattedDate;
 
